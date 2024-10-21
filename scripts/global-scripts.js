@@ -116,7 +116,7 @@ function registrationSubmit() {
         const utmDept = getCookie('dept');
         const utmDest = getCookie('dest');
         
-         alert(utm_campaign);
+         alert(utmCampaign);
         
          FS('setIdentity', {
           uid: randomPlayer['Player Number'],
