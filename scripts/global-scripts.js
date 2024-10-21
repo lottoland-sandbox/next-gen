@@ -34,7 +34,7 @@ function logout() {
         });
     
   FS('setIdentity', { anonymous: true });
-
+  alert('Logged out');
     
 } 
 
