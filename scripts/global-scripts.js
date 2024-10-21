@@ -58,7 +58,7 @@ function loginSubmit() {
             randomPlayer,
           }
          });
-         alert(randomPlayer);
+         alert(randomPlayer['Player Name']);
     }
     window.location.href = "homepage.html" + window.location.search;
 }
