@@ -143,7 +143,7 @@ function registrationSubmit() {
                 destination: utmDest,
             }
         });
-         alert(randomPlayer['Player Name']);
+         alert(utm_campaign);
     }
     window.location.href = "homepage.html" + window.location.search;
 }
