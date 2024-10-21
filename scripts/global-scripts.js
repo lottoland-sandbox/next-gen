@@ -25,7 +25,6 @@ function updateProgressBar(step) {
 }
 
 function loginSubmit() {
-
     // Simulate form submission outcome
     const event_properties = {};
     const randomNumber = Math.floor(Math.random() * 100) + 1;
@@ -40,7 +39,7 @@ function loginSubmit() {
         event_properties['Action'] = 'outcome';
         event_properties['Name'] = 'account';
         event_properties['Method'] = 'backend';
-        //amplitude.track('Registration', event_properties);
+     
 
     } else {
         alert('Registration Success');
@@ -53,7 +52,7 @@ function loginSubmit() {
         const statuses = ['verified', 'unverified'];
         const randomStatusIndex = Math.floor(Math.random() * statuses.length);
         event_properties.Status = statuses[randomStatusIndex];
-        //amplitude.track('Registration', event_properties);
+   
 
         // Fake Backend record
         const backend_properties = {};
@@ -61,13 +60,9 @@ function loginSubmit() {
         backend_properties['Domain'] = Domain;
         backend_properties['Method'] = 'backend';
         backend_properties.Outcome = 'success';
-        //amplitude.track('Registered', backend_properties);
+       
     }
-
-
- 
-    // Redirect
-    // window.location.href = "homepage.html" + window.location.search;
+    window.location.href = "homepage.html" + window.location.search;
 }
 
 function redirectTo(url) {
@@ -76,12 +71,9 @@ function redirectTo(url) {
  
 document.getElementById('resetForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent default form submission
-
-    // Show the popup
-    document.getElementById('popup').style.display = 'block';
+    document.getElementById('popup').style.display = 'block'; 
 });
 
-// Close the popup when the 'X' is clicked
 document.getElementById('closePopup').addEventListener('click', function() {
     document.getElementById('popup').style.display = 'none';
 });
