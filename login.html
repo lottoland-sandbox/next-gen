@@ -13,6 +13,13 @@
     <div id="main" data-analytics-component="login">
         <img src="./img/lottoland.png" alt="Logo" class="logo">
 
+          <div id="datetime"></div>
+            <script>
+            setInterval(() => {
+            document.getElementById('datetime').textContent = new Date().toLocaleString();
+            }, 1000);
+            </script>
+
         <!-- HEADER -->
         <div class="header" data-analytics-section="header">
             <div class="header-links">
