@@ -38,6 +38,7 @@ function loginSubmit() {
             name: 'Login Failure',
             error: errors[randomErrorIndex],         
         });
+        alert('Login Failure - Tracked');
      
     } else {
         alert('Login Success');
@@ -45,7 +46,7 @@ function loginSubmit() {
             name: 'Login Success',
             player: getRandomPlayer(),
         });
-       
+       alert('Login Success - Tracked');
     }
     window.location.href = "homepage.html" + window.location.search;
 }
