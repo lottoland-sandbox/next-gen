@@ -67,7 +67,7 @@ function loginSubmit() {
 
  
     // Redirect
-    // window.location.href = "./homepage.html" + window.location.search;
+    // window.location.href = "homepage.html" + window.location.search;
 }
 
 function redirectTo(url) {
