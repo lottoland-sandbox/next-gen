@@ -25,7 +25,17 @@ function updateProgressBar(step) {
 }
 
 function logout() {
+
+    FS('trackEvent', {
+            name: 'Logout | Success',
+            properties: {
+                method: 'front-end',    
+            }
+        });
+    
   FS('setIdentity', { anonymous: true });
+
+    
 } 
 
 
@@ -44,7 +54,7 @@ function loginSubmit() {
             name: 'Login | Failure',
             properties: {
                 method: 'front-end',
-                error: randomError ,    
+                error: randomError,
             }
         });
         alert( randomError);
