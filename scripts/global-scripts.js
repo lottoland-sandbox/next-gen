@@ -25,17 +25,15 @@ function updateProgressBar(step) {
 }
 
 function logout() {
-
     FS('trackEvent', {
-            name: 'Logout | Success',
-            properties: {
-                method: 'front-end',    
-            }
-        });
+        name: 'Logout | Success',
+        properties: {
+            method: 'front-end',    
+        }
+     });
     
-  FS('setIdentity', { anonymous: true });
-  alert('Logged out');
-    
+    FS('setIdentity', { anonymous: true });
+    alert('Logged out');
 } 
 
 
