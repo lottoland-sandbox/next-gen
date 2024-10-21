@@ -31,5 +31,4 @@ var UTMCookieTracker = (function() {
     };
 })();
 
-// Example usage
-window.onload = UTMCookieTracker.setUTMCookies;
+
