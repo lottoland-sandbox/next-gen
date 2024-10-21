@@ -139,7 +139,7 @@ function registrationSubmit() {
                 utm_source: utmSource,
                 utm_medium: utmMedium,
                 utm_term: utmTerm,
-                deptartment: utmDept,
+                department: utmDept,
                 destination: utmDest,
             }
         });
