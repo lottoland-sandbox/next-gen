@@ -24,7 +24,7 @@ function updateProgressBar(step) {
     progressBarInner.style.width = `${fillPercentage}%`;
 }
 
-function submitForm() {
+function loginSubmit() {
 
     // Simulate form submission outcome
     const event_properties = {};
@@ -67,7 +67,7 @@ function submitForm() {
 
  
     // Redirect
-    // window.location.href = "confirmation.html" + window.location.search;
+    // window.location.href = "./homepage.html" + window.location.search;
 }
 
 function redirectTo(url) {
