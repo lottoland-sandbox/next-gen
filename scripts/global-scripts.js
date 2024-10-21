@@ -40,7 +40,7 @@ function loginSubmit() {
                 error: errors[randomErrorIndex],    
             }
         });
-      
+        
      
     } else {
         alert('Login Success');
@@ -58,7 +58,7 @@ function loginSubmit() {
             randomPlayer,
           }
          });
-      
+         alert(randomPlayer);
     }
     window.location.href = "homepage.html" + window.location.search;
 }
