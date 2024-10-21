@@ -30,7 +30,7 @@ function loginSubmit() {
     const event_properties = {};
     const randomNumber = Math.floor(Math.random() * 100) + 1;
     if (randomNumber < 34) {
-        alert('Login Failure');
+        alert('Login | Failure');
         const errors = ['Duplicate_Account', 'System_Unavailable', 'Fraud', 'Network_Issue'];
         const randomErrorIndex = Math.floor(Math.random() * errors.length);
         
@@ -47,7 +47,7 @@ function loginSubmit() {
         const randomPlayer=getRandomPlayer();
         
         FS('trackEvent', {
-            name: 'Login Success',
+            name: 'Login | Success',
             properties: {
               playerName: randomPlayer['Player Name'],
               accountStatus: randomPlayer['Account Status'],
