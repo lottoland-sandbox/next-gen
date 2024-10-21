@@ -24,6 +24,11 @@ function updateProgressBar(step) {
     progressBarInner.style.width = `${fillPercentage}%`;
 }
 
+function logout() {
+  FS('setIdentity', { anonymous: true });
+}
+
+
 function loginSubmit() {
    
     // Simulate form submission outcome
