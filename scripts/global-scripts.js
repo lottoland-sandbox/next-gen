@@ -116,7 +116,7 @@ function registrationSubmit() {
         const utmDept = getCookie('dept');
         const utmDest = getCookie('dest');
         
-         alert(utmCampaign);
+        
         
          FS('setIdentity', {
           uid: randomPlayer['Player Number'],
@@ -130,6 +130,8 @@ function registrationSubmit() {
         
           }
          });
+
+ alert(utmCampaign);
         
         FS('trackEvent', {
             name: 'Registration | Success',
