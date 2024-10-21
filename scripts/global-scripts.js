@@ -37,6 +37,7 @@ function loginSubmit() {
         FS('trackEvent', {
             name: 'Login Failure',
             properties: {
+                method: 'front-end',
                 error: errors[randomErrorIndex],    
             }
         });
@@ -60,6 +61,9 @@ function loginSubmit() {
         
         FS('trackEvent', {
             name: 'Login | Success',
+            properties: {
+                method: 'front-end',
+            }
         });
 
        
