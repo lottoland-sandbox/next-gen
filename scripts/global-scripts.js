@@ -47,7 +47,6 @@ function loginSubmit() {
         const randomPlayer=getRandomPlayer();
         FS('trackEvent', {
             name: 'Login Success',
-            uid: randomPlayer['Player Number'],
             properties: {
                 randomPlayer,
             });
