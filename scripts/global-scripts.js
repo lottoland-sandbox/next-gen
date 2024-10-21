@@ -45,6 +45,7 @@ function loginSubmit() {
     } else {
         alert('Login Success');
         const randomPlayer=getRandomPlayer();
+        
         FS('trackEvent', {
             name: 'Login Success',
             properties: {
