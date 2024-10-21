@@ -30,37 +30,29 @@ function loginSubmit() {
     const event_properties = {};
     const randomNumber = Math.floor(Math.random() * 100) + 1;
     if (randomNumber < 34) {
-        alert('Registration Failure');
-        event_properties.Ref='REG-37';
-        event_properties.Outcome = 'failure';
+        alert('Login Failure');
         const errors = ['Duplicate_Account', 'System_Unavailable', 'Fraud', 'Network_Issue'];
         const randomErrorIndex = Math.floor(Math.random() * errors.length);
-        event_properties.Error = errors[randomErrorIndex];
-        event_properties['Domain'] = Domain;
-        event_properties['Action'] = 'outcome';
-        event_properties['Name'] = 'account';
-        event_properties['Method'] = 'backend';
+        
+        FS('trackEvent', {
+            name: 'Login Failure',
+            properties: {
+                error: errors[randomErrorIndex];    
+            }    
+        });
      
-
     } else {
-        alert('Registration Success');
-        event_properties.Ref='REG-35';
-        event_properties['Domain'] = Domain;
-        event_properties['Action'] = 'outcome';
-        event_properties['Name'] = 'account';
-        event_properties['Method'] = 'backend';
-        event_properties.Outcome = 'success';
+        alert('Login Success');
+
         const statuses = ['verified', 'unverified'];
         const randomStatusIndex = Math.floor(Math.random() * statuses.length);
-        event_properties.Status = statuses[randomStatusIndex];
-   
-
-        // Fake Backend record
-        const backend_properties = {};
-        backend_properties.Ref='REG-38';
-        backend_properties['Domain'] = Domain;
-        backend_properties['Method'] = 'backend';
-        backend_properties.Outcome = 'success';
+        FS('trackEvent', {
+            name: 'Login Success',
+            properties: {
+                status: statuses[randomStatusIndex];  
+                player: getRandomPlayer();
+            }    
+        });
        
     }
     window.location.href = "homepage.html" + window.location.search;
