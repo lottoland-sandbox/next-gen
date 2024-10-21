@@ -82,7 +82,11 @@ function loginSubmit() {
     window.location.href = "homepage.html" + window.location.search;
 }
 
-
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
 function registrationSubmit() {
    
