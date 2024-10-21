@@ -48,14 +48,24 @@ function loginSubmit() {
         FS('trackEvent', {
             name: 'Login Success',
             properties: {
-                randomPlayer,
+              playerName: randomPlayer['Player Name'],
+              accountStatus: randomPlayer['Account Status'],
+              verificationStatus: randomPlayer['Verification Status'],
+              playerNumber: randomPlayer['Player Number'],
+              playerTier: randomPlayer['Player Tier'],
+              balance: randomPlayer['Balance'],
             }
         });
 
         FS('setIdentity', {
           uid: randomPlayer['Player Number'],
           properties: {
-            randomPlayer,
+              playerName: randomPlayer['Player Name'],
+              accountStatus: randomPlayer['Account Status'],
+              verificationStatus: randomPlayer['Verification Status'],
+              playerNumber: randomPlayer['Player Number'],
+              playerTier: randomPlayer['Player Tier'],
+              balance: randomPlayer['Balance'],
           }
          });
          alert(randomPlayer['Player Name']);
