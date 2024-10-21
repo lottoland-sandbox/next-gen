@@ -49,14 +49,15 @@ function loginSubmit() {
             name: 'Login Success',
             properties: {
                 randomPlayer,
-            });
+            }
+        });
 
         FS('setIdentity', {
           uid: randomPlayer['Player Number'],
           properties: {
             randomPlayer,
           }
-});
+         });
       
     }
     window.location.href = "homepage.html" + window.location.search;
