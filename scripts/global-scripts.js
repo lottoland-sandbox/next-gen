@@ -26,7 +26,7 @@ function updateProgressBar(step) {
 
 function logout() {
   FS('setIdentity', { anonymous: true });
-}
+} 
 
 
 function loginSubmit() {
