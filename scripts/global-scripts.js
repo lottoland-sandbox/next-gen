@@ -38,15 +38,16 @@ function loginSubmit() {
         alert('Login | Failure');
         const errors = ['Duplicate_Account', 'System_Unavailable', 'Fraud', 'Network_Issue'];
         const randomErrorIndex = Math.floor(Math.random() * errors.length);
+        const randomError=errors[randomErrorIndex];
         
         FS('trackEvent', {
             name: 'Login Failure',
             properties: {
                 method: 'front-end',
-                error: errors[randomErrorIndex],    
+                error: randomError ,    
             }
         });
-        
+        alert( randomError);
      
     } else {
         alert('Login Success');
