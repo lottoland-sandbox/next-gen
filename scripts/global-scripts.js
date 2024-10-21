@@ -116,7 +116,7 @@ function registrationSubmit() {
         const utmDept = getCookie('dept');
         const utmDest = getCookie('dest');
         
-        
+         alert(utm_campaign);
         
          FS('setIdentity', {
           uid: randomPlayer['Player Number'],
@@ -143,7 +143,7 @@ function registrationSubmit() {
                 destination: utmDest,
             }
         });
-         alert(utm_campaign);
+        
     }
     window.location.href = "homepage.html" + window.location.search;
 }
