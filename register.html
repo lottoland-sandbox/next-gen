@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-   <title>Registration v3</title>
+   <title>Registration v5</title>
    <link rel="stylesheet" href="./styles/global-styles.css">
    <script src="./scripts/header-script.js" defer></script>   
    <script src="./scripts/utm-cookie-tracker.js" defer></script> 
@@ -31,9 +31,9 @@
         <div class="form-step active" id="step-1" data-analytics-category="step1">
             <h2>Step 1: Personal Information</h2>
             <label for="field.firstname">First Name:</label>
-            <input type="text" id="field.firstname" data-track-name="firstname" required>
+            <input type="text" id="field.firstname" data-analytics-name="firstname" required>
             <label for="field.lastname">Last Name:</label>
-            <input type="text" id="field.lastname" data-track-name="lastname"  required>
+            <input type="text" id="field.lastname" data-analytics-name="lastname"  required>
             <button id="button.step_1.next" type="button" onclick="nextStep(1)" data-track-name="next" >Next</button>
         </div>
       
@@ -42,7 +42,7 @@
             <label for="field.countryCode">Country Code:</label>
             <input type="text" id="field.countryCode" data-analytics-name="countryCode" required> 
             <label for="field.mobilePhone">Mobile Phone:</label>
-            <input type="text" id="field.mobilePhone" data-analytucs-name="mobilePhone" required>
+            <input type="text" id="field.mobilePhone" data-analytics-name="mobilePhone" required>
             <label for="field.dob">Date of Birth:</label>
             <input type="date" id="field.dob" data-analytics-name="dob" required>
             <button id="button.step_2.back" type="button" onclick="prevStep(2)" data-analytics-name="back"  >Back</button>
