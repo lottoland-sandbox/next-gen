@@ -131,7 +131,7 @@ function registrationSubmit() {
           }
          });
 
- alert(utmCampaign);
+ 
         
         FS('trackEvent', {
             name: 'Registration | Success',
@@ -145,8 +145,9 @@ function registrationSubmit() {
                 destination: utmDest,
             }
         });
-        
+        alert(utmCampaign);
     }
+    
     window.location.href = "homepage.html" + window.location.search;
 }
 
