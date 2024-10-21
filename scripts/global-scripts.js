@@ -43,15 +43,9 @@ function loginSubmit() {
      
     } else {
         alert('Login Success');
-
-        const statuses = ['verified', 'unverified'];
-        const randomStatusIndex = Math.floor(Math.random() * statuses.length);
         FS('trackEvent', {
             name: 'Login Success',
-            properties: {
-                status: statuses[randomStatusIndex];  
-                player: getRandomPlayer();
-            }    
+            player: getRandomPlayer();   
         });
        
     }
