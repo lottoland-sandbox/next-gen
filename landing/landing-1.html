@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing 1 v16</title>
+    <title>Landing 1 v17</title>
     <link rel="stylesheet" href="./styles/global-styles.css">
     <script src="./scripts/header-script.js" defer></script>
-    
-    <script>
-       
-
-        // Call the function when the page loads
-        window.onload = setUTMCookies;
-    </script>
-    
+    <script src="./scripts/utm-cookie-tracker.js"></script> 
 </head>
 <body>
+     <script>
+        // Call the function when the page loads
+        window.onload = UTMCookieTracker.setUTMCookies;
+    </script>
     <img src="../img/lottoland.png" alt="Logo" class="logo">
     <h2>Landing Page - 1 - Big Bass Bonanza</h2>
 
