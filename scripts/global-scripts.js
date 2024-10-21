@@ -105,6 +105,14 @@ function registrationSubmit() {
     } else {
         alert('Registration Success');
         const randomPlayer=getRandomPlayer();
+        const utmCampaign = getCookie('utm_campaign');
+        const utmSource = getCookie('utm_source');
+        const utmMedium = getCookie('utm_medium');
+        const utmTerm = getCookie('utm_term');
+        const utmDept = getCookie('dept');
+        const utmDest = getCookie('dest');
+        
+        
         
          FS('setIdentity', {
           uid: randomPlayer['Player Number'],
@@ -114,6 +122,7 @@ function registrationSubmit() {
               verificationStatus: randomPlayer['Verification Status'],
               playerNumber: randomPlayer['Player Number'],
               playerTier: randomPlayer['Player Tier'],
+           
         
           }
          });
@@ -122,6 +131,12 @@ function registrationSubmit() {
             name: 'Registration | Success',
             properties: {
                 method: 'front-end',
+                utm_campaign: utmCampaign,
+                utm_source: utmSource,
+                utm_medium: utmMedium,
+                utm_term: utmTerm,
+                deptartment: utmDept,
+                destination: utmDest,
             }
         });
          alert(randomPlayer['Player Name']);
