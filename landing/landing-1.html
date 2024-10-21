@@ -9,10 +9,7 @@
     <script src="./scripts/utm-cookie-tracker.js"></script> 
 </head>
 <body>
-     <script>
-        // Call the function when the page loads
-        window.onload = UTMCookieTracker.setUTMCookies;
-    </script>
+
     <img src="../img/lottoland.png" alt="Logo" class="logo">
     <h2>Landing Page - 1 - Big Bass Bonanza</h2>
 
@@ -48,7 +45,14 @@
             
         </div>    
     </div>
-</body>
+     <script>
+        // Call the UTM cookie function when the DOM is fully loaded
+        document.addEventListener("DOMContentLoaded", function() {
+            UTMCookieTracker.setUTMCookies();
+        });
+    </script>
     <script src="./scripts/global-scripts.js"></script>
+</body>
+    
  
 </html>
