@@ -46,19 +46,7 @@ function loginSubmit() {
         alert('Login Success');
         const randomPlayer=getRandomPlayer();
         
-        FS('trackEvent', {
-            name: 'Login | Success',
-            properties: {
-              playerName: randomPlayer['Player Name'],
-              accountStatus: randomPlayer['Account Status'],
-              verificationStatus: randomPlayer['Verification Status'],
-              playerNumber: randomPlayer['Player Number'],
-              playerTier: randomPlayer['Player Tier'],
-              balance: randomPlayer['Balance'],
-            }
-        });
-
-        FS('setIdentity', {
+         FS('setIdentity', {
           uid: randomPlayer['Player Number'],
           properties: {
               playerName: randomPlayer['Player Name'],
@@ -69,6 +57,12 @@ function loginSubmit() {
               balance: randomPlayer['Balance'],
           }
          });
+        
+        FS('trackEvent', {
+            name: 'Login | Success',
+        });
+
+       
          alert(randomPlayer['Player Name']);
     }
     window.location.href = "homepage.html" + window.location.search;
