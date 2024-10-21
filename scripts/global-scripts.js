@@ -39,8 +39,6 @@ function logout() {
 
 function loginSubmit() {
    
-    // Simulate form submission outcome
-    const event_properties = {};
     const randomNumber = Math.floor(Math.random() * 100) + 1;
     if (randomNumber < 34) {
         alert('Login Failure');
@@ -79,12 +77,65 @@ function loginSubmit() {
                 method: 'front-end',
             }
         });
-
-       
          alert(randomPlayer['Player Name']);
     }
     window.location.href = "homepage.html" + window.location.search;
 }
+
+
+
+function registrationSubmit() {
+   
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    if (randomNumber < 34) {
+        alert('Registration Failure');
+        const errors = ['Duplicate_Account', 'System_Unavailable', 'Out_of_state', 'Network_Issue'];
+        const randomErrorIndex = Math.floor(Math.random() * errors.length);
+        const randomError=errors[randomErrorIndex];
+        
+        FS('trackEvent', {
+            name: 'Registration | Failure',
+            properties: {
+                method: 'front-end',
+                error: randomError,
+            }
+        });
+        alert( randomError);
+     
+    } else {
+        alert('Registration Success');
+        const randomPlayer=getRandomPlayer();
+        
+         FS('setIdentity', {
+          uid: randomPlayer['Player Number'],
+          properties: {
+              playerName: randomPlayer['Player Name'],
+              accountStatus: randomPlayer['Account Status'],
+              verificationStatus: randomPlayer['Verification Status'],
+              playerNumber: randomPlayer['Player Number'],
+              playerTier: randomPlayer['Player Tier'],
+        
+          }
+         });
+        
+        FS('trackEvent', {
+            name: 'Registration | Success',
+            properties: {
+                method: 'front-end',
+            }
+        });
+         alert(randomPlayer['Player Name']);
+    }
+    window.location.href = "homepage.html" + window.location.search;
+}
+
+
+
+
+
+
+
+
 
 function redirectTo(url) {
     window.location.href = url + window.location.search;
