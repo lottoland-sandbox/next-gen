@@ -25,7 +25,7 @@ function updateProgressBar(step) {
 }
 
 function loginSubmit() {
-    alert('submitted');
+   
     // Simulate form submission outcome
     const event_properties = {};
     const randomNumber = Math.floor(Math.random() * 100) + 1;
