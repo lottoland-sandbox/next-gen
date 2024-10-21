@@ -36,16 +36,28 @@ function loginSubmit() {
         
         FS('trackEvent', {
             name: 'Login Failure',
-            error: errors[randomErrorIndex],         
+            properties: {
+                error: errors[randomErrorIndex],    
+            }
         });
       
      
     } else {
         alert('Login Success');
+        const randomPlayer=getRandomPlayer();
         FS('trackEvent', {
             name: 'Login Success',
-            player: getRandomPlayer(),
-        });
+            uid: randomPlayer['Player Number'],
+            properties: {
+                randomPlayer,
+            });
+
+        FS('setIdentity', {
+          uid: randomPlayer['Player Number'],
+          properties: {
+            randomPlayer,
+          }
+});
       
     }
     window.location.href = "homepage.html" + window.location.search;
