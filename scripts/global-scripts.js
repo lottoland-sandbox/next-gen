@@ -36,14 +36,14 @@ function loginSubmit() {
         
         FS('trackEvent', {
             name: 'Login Failure',
-            error: errors[randomErrorIndex];            
+            error: errors[randomErrorIndex],         
         });
      
     } else {
         alert('Login Success');
         FS('trackEvent', {
             name: 'Login Success',
-            player: getRandomPlayer();   
+            player: getRandomPlayer(),
         });
        
     }
