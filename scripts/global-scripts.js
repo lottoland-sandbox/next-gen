@@ -35,13 +35,13 @@ function loginSubmit() {
     const event_properties = {};
     const randomNumber = Math.floor(Math.random() * 100) + 1;
     if (randomNumber < 34) {
-        alert('Login | Failure');
+        alert('Login Failure');
         const errors = ['Duplicate_Account', 'System_Unavailable', 'Fraud', 'Network_Issue'];
         const randomErrorIndex = Math.floor(Math.random() * errors.length);
         const randomError=errors[randomErrorIndex];
         
         FS('trackEvent', {
-            name: 'Login Failure',
+            name: 'Login | Failure',
             properties: {
                 method: 'front-end',
                 error: randomError ,    
