@@ -163,10 +163,7 @@ function redirectTo(url) {
     window.location.href = url + window.location.search;
 }
  
-document.getElementById('resetForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
-    document.getElementById('popup').style.display = 'block'; 
-});
+
 
 document.getElementById('closePopup').addEventListener('click', function() {
     document.getElementById('popup').style.display = 'none';
