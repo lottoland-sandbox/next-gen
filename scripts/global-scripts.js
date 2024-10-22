@@ -148,7 +148,7 @@ function registrationSubmit() {
         alert(utmCampaign);
     }
     
-    window.location.href = "homepage.html" + window.location.search;
+    //window.location.href = "homepage.html" + window.location.search;
 }
 
 
