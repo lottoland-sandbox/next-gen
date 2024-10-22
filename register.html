@@ -1,7 +1,7 @@
 =<!DOCTYPE html>
 <html>
 <head> 
-   <title>Registration v8</title>
+   <title>Registration v9</title>
    <link rel="stylesheet" href="./styles/global-styles.css">
    <script src="./scripts/header-script.js" defer></script>   
    <script src="./scripts/utm-cookie-tracker.js" defer></script> 
@@ -31,18 +31,18 @@
         <div class="form-step active" id="step-1" data-analytics-category="step1">
             <h2>Step 1: Personal Information</h2>
             <label for="field.firstname">First Name:</label>
-            <input type="text" id="field.firstname" name="firstname" data-analytics-name="firstname" required>
+            <input type="text" id="field.firstname" name="firstname" data-analytics-name="firstname" >
             <label for="field.lastname">Last Name:</label>
-            <input type="text" id="field.lastname" name="lastname" data-analytics-name="lastname"  required>
+            <input type="text" id="field.lastname" name="lastname" data-analytics-name="lastname" >
             <button id="button.step_1.next" type="button" onclick="nextStep(1)" data-track-name="next" >Next</button>
         </div>
       
          <div class="form-step" id="step-2" data-analytics-catgory="step2">
             <h2>Step 2: Personal Information</h2>
             <label for="field.countryCode">Country Code:</label>
-            <input type="text" id="field.countryCode" name="countryCode" data-analytics-name="countryCode" required> 
+            <input type="text" id="field.countryCode" name="countryCode" data-analytics-name="countryCode" > 
             <label for="field.mobilePhone">Mobile Phone:</label>
-            <input type="text" id="field.mobilePhone" name="mobilePhone" data-analytics-name="mobilePhone" required>
+            <input type="text" id="field.mobilePhone" name="mobilePhone" data-analytics-name="mobilePhone" >
             <label for="field.dob">Date of Birth:</label>
             <input type="date" id="field.dob" name="dob" data-analytics-name="dob" required>
             <button id="button.step_2.back" type="button" onclick="prevStep(2)" data-analytics-name="back"  >Back</button>
@@ -52,21 +52,21 @@
         <div class="form-step" id="step-3" data-analytics-catgeory="step3">
             <h2>Step 3: Address Information</h2>
             <label for="field.autoCompleteAddress">Address:</label>
-            <input type="text" id="field.address" name="autoCompleteAddress" data-analytics-name="autoCompleteAddress" required>
+            <input type="text" id="field.address" name="autoCompleteAddress" data-analytics-name="autoCompleteAddress" >
             <label for="field.streetNo">Number:</label>
-            <input type="text" id="field.streetNo" name="streetNo" data-analytics-name="streetNo"   required>
+            <input type="text" id="field.streetNo" name="streetNo" data-analytics-name="streetNo"   >
             <label for="field.streetName">Street Name:</label>
-            <input type="text" id="field.streetName" name=""streetName" data-analytics-name="streetName" required>
+            <input type="text" id="field.streetName" name="streetName" data-analytics-name="streetName" >
             <label for="field.additionalInfo">Additional:</label>
-            <input type="text" id="field.additionalInfo" name="additionalInfo" data-analytics-name="additionalInfo" required>
+            <input type="text" id="field.additionalInfo" name="additionalInfo" data-analytics-name="additionalInfo" >
             <label for="field.city">City:</label>
-            <input type="text" id="field.city" name="city" data-analytics-name="city" required>
+            <input type="text" id="field.city" name="city" data-analytics-name="city" >
             <label for="field.postcode">Zip Code:</label>
-            <input type="text" id="field.postcode" name="postcode" data-analytics-name="postcode" required>
+            <input type="text" id="field.postcode" name="postcode" data-analytics-name="postcode" >
             <label for="field.state">State:</label>
-            <input type="text" id="field.state" name="state" data-analytics-name="state" required>
+            <input type="text" id="field.state" name="state" data-analytics-name="state" >
             <label for="field.country">Country:</label>
-            <input type="text" id="field.country" name="country" data-analytics-name="country"  required>
+            <input type="text" id="field.country" name="country" data-analytics-name="country"  >
             <button id="button.step_3.back" type="button" onclick="prevStep(3)" data-analytics-name="back" >Back</button>
             <button id="button.step_3.next" type="button" onclick="nextStep(3)" data-analytics-name="next" >Next</button>
         </div>
@@ -74,9 +74,9 @@
         <div class="form-step" id="step-4" data-analytics-category="step4">
             <h2>Step 4: Credentials</h2>
             <label for="field.email">Email:</label>
-            <input type="email" id="field.email" name="email" data-analytics-name="email" required>
+            <input type="email" id="field.email" name="email" data-analytics-name="email" >
             <label for="field.password">Password:</label>
-            <input type="password" id="field.password" name="password" data-analytics-name="password" required>
+            <input type="password" id="field.password" name="password" data-analytics-name="password" >
       
             <a id="link.facebook" class="page-link" href="#"  data-analytics-name="termsAndConditions" >Terms and Conditions</a>
             <a id="link.twitter" class="page-link" href="#"  data-analytics-name="privacyPolicy" >Privacy Policy</a>
