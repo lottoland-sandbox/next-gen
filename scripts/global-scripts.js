@@ -181,7 +181,7 @@ function payinFTD() {
                 
             }
         });
-        alert('Payin FTD Success');
+        alert("Payin FTD Success");
     }
 
 function payinSD() {
@@ -195,7 +195,7 @@ function payinSD() {
                 
             }
         });
-        alert('Payin FTD Success');
+        alert("Payin FTD Success");
     }
 
        
