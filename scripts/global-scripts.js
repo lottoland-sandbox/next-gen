@@ -170,6 +170,33 @@ document.getElementById('closePopup').addEventListener('click', function() {
 });
 
 
+function payinFTD() {
+ FS('trackEvent', {
+            name: 'Payin | Success',
+            properties: {
+                method: 'front-end',
+                amount: '10.00',
+                instrument: 'visa',
+                type: 'ftd',
+                
+            }
+        });
+        alert('Payin FTD Success');
+    }
+
+function payinSD() {
+ FS('trackEvent', {
+            name: 'Payin | Success',
+            properties: {
+                method: 'front-end',
+                amount: '10.00',
+                instrument: 'mastercard',
+                type: 'sd',
+                
+            }
+        });
+        alert('Payin FTD Success');
+    }
 
        
 
