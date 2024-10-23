@@ -68,6 +68,13 @@ function loginSubmit() {
               playerNumber: randomPlayer['Player Number'],
               playerTier: randomPlayer['Player Tier'],
               balance: randomPlayer['Balance'],
+              utm_campaign: randomPlayer['utm_campaign'],
+              utm_source: randomPlayer['utm_source'],
+              utm_medium: randomPlayer['utm_medium'],
+              utm_term: randomPlayer['utm_term'],
+              department: randomPlayer['department'],
+              destination: randomPlayer['destination'],
+              
           }
          });
         
@@ -126,7 +133,12 @@ function registrationSubmit() {
               verificationStatus: randomPlayer['Verification Status'],
               playerNumber: randomPlayer['Player Number'],
               playerTier: randomPlayer['Player Tier'],
-           
+              utm_campaign: utmCampaign,
+              utm_source: utmSource,
+              utm_medium: utmMedium,
+              utm_term: utmTerm,
+              department: utmDept,
+              destination: utmDest,
         
           }
          });
