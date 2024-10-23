@@ -175,7 +175,7 @@ function payinFTD() {
             name: 'Payin | Success',
             properties: {
                 method: 'front-end',
-                amount: '10.00',
+                amount: 10.00,
                 instrument: 'visa',
                 type: 'ftd',
                 
@@ -189,7 +189,7 @@ function payinSD() {
             name: 'Payin | Success',
             properties: {
                 method: 'front-end',
-                amount: '10.00',
+                amount: 10.00,
                 instrument: 'mastercard',
                 type: 'sd',
                 
