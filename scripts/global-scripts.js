@@ -171,31 +171,44 @@ document.getElementById('closePopup').addEventListener('click', function() {
 
 
 function payinFTD() {
- FS('trackEvent', {
-            name: 'Payin | Success',
-            properties: {
-                method: 'front-end',
-                amount: 10.00,
-                instrument: 'visa',
-                type: 'ftd',
-                
-            }
-        });
-        alert("Payin FTD Success");
-    }
+    // Define valid denominations
+    const denominations = [ 5, 10, 20, 25, 50, 75, 100];
+
+    // Choose a random denomination from the array
+    const randomIndex = Math.floor(Math.random() * denominations.length);
+    const amount = denominations[randomIndex];
+
+    FS('trackEvent', {
+        name: 'Payin | Success',
+        properties: {
+            method: 'front-end',
+            amount: amount,
+            instrument: 'visa',
+            type: 'ftd',
+        }
+    });
+    alert("Payin FTD Success with amount: " + amount);
+}
 
 function payinSD() {
+ // Define valid denominations
+    const denominations = [ 5, 10, 20, 25, 50, 75, 100];
+
+    // Choose a random denomination from the array
+    const randomIndex = Math.floor(Math.random() * denominations.length);
+    const amount = denominations[randomIndex];
+    
  FS('trackEvent', {
             name: 'Payin | Success',
             properties: {
                 method: 'front-end',
-                amount: 10.00,
+                amount: amount,
                 instrument: 'mastercard',
                 type: 'sd',
                 
             }
         });
-        alert("Payin SD Success");
+        alert("Payin SD Success with amount: " + amount);
     }
 
        
