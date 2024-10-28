@@ -82,6 +82,7 @@ function loginSubmit() {
 
         // Amplitude - Identity ****
         const identifyEvent = new amplitude.Identify();
+        identifyEvent.set('User ID', randomPlayer['Player Number']);
         identifyEvent.set('playerName', randomPlayer['Player Name']);
         identifyEvent.set('accountStatus', randomPlayer['Account Status']);
         identifyEvent.set('verificationStatus', randomPlayer['Verification Status']);
