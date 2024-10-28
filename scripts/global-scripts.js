@@ -58,7 +58,8 @@ function loginSubmit() {
     } else {
         alert('Login Success');
         const randomPlayer=getRandomPlayer();
-        
+
+         // Full Story - Identity ****
          FS('setIdentity', {
           uid: randomPlayer['Player Number'],
           properties: {
@@ -77,13 +78,38 @@ function loginSubmit() {
               
           }
          });
-        
+
+        // Amplitude - Identity ****
+        const identifyEvent = new amplitude.Identify();
+        identifyEvent.set('playerName', randomPlayer['Player Name');
+        identifyEvent.set('accountStatus', randomPlayer['Account Status');
+        identifyEvent.set('verificationStatus', randomPlayer['Verification Status');
+        identifyEvent.set('playerNumber', randomPlayer['Player Number');
+        identifyEvent.set('playerTier', randomPlayer['Player Tier');
+        identifyEvent.set('balance', randomPlayer['Balance');
+        identifyEvent.set('utm_campaign', randomPlayer['utm_campaign');
+        identifyEvent.set('utm_source', randomPlayer['utm_source');
+        identifyEvent.set('utm_media', randomPlayer['utm_media');
+        identifyEvent.set('utm_term', randomPlayer['utm_term');
+        identifyEvent.set('department', randomPlayer['department');
+        identifyEvent.set('destination', randomPlayer['destination');        
+        amplitude.identify(identifyEvent);
+
+        // Full Story - Login | Success Event ****
         FS('trackEvent', {
             name: 'Login | Success',
             properties: {
                 method: 'front-end',
             }
         });
+
+        // Amplitude - Login | Success ****
+        const eventProperties = {
+           method: 'front-end',
+        };
+        amplitude.track('Login | Success', eventProperties);
+
+        
          alert(randomPlayer['Player Name']);
     }
     window.location.href = "homepage.html" + window.location.search;
@@ -124,7 +150,7 @@ function registrationSubmit() {
         const utmDest = getCookie('dest');
         
         
-        
+        // Full Story Identity
          FS('setIdentity', {
           uid: randomPlayer['Player Number'],
           properties: {
