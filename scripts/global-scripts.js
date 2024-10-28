@@ -41,11 +41,12 @@ function loginSubmit() {
    
     const randomNumber = Math.floor(Math.random() * 100) + 1;
     if (randomNumber < 34) {
-        alert('Login Failure');
+        
         const errors = ['Closed','Gamstop_Ban','Self_Ban', 'System_Unavailable', 'Fraud', 'Network_Issue'];
         const randomErrorIndex = Math.floor(Math.random() * errors.length);
         const randomError=errors[randomErrorIndex];
-        
+
+        // Full Story - Login | Failure ****
         FS('trackEvent', {
             name: 'Login | Failure',
             properties: {
@@ -60,10 +61,8 @@ function loginSubmit() {
            error: randomError, 
         };
         amplitude.track('Login | Failure', eventProperties);
-
-
         
-        alert( randomError);
+        alert( 'Login Failure '+randomError);
      
     } else {
         
