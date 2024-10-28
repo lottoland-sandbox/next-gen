@@ -53,6 +53,16 @@ function loginSubmit() {
                 error: randomError,
             }
         });
+
+        // Amplitude - Login | Failure ****
+        const eventProperties = {
+           method: 'front-end',
+           error: randomError, 
+        };
+        amplitude.track('Login | Failure', eventProperties);
+
+
+        
         alert( randomError);
      
     } else {
