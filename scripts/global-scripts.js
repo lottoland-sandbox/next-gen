@@ -264,7 +264,7 @@ document.getElementById('closePopup').addEventListener('click', function() {
 function payinFTD() {
 
     
-    const instruments = ['visa', 'mastercard', 'paypal', 'Neteller'];
+    const instruments = ['visa', 'mastercard', 'paypal', 'neteller'];
     const randomIndexInst = Math.floor(Math.random() * instruments.length);
     const instrument= instruments[randomIndexInst];
 
@@ -298,7 +298,7 @@ function payinFTD() {
 }
 
 function payinSD() {
-    const instruments = ['visa', 'mastercard', 'paypal', 'Neteller'];
+    const instruments = ['visa', 'mastercard', 'paypal', 'neteller'];
     const randomIndexInst = Math.floor(Math.random() * instruments.length);
     const instrument= instruments[randomIndexInst];
 
