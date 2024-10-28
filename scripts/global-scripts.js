@@ -42,7 +42,7 @@ function loginSubmit() {
     const randomNumber = Math.floor(Math.random() * 100) + 1;
     if (randomNumber < 34) {
         alert('Login Failure');
-        const errors = ['Duplicate_Account', 'System_Unavailable', 'Fraud', 'Network_Issue'];
+        const errors = ['Closed','Gamstop_Ban','Self_Ban', 'System_Unavailable', 'Fraud', 'Network_Issue'];
         const randomErrorIndex = Math.floor(Math.random() * errors.length);
         const randomError=errors[randomErrorIndex];
         
