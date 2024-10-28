@@ -27,6 +27,30 @@ g.log=function(b,d){h("log",{level:b,msg:d})},g.consent=function(b){h("setIdenti
 f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){return g._w[s].apply(this,arguments)}),g._v="2.0.0")
 }(window,document,window._fs_namespace,"script",window._fs_script);
 </script>
+
+<script src="https://cdn.amplitude.com/libs/analytics-browser-2.11.7-min.js.gz"></script>
+<script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.4.0-min.js.gz"></script>
+<script>
+  
+  window.amplitude.init("3424f256a73bbb756e9d4ef8000ea179", {
+     autocapture: {
+    attribution: true,
+    pageViews: true,
+    sessions: true,
+    fileDownload: false,
+    formInteractions: true,
+    elementInteractions: true
+  },
+  });
+
+const sessionReplayTracking = window.sessionReplay.plugin({sampleRate: 1});
+window.amplitude.add(sessionReplayTracking);
+ 
+</script>
+   
+
+   
+   
 </head>
 <body>
 
