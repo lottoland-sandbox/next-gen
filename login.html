@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login v16</title>
+    <title>Login v17</title>
     <link rel="stylesheet" href="./styles/global-styles.css">
     <script src="./scripts/header-script.js" defer></script>
     <script>
@@ -29,6 +29,14 @@ g.log=function(b,d){h("log",{level:b,msg:d})},g.consent=function(b){h("setIdenti
 f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){return g._w[s].apply(this,arguments)}),g._v="2.0.0")
 }(window,document,window._fs_namespace,"script",window._fs_script);
 </script>
+
+<script src="https://cdn.amplitude.com/libs/analytics-browser-2.11.7-min.js.gz"></script>
+<script>
+  window.amplitude.init("3424f256a73bbb756e9d4ef8000ea179", {
+      autocapture: { elementInteractions: true }
+  });
+</script>
+    
 </head>
 
 <body>
