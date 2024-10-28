@@ -31,8 +31,21 @@ function logout() {
             method: 'front-end',    
         }
      });
+
+      // Amplitude - Logout | Success ****
+        const eventProperties = {
+           method: 'front-end',
+    
+        };
+        amplitude.track('Logout | Success', eventProperties);
     
     FS('setIdentity', { anonymous: true });
+
+    amplitude.setUserId(null); // Set user ID to null
+    amplitude.regenerateDeviceId(); // Generate a new device ID
+    
+
+    
     alert('Logged out');
 } 
 
@@ -61,6 +74,7 @@ function loginSubmit() {
            error: randomError, 
         };
         amplitude.track('Login | Failure', eventProperties);
+
         
         alert( 'Login Failure '+randomError);
      
