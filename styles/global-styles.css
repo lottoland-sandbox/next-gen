@@ -183,6 +183,11 @@ h2 {
         padding: 5px 10px;
     }
 
+.promotion {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+}
 
 .popup {
     display: none; /* Hidden by default */
