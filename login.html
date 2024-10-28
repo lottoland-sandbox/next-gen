@@ -35,8 +35,19 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 <script>
   
   window.amplitude.init("3424f256a73bbb756e9d4ef8000ea179", {
-      autocapture: { elementInteractions: true }
+     autocapture: {
+    attribution: true,
+    pageViews: true,
+    sessions: true,
+    fileDownload: false,
+    formInteractions: true,
+    elementInteractions: true
+  },
   });
+
+const sessionReplayTracking = window.sessionReplay.plugin({sampleRate: 1});
+window.amplitude.add(sessionReplayTracking);
+ 
 </script>
 
 
