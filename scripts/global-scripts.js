@@ -42,7 +42,6 @@ function logout() {
     FS('setIdentity', { anonymous: true });
 
     amplitude.setUserId(null); // Set user ID to null
-    amplitude.regenerateDeviceId(); // Generate a new device ID
     
 
     
