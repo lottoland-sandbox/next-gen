@@ -78,6 +78,7 @@ function loginSubmit() {
               
           }
          });
+         alert('Full Story Identity');
 
         // Amplitude - Identity ****
         const identifyEvent = new amplitude.Identify();
@@ -94,6 +95,8 @@ function loginSubmit() {
         identifyEvent.set('department', randomPlayer['department');
         identifyEvent.set('destination', randomPlayer['destination');        
         amplitude.identify(identifyEvent);
+        alert('Amplitude Identity');
+        
 
         // Full Story - Login | Success Event ****
         FS('trackEvent', {
@@ -102,12 +105,14 @@ function loginSubmit() {
                 method: 'front-end',
             }
         });
+        alert('FS - Login Event');
 
         // Amplitude - Login | Success ****
         const eventProperties = {
            method: 'front-end',
         };
         amplitude.track('Login | Success', eventProperties);
+        alert('Amplitude - Login Event');
 
         
          alert(randomPlayer['Player Name']);
