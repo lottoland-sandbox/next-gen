@@ -262,10 +262,14 @@ document.getElementById('closePopup').addEventListener('click', function() {
 
 
 function payinFTD() {
-    // Define valid denominations
-    const denominations = [ 5, 10, 20, 25, 50, 75, 100];
 
-    // Choose a random denomination from the array
+    
+    const instruments = ['visa', 'mastercard', 'paypal', 'Neteller'];
+    const randomIndexInst = Math.floor(Math.random() * instruments.length);
+    const instrument= instruments[randomIndexInst];
+
+   
+    const denominations = [ 5, 10, 20, 25, 50, 75, 100];
     const randomIndex = Math.floor(Math.random() * denominations.length);
     const amount = denominations[randomIndex];
 
@@ -274,18 +278,32 @@ function payinFTD() {
         properties: {
             method: 'front-end',
             amount: amount,
-            instrument: 'visa',
+            instrument: instrument,
             type: 'ftd',
         }
     });
-    alert("Payin FTD Success with amount: " + amount);
+
+        // Amplitude - FTD | Success ****
+        const eventProperties = {
+          method: 'front-end',
+            amount: amount,
+            instrument: instrument,
+            type: 'ftd',
+        };
+        amplitude.track('Payin | Success', eventProperties);
+
+
+    
+    alert("Payin FTD Success with amount: " + amount +" "+instrument);
 }
 
 function payinSD() {
- // Define valid denominations
-    const denominations = [ 5, 10, 20, 25, 50, 75, 100];
+    const instruments = ['visa', 'mastercard', 'paypal', 'Neteller'];
+    const randomIndexInst = Math.floor(Math.random() * instruments.length);
+    const instrument= instruments[randomIndexInst];
 
-    // Choose a random denomination from the array
+   
+    const denominations = [ 5, 10, 20, 25, 50, 75, 100];
     const randomIndex = Math.floor(Math.random() * denominations.length);
     const amount = denominations[randomIndex];
     
@@ -294,12 +312,23 @@ function payinSD() {
             properties: {
                 method: 'front-end',
                 amount: amount,
-                instrument: 'mastercard',
+                instrument: instrument,
                 type: 'sd',
                 
             }
         });
-        alert("Payin SD Success with amount: " + amount);
+
+
+   // Amplitude - FTD | Success ****
+        const eventProperties = {
+          method: 'front-end',
+            amount: amount,
+            instrument: instrument,
+            type: 'sd',
+        };
+        amplitude.track('Payin | Success', eventProperties);
+    
+        alert("Payin SD Success with amount: " + amount +" "+instrument);
     }
 
        
