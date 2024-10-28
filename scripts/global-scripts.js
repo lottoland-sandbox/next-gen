@@ -66,7 +66,7 @@ function loginSubmit() {
         alert( randomError);
      
     } else {
-        alert('Login Success');
+        
         const randomPlayer=getRandomPlayer();
 
          // Full Story - Identity ****
@@ -125,7 +125,7 @@ function loginSubmit() {
       
 
         
-         alert(randomPlayer['Player Name']);
+         alert('Login Success - ' + randomPlayer['Player Name']);
     }
     window.location.href = "homepage.html" + window.location.search;
 }
