@@ -7,7 +7,9 @@
     <title>Recovery - Reset v5</title>
     <link rel="stylesheet" href="./styles/global-styles.css">
     <script src="./scripts/header-script.js" defer></script>
-    <script>
+    
+<!-- FULL STORY -->       
+<script>
 window['_fs_host'] = 'fullstory.com';
 window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
 window['_fs_org'] = 'o-21MNYV-na1';
@@ -29,6 +31,27 @@ g.log=function(b,d){h("log",{level:b,msg:d})},g.consent=function(b){h("setIdenti
 f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){return g._w[s].apply(this,arguments)}),g._v="2.0.0")
 }(window,document,window._fs_namespace,"script",window._fs_script);
 </script>
+
+<!-- AMPLITUDE -->       
+<script src="https://cdn.amplitude.com/libs/analytics-browser-2.11.7-min.js.gz"></script>
+<script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.4.0-min.js.gz"></script>
+<script>
+  window.amplitude.init("3424f256a73bbb756e9d4ef8000ea179", {
+     autocapture: {
+    attribution: true,
+    pageViews: true,
+    sessions: true,
+    fileDownload: false,
+    formInteractions: true,
+    elementInteractions: true
+  },
+  });
+const sessionReplayTracking = window.sessionReplay.plugin({sampleRate: 1});
+window.amplitude.add(sessionReplayTracking);
+</script>
+<script type="text/javascript" src="https://cdn.amplitude.com/script/3424f256a73bbb756e9d4ef8000ea179.experiment.js"></script>
+   
+    
 </head>
 
 <body>
