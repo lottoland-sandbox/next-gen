@@ -249,7 +249,7 @@ function registrationSubmit() {
       
 
         
-        alert(utmCampaign);
+       alert(utmCampaign || "Campaign is not defined.");
     }
     
     window.location.href = "homepage.html" + window.location.search;
