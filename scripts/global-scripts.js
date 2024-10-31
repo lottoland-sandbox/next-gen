@@ -248,8 +248,13 @@ function registrationSubmit() {
         amplitude.track('Registration | Success', eventProperties);
       
 
-        
-       alert(utmCampaign || "Campaign is not defined.");
+      try {
+    alert(utmCampaign || "Campaign is not defined.");
+} catch (e) {
+    alert("Campaign is not defined.");
+}
+ 
+      
     }
     
     window.location.href = "homepage.html" + window.location.search;
