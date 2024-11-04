@@ -118,7 +118,7 @@ function loginSubmit() {
         identifyEvent.set('department', randomPlayer['department']);
         identifyEvent.set('destination', randomPlayer['destination']);        
         amplitude.identify(identifyEvent);
-        amplitude.getInstance().setUserId(randomPlayer['Player Number']);
+       
         
 
         // Full Story - Login | Success Event ****
