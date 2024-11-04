@@ -34,23 +34,24 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 
 <!-- AMPLITUDE -->       
 <script src="https://cdn.amplitude.com/libs/analytics-browser-2.11.7-min.js.gz"></script>
-<script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.4.0-min.js.gz"></script>
+<script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.8.1-min.js.gz"></script>
 <script>
   window.amplitude.init("3424f256a73bbb756e9d4ef8000ea179", {
-     autocapture: {
-    attribution: true,
-    pageViews: true,
-    sessions: true,
-    fileDownload: false,
-    formInteractions: true,
-    elementInteractions: true
-  },
+    autocapture: {
+      attribution: true,
+      pageViews: true,
+      sessions: true,
+      fileDownload: false,
+      formInteractions: true,
+      elementInteractions: true
+    },
   });
-const sessionReplayTracking = window.sessionReplay.plugin({sampleRate: 1});
-window.amplitude.add(sessionReplayTracking);
+  const sessionReplayTracking = window.sessionReplay.plugin({sampleRate: 0.1}); // 10% sample rate
+  window.amplitude.add(sessionReplayTracking).promise.then(() => {
+    console.log("Session Replay plugin added successfully");
+  });
 </script>
 <script type="text/javascript" src="https://cdn.amplitude.com/script/3424f256a73bbb756e9d4ef8000ea179.experiment.js"></script>
-   
     
 </head>
 
