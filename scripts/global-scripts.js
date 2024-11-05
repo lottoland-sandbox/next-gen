@@ -375,5 +375,7 @@ function addToCart(product) {
     amplitude.track('Cart | Added', eventProperties);    
 }
 
-
+function checkout() {
+    alert('Checked Out');
+}
 
