@@ -373,6 +373,14 @@ function addToCart(product) {
         
     };
     amplitude.track('Cart | Added', eventProperties);    
+
+
+  const productsDiv = document.getElementById("products");
+  const description = document.createElement("p");
+  description.textContent = product;
+  productsDiv.appendChild(description);
+
+    
 }
 
 function checkout() {
