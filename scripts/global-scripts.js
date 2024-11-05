@@ -356,7 +356,23 @@ function payinSD() {
 
 function addToCart(product) {
     console.log("Clicked product:", product);
-    // Your custom logic here
+    // FULLSTORY TRACKING
+    FS('trackEvent', {
+            name: 'Cart | Added',
+            properties: {
+                genre: 'Lottery',
+                product: product,
+                
+            }
+        });
+    
+    //AMPLITUDE TRACKING
+    const eventProperties = {
+          genre: 'Lottery',
+          product: product,
+        
+    };
+    amplitude.track('Cart | Added', eventProperties);    
 }
 
 
