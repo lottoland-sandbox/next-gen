@@ -353,3 +353,12 @@ function payinSD() {
 
        
 
+
+function addToCart(product) {
+    console.log("Clicked product:", product);
+    // Your custom logic here
+}
+
+
+
+
