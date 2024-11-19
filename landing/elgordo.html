@@ -47,7 +47,7 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       elementInteractions: true
     },
   });
-  const sessionReplayTracking = window.sessionReplay.plugin({sampleRate: 0.1}); // 10% sample rate
+const sessionReplayTracking = window.sessionReplay.plugin({sampleRate: 1}); // 100% sample rate
   window.amplitude.add(sessionReplayTracking).promise.then(() => {
     console.log("Session Replay plugin added successfully");
   });
