@@ -41,7 +41,7 @@ function logout() {
     
     FS('setIdentity', { anonymous: true });
 
-    amplitude.setUserId(null); // Set user ID to null
+ 
     
 
     
@@ -67,13 +67,7 @@ function loginSubmit() {
             }
         });
 
-        // Amplitude - Login | Failure ****
-        const eventProperties = {
-           method: 'front-end',
-           error: randomError, 
-        };
-        amplitude.track('Login | Failure', eventProperties);
-
+ 
         
         alert( 'Login Failure '+randomError);
      
@@ -102,22 +96,6 @@ function loginSubmit() {
          });
        
 
-        // Amplitude - Identity ****
-        const identifyEvent = new amplitude.Identify();
-        identifyEvent.set('User ID', randomPlayer['Player Number']);
-        identifyEvent.set('playerName', randomPlayer['Player Name']);
-        identifyEvent.set('accountStatus', randomPlayer['Account Status']);
-        identifyEvent.set('verificationStatus', randomPlayer['Verification Status']);
-        identifyEvent.set('playerNumber', randomPlayer['Player Number']);
-        identifyEvent.set('playerTier', randomPlayer['Player Tier']);
-        identifyEvent.set('balance', randomPlayer['Balance']);
-        identifyEvent.set('utm_campaign', randomPlayer['utm_campaign']);
-        identifyEvent.set('utm_source', randomPlayer['utm_source']);
-        identifyEvent.set('utm_media', randomPlayer['utm_media']);
-        identifyEvent.set('utm_term', randomPlayer['utm_term']);
-        identifyEvent.set('department', randomPlayer['department']);
-        identifyEvent.set('destination', randomPlayer['destination']);        
-        amplitude.identify(identifyEvent);
        
         
 
@@ -130,12 +108,7 @@ function loginSubmit() {
         });
     
 
-        // Amplitude - Login | Success ****
-        const eventProperties = {
-           method: 'front-end',
-        };
-        amplitude.track('Login | Success', eventProperties);
-      
+ 
 
         
          alert('Login Success - ' + randomPlayer['Player Name']);
@@ -167,13 +140,7 @@ function registrationSubmit() {
         });
         alert( randomError);
 
-         // Amplitude - Registration | Failure ****
-        const eventProperties = {
-           method: 'front-end',
-           error: randomError, 
-        };
-        amplitude.track('Registration | Failure', eventProperties);
-     
+      
     } else {
         alert('Registration Success');
         const randomPlayer=getRandomPlayer();
@@ -204,22 +171,7 @@ function registrationSubmit() {
           }
          });
 
-        // Amplitude - Identity ****
-        const identifyEvent = new amplitude.Identify();
-        identifyEvent.set('User ID', randomPlayer['Player Number']);
-        identifyEvent.set('playerName', randomPlayer['Player Name']);
-        identifyEvent.set('accountStatus', randomPlayer['Account Status']);
-        identifyEvent.set('verificationStatus', randomPlayer['Verification Status']);
-        identifyEvent.set('playerNumber', randomPlayer['Player Number']);
-        identifyEvent.set('playerTier', randomPlayer['Player Tier']);
-        identifyEvent.set('balance', randomPlayer['Balance']);
-        identifyEvent.set('utm_campaign', randomPlayer['utm_campaign']);
-        identifyEvent.set('utm_source', randomPlayer['utm_source']);
-        identifyEvent.set('utm_media', randomPlayer['utm_media']);
-        identifyEvent.set('utm_term', randomPlayer['utm_term']);
-        identifyEvent.set('department', randomPlayer['department']);
-        identifyEvent.set('destination', randomPlayer['destination']);        
-        amplitude.identify(identifyEvent);
+
         
         
  
@@ -237,17 +189,7 @@ function registrationSubmit() {
             }
         });
 
-         // Amplitude - Registration | Success ****
-        const eventProperties = {
-           method: 'front-end',
-           utm_campaign: utmCampaign,
-           utm_source: utmSource,
-           utm_medium: utmMedium,
-           utm_term: utmTerm,
-           department: utmDept,
-           destination: utmDest,
-        };
-        amplitude.track('Registration | Success', eventProperties);
+       
       
 
       try {
@@ -303,14 +245,7 @@ function payinFTD() {
         }
     });
 
-        // Amplitude - FTD | Success ****
-        const eventProperties = {
-          method: 'front-end',
-            amount: amount,
-            instrument: instrument,
-            type: 'ftd',
-        };
-        amplitude.track('Payin | Success', eventProperties);
+   
 
 
     
@@ -339,17 +274,7 @@ function payinSD() {
         });
 
 
-   // Amplitude - FTD | Success ****
-        const eventProperties = {
-          method: 'front-end',
-            amount: amount,
-            instrument: instrument,
-            type: 'sd',
-        };
-        amplitude.track('Payin | Success', eventProperties);
-    
-        alert("Payin SD Success with amount: " + amount +" "+instrument);
-    }
+
 
        
 
@@ -366,13 +291,7 @@ function addToCart(product) {
             }
         });
     
-    //AMPLITUDE TRACKING
-    const eventProperties = {
-          genre: 'Lottery',
-          product: product,
-        
-    };
-    amplitude.track('Cart | Added', eventProperties);    
+    
 
 
   const productsDiv = document.getElementById("products");
