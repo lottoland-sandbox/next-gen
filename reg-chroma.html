@@ -92,22 +92,24 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
             <input type="text" id="field.firstname" name="firstname" data-track-name="firstname" data-track-privacy="mask" >
             <label for="field.lastname">Last Name:</label>
             <input type="text" id="field.lastname" name="lastname" data-track-name="lastname" data-track-privacy="mask" >
-          <span data-track-name="progression">
+          <span data-track-container="progression">
             <button id="button.step_1.next" type="button" onclick="nextStep(1)" data-track-name="container" >Continue</button>
             <a id="link.login" class="header-link" href="login.html"  data-track-name="login" >Log In</a>
           </span>
         </div>
       
-         <div class="form-step" id="step-2" data-analytics-category="step2">
+         <div class="form-step" id="step-2" data-track-container="step2">
             <h2>Step 2: Personal Information</h2>
             <label for="field.countryCode">Country Code:</label>
-            <input type="text" id="field.countryCode" name="countryCode" data-analytics-name="countryCode" > 
+            <input type="text" id="field.countryCode" name="countryCode" data-track-name="countryCode" > 
             <label for="field.mobilePhone">Mobile Phone:</label>
-            <input type="text" id="field.mobilePhone" name="mobilePhone" data-analytics-name="mobilePhone" >
+            <input type="text" id="field.mobilePhone" name="mobilePhone" data-track-name="mobilePhone" >
             <label for="field.dob">Date of Birth:</label>
-            <input type="date" id="field.dob" name="dob" data-analytics-name="dob" >
-            <button id="button.step_2.back" type="button" onclick="prevStep(2)" data-analytics-name="back"  >Back</button>
-            <button id="button.step_2.next" type="button" onclick="nextStep(2)" data-analytics-name="next"  >Next</button>
+            <input type="date" id="field.dob" name="dob" data-track-name="dob" >
+            <span data-track-container="progression">
+               <button id="button.step_2.back" type="button" onclick="prevStep(2)" data-track-name="back"  >Back</button>
+               <button id="button.step_2.next" type="button" onclick="nextStep(2)" data-track-name="continue"  >Next</button>
+            </span>
         </div>
       
         <div class="form-step" id="step-3" data-analytics-category="step3">
