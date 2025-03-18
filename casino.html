@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-   <title>Casino Lobby - Chroma v8</title>
+   <title>Casino Lobby - Chroma v9</title>
    <link rel="stylesheet" href="./styles/global-styles.css">
    <script src="./scripts/header-script.js" defer></script>   
    <script src="./scripts/utm-cookie-tracker.js" defer></script> 
@@ -183,11 +183,11 @@ body {
 
 
 
-   <div class="carousel-container">
+   <div class="carousel-container" data-track-container="carousel" data-track-name="Featured Games">
     <!-- Carousel Title: Featured Games -->
     <h1 class="carousel-title">Featured Games</h1>
     <div class="carousel">
-        <div class="carousel-item clickable" data-game-provider="XYZ Studios" data-game-id="101" data-is-favorited="true">
+        <div class="carousel-item clickable"  data-track-name="gameTile" data-game-name="Featured Game 1" data-game-provider="XYZ Studios" data-game-id="101" data-is-favorited="true">
             <h2>Game 1</h2>
             <p>Description for Game 1. Enjoy playing!</p>
             <div class="game-info">
@@ -196,7 +196,7 @@ body {
                 <img src="favorite-icon.png" alt="Favorite" class="favorite">
             </div>
         </div>
-        <div class="carousel-item clickable" data-game-provider="ABC Games" data-game-id="102" data-is-favorited="false">
+        <div class="carousel-item clickable" data-track-name="gameTile" data-game-name="Featured Game 2" data-game-provider="ABC Games" data-game-id="102" data-is-favorited="false">
             <h2>Game 2</h2>
             <p>Description for Game 2. Fun and addictive!</p>
             <div class="game-info">
@@ -205,7 +205,7 @@ body {
                 <img src="favorite-icon.png" alt="Favorite" class="favorite">
             </div>
         </div>
-        <div class="carousel-item clickable" data-game-provider="Adventure Inc." data-game-id="103" data-is-favorited="true">
+        <div class="carousel-item clickable" data-track-name="gameTile" data-game-name="Featured Game 3" data-game-provider="Adventure Inc." data-game-id="103" data-is-favorited="true">
             <h2>Game 3</h2>
             <p>Description for Game 3. Exciting adventure awaits!</p>
             <div class="game-info">
@@ -214,7 +214,7 @@ body {
                 <img src="favorite-icon.png" alt="Favorite" class="favorite">
             </div>
         </div>
-        <div class="carousel-item clickable" data-game-provider="Action Games" data-game-id="104" data-is-favorited="false">
+        <div class="carousel-item clickable" data-track-name="gameTile" data-game-name="Featured Game 4"  data-game-provider="Action Games" data-game-id="104" data-is-favorited="false">
             <h2>Game 4</h2>
             <p>Description for Game 4. Ultimate action-packed game!</p>
             <div class="game-info">
@@ -223,7 +223,7 @@ body {
                 <img src="favorite-icon.png" alt="Favorite" class="favorite">
             </div>
         </div>
-        <div class="carousel-item clickable" data-game-provider="Multiplayer Studios" data-game-id="105" data-is-favorited="true">
+        <div class="carousel-item clickable" data-track-name="gameTile" data-game-name="Featured Game 5"  data-game-provider="Multiplayer Studios" data-game-id="105" data-is-favorited="true">
             <h2>Game 5</h2>
             <p>Description for Game 5. Super fun multiplayer game!</p>
             <div class="game-info">
@@ -235,11 +235,11 @@ body {
     </div>
 </div>
 
-<div class="carousel-container">
+<div class="carousel-container"  data-track-container="carousel" data-track-name="Trending UK">
     <!-- Carousel Title: Trending UK -->
     <h1 class="carousel-title">Trending UK</h1>
     <div class="carousel">
-        <div class="carousel-item clickable" data-game-provider="Euro Games" data-game-id="201" data-is-favorited="false">
+        <div class="carousel-item clickable" data-track-name="gameTile" data-game-name="UK Game 1" data-game-provider="Euro Games" data-game-id="201" data-is-favorited="false">
             <h2>UK Game 1</h2>
             <p>Description for UK Game 1. A popular game in the UK!</p>
             <div class="game-info">
@@ -248,7 +248,7 @@ body {
                 <img src="favorite-icon.png" alt="Favorite" class="favorite">
             </div>
         </div>
-        <div class="carousel-item clickable" data-game-provider="Brit Games" data-game-id="202" data-is-favorited="true">
+        <div class="carousel-item clickable"  data-track-name="gameTile" data-game-name="UK Game 2" data-game-provider="Brit Games" data-game-id="202" data-is-favorited="true">
             <h2>UK Game 2</h2>
             <p>Description for UK Game 2. A trending game in the UK!</p>
             <div class="game-info">
@@ -257,7 +257,7 @@ body {
                 <img src="favorite-icon.png" alt="Favorite" class="favorite">
             </div>
         </div>
-        <div class="carousel-item clickable" data-game-provider="London Studios" data-game-id="203" data-is-favorited="false">
+        <div class="carousel-item clickable"  data-track-name="gameTile" data-game-name="UK Game 3"  data-game-provider="London Studios" data-game-id="203" data-is-favorited="false">
             <h2>UK Game 3</h2>
             <p>Description for UK Game 3. Enjoyable and popular!</p>
             <div class="game-info">
@@ -266,7 +266,7 @@ body {
                 <img src="favorite-icon.png" alt="Favorite" class="favorite">
             </div>
         </div>
-        <div class="carousel-item clickable" data-game-provider="England Games" data-game-id="204" data-is-favorited="true">
+        <div class="carousel-item clickable"  data-track-name="gameTile" data-game-name="UK Game 4" data-game-provider="England Games" data-game-id="204" data-is-favorited="true">
             <h2>UK Game 4</h2>
             <p>Description for UK Game 4. The top game right now in the UK!</p>
             <div class="game-info">
@@ -275,7 +275,7 @@ body {
                 <img src="favorite-icon.png" alt="Favorite" class="favorite">
             </div>
         </div>
-        <div class="carousel-item clickable" data-game-provider="UK Studios" data-game-id="205" data-is-favorited="true">
+        <div class="carousel-item clickable"  data-track-name="gameTile" data-game-name="UK Game 5" data-game-provider="UK Studios" data-game-id="205" data-is-favorited="true">
             <h2>UK Game 5</h2>
             <p>Description for UK Game 5. A fan-favorite in the UK!</p>
             <div class="game-info">
