@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-   <title>Casino Lobby - Chroma v6</title>
+   <title>Casino Lobby - Chroma v7</title>
    <link rel="stylesheet" href="./styles/global-styles.css">
    <script src="./scripts/header-script.js" defer></script>   
    <script src="./scripts/utm-cookie-tracker.js" defer></script> 
@@ -51,9 +51,8 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 </script>
 <script type="text/javascript" src="https://cdn.amplitude.com/script/3424f256a73bbb756e9d4ef8000ea179.experiment.js"></script>
 <script>
-  // Select all clickable carousel items
+ // Select all clickable carousel items and add event listeners
 document.querySelectorAll('.carousel-item.clickable').forEach(item => {
-    // Add click event listener to each item
     item.addEventListener('click', function() {
         // Get game data from data attributes
         const gameProvider = this.getAttribute('data-game-provider');
@@ -66,10 +65,28 @@ document.querySelectorAll('.carousel-item.clickable').forEach(item => {
               `Game ID: ${gameId}\n` +
               `Favorited: ${isFavorited}`);
     });
-}); 
+});
+
+// Optional: Functionality to auto-slide carousels (Optional)
+// You can adjust the animation timing or add buttons for manual control
+function slideCarousel() {
+    const carousels = document.querySelectorAll('.carousel');
+    
+    carousels.forEach(carousel => {
+        let index = 0;
+        setInterval(() => {
+            // Move the carousel to the left
+            index = (index + 1) % 5; // Assuming 5 items per carousel
+            carousel.style.transform = `translateX(-${index * 20}%)`;
+        }, 3000); // Every 3 seconds
+    });
+}
+
+
+
 </script>
   <style>
-    * {
+   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -83,12 +100,21 @@ body {
 
 .carousel-container {
     width: 100%;
-    overflow: hidden;
+    margin-bottom: 40px; /* Add space between carousels */
+}
+
+.carousel-title {
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
 }
 
 .carousel {
     display: flex;
-    animation: slide 15s infinite linear;
+    overflow: hidden;
+    position: relative;
 }
 
 .carousel-item {
@@ -137,75 +163,39 @@ body {
     content: url('favorite-icon-empty.png'); /* Use an empty favorite icon */
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Animation for the sliding carousel */
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-20%);
+    }
+    40% {
+        transform: translateX(-40%);
+    }
+    60% {
+        transform: translateX(-60%);
+    }
+    80% {
+        transform: translateX(-80%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    padding: 20px;
+/* Optional: Add responsiveness for smaller screens */
+@media (max-width: 768px) {
+    .carousel-item {
+        width: 40%;
+    }
 }
 
-.carousel-container {
-    width: 100%;
-    overflow: hidden;
-}
-
-.carousel {
-    display: flex;
-   
-}
-
-.carousel-item {
-    width: 20%;
-    padding: 10px;
-    background: #fff;
-    margin-right: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease-in-out;
-}
-
-.carousel-item:hover {
-    transform: scale(1.05);
-}
-
-.carousel-item h2 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.carousel-item p {
-    font-size: 1em;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-.game-info p {
-    font-size: 0.9em;
-    color: #777;
-}
-
-.favorite {
-    width: 24px;
-    height: 24px;
-}
-
-/* Specific styles for the favorited state */
-.carousel-item[data-is-favorited="true"] .favorite {
-    content: url('favorite-icon-filled.png'); /* Use a filled favorite icon */
-}
-
-.carousel-item[data-is-favorited="false"] .favorite {
-    content: url('favorite-icon-empty.png'); /* Use an empty favorite icon */
-}
-
-
+@media (max-width: 480px) {
+    .carousel-item {
+        width: 80%;
+    }
 }
   </style>
    
@@ -227,114 +217,112 @@ body {
 
 
 
-<!-- HEADER -->       
-<div class="promotion">
-   - * -
+   <div class="carousel-container">
+    <!-- Carousel Title: Featured Games -->
+    <h1 class="carousel-title">Featured Games</h1>
+    <div class="carousel">
+        <div class="carousel-item clickable" data-game-provider="XYZ Studios" data-game-id="101" data-is-favorited="true">
+            <h2>Game 1</h2>
+            <p>Description for Game 1. Enjoy playing!</p>
+            <div class="game-info">
+                <p>Game Provider: XYZ Studios</p>
+                <p>Game ID: 101</p>
+                <img src="favorite-icon.png" alt="Favorite" class="favorite">
+            </div>
+        </div>
+        <div class="carousel-item clickable" data-game-provider="ABC Games" data-game-id="102" data-is-favorited="false">
+            <h2>Game 2</h2>
+            <p>Description for Game 2. Fun and addictive!</p>
+            <div class="game-info">
+                <p>Game Provider: ABC Games</p>
+                <p>Game ID: 102</p>
+                <img src="favorite-icon.png" alt="Favorite" class="favorite">
+            </div>
+        </div>
+        <div class="carousel-item clickable" data-game-provider="Adventure Inc." data-game-id="103" data-is-favorited="true">
+            <h2>Game 3</h2>
+            <p>Description for Game 3. Exciting adventure awaits!</p>
+            <div class="game-info">
+                <p>Game Provider: Adventure Inc.</p>
+                <p>Game ID: 103</p>
+                <img src="favorite-icon.png" alt="Favorite" class="favorite">
+            </div>
+        </div>
+        <div class="carousel-item clickable" data-game-provider="Action Games" data-game-id="104" data-is-favorited="false">
+            <h2>Game 4</h2>
+            <p>Description for Game 4. Ultimate action-packed game!</p>
+            <div class="game-info">
+                <p>Game Provider: Action Games</p>
+                <p>Game ID: 104</p>
+                <img src="favorite-icon.png" alt="Favorite" class="favorite">
+            </div>
+        </div>
+        <div class="carousel-item clickable" data-game-provider="Multiplayer Studios" data-game-id="105" data-is-favorited="true">
+            <h2>Game 5</h2>
+            <p>Description for Game 5. Super fun multiplayer game!</p>
+            <div class="game-info">
+                <p>Game Provider: Multiplayer Studios</p>
+                <p>Game ID: 105</p>
+                <img src="favorite-icon.png" alt="Favorite" class="favorite">
+            </div>
+        </div>
+    </div>
 </div>
 
-   
 <div class="carousel-container">
-    <div class="carousel" data-track-container="Trending UK">
-        <h2>Trending UK</h2></hr>
-        <div class="carousel-item" data-game-provider="XYZ Studios" data-game-id="101" data-is-favorited="true">
-            <h2>Big Bass Splash</h2>
-            <p>Enjoy playing!</p>
+    <!-- Carousel Title: Trending UK -->
+    <h1 class="carousel-title">Trending UK</h1>
+    <div class="carousel">
+        <div class="carousel-item clickable" data-game-provider="Euro Games" data-game-id="201" data-is-favorited="false">
+            <h2>UK Game 1</h2>
+            <p>Description for UK Game 1. A popular game in the UK!</p>
             <div class="game-info">
-                <p>Game Provider: XYZ Studios</p>
-                <p>Game ID: 101</p>
+                <p>Game Provider: Euro Games</p>
+                <p>Game ID: 201</p>
                 <img src="favorite-icon.png" alt="Favorite" class="favorite">
             </div>
         </div>
-        <div class="carousel-item" data-game-provider="ABC Games" data-game-id="102" data-is-favorited="false">
-            <h2>Triple Pot Gold</h2>
-            <p>Fun and addictive!</p>
+        <div class="carousel-item clickable" data-game-provider="Brit Games" data-game-id="202" data-is-favorited="true">
+            <h2>UK Game 2</h2>
+            <p>Description for UK Game 2. A trending game in the UK!</p>
             <div class="game-info">
-                <p>Game Provider: ABC Games</p>
-                <p>Game ID: 102</p>
+                <p>Game Provider: Brit Games</p>
+                <p>Game ID: 202</p>
                 <img src="favorite-icon.png" alt="Favorite" class="favorite">
             </div>
         </div>
-        <div class="carousel-item" data-game-provider="Adventure Inc." data-game-id="103" data-is-favorited="true">
-            <h2>Bingo Big</h2>
-            <p>Exciting adventure awaits!</p>
+        <div class="carousel-item clickable" data-game-provider="London Studios" data-game-id="203" data-is-favorited="false">
+            <h2>UK Game 3</h2>
+            <p>Description for UK Game 3. Enjoyable and popular!</p>
             <div class="game-info">
-                <p>Game Provider: Adventure Inc.</p>
-                <p>Game ID: 103</p>
+                <p>Game Provider: London Studios</p>
+                <p>Game ID: 203</p>
                 <img src="favorite-icon.png" alt="Favorite" class="favorite">
             </div>
         </div>
-        <div class="carousel-item" data-game-provider="Action Games" data-game-id="104" data-is-favorited="false">
-            <h2>Volcano Goddess</h2>
-            <p> Ultimate action-packed game!</p>
+        <div class="carousel-item clickable" data-game-provider="England Games" data-game-id="204" data-is-favorited="true">
+            <h2>UK Game 4</h2>
+            <p>Description for UK Game 4. The top game right now in the UK!</p>
             <div class="game-info">
-                <p>Game Provider: Action Games</p>
-                <p>Game ID: 104</p>
+                <p>Game Provider: England Games</p>
+                <p>Game ID: 204</p>
                 <img src="favorite-icon.png" alt="Favorite" class="favorite">
             </div>
         </div>
-        <div class="carousel-item" data-game-provider="Multiplayer Studios" data-game-id="105" data-is-favorited="true">
-            <h2>Hot Fireballs</h2>
-            <p>Super fun action game!</p>
+        <div class="carousel-item clickable" data-game-provider="UK Studios" data-game-id="205" data-is-favorited="true">
+            <h2>UK Game 5</h2>
+            <p>Description for UK Game 5. A fan-favorite in the UK!</p>
             <div class="game-info">
-                <p>Game Provider: Multiplayer Studios</p>
-                <p>Game ID: 105</p>
+                <p>Game Provider: UK Studios</p>
+                <p>Game ID: 205</p>
                 <img src="favorite-icon.png" alt="Favorite" class="favorite">
             </div>
         </div>
     </div>
-
-
- <div class="carousel" data-track-container="New">
-        <h2>New</h2></hr>
-        <div class="carousel-item" data-game-provider="Multiplayer Studios" data-game-id="105" data-is-favorited="true">
-            <h2>Hot Fireballs</h2>
-            <p>Super fun action game!</p>
-            <div class="game-info">
-                <p>Game Provider: Multiplayer Studios</p>
-                <p>Game ID: 105</p>
-                <img src="favorite-icon.png" alt="Favorite" class="favorite">
-            </div>
-        </div>
-        <div class="carousel-item" data-game-provider="ABC Games" data-game-id="102" data-is-favorited="false">
-            <h2>Triple Pot Gold</h2>
-            <p>Fun and addictive!</p>
-            <div class="game-info">
-                <p>Game Provider: ABC Games</p>
-                <p>Game ID: 102</p>
-                <img src="favorite-icon.png" alt="Favorite" class="favorite">
-            </div>
-        </div>
-        <div class="carousel-item" data-game-provider="Adventure Inc." data-game-id="103" data-is-favorited="true">
-            <h2>Bingo Big</h2>
-            <p>Exciting adventure awaits!</p>
-            <div class="game-info">
-                <p>Game Provider: Adventure Inc.</p>
-                <p>Game ID: 103</p>
-                <img src="favorite-icon.png" alt="Favorite" class="favorite">
-            </div>
-        </div>
-        <div class="carousel-item" data-game-provider="XYZ Studios" data-game-id="101" data-is-favorited="true">
-            <h2>Big Bass Splash</h2>
-            <p>Enjoy playing!</p>
-            <div class="game-info">
-                <p>Game Provider: XYZ Studios</p>
-                <p>Game ID: 101</p>
-                <img src="favorite-icon.png" alt="Favorite" class="favorite">
-            </div>
-        </div>
-        <div class="carousel-item" data-game-provider="Action Games" data-game-id="104" data-is-favorited="false">
-            <h2>Volcano Goddess</h2>
-            <p> Ultimate action-packed game!</p>
-            <div class="game-info">
-                <p>Game Provider: Action Games</p>
-                <p>Game ID: 104</p>
-                <img src="favorite-icon.png" alt="Favorite" class="favorite">
-            </div>
-        </div>
-       
-    </div>
-   
 </div>
+
+
+
   
 </div>
 <script src="./scripts/global-scripts.js"></script>
