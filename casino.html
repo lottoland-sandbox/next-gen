@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-   <title>Casino Lobby - Chroma v7</title>
+   <title>Casino Lobby - Chroma v8</title>
    <link rel="stylesheet" href="./styles/global-styles.css">
    <script src="./scripts/header-script.js" defer></script>   
    <script src="./scripts/utm-cookie-tracker.js" defer></script> 
@@ -50,41 +50,7 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
   });
 </script>
 <script type="text/javascript" src="https://cdn.amplitude.com/script/3424f256a73bbb756e9d4ef8000ea179.experiment.js"></script>
-<script>
- // Select all clickable carousel items and add event listeners
-document.querySelectorAll('.carousel-item.clickable').forEach(item => {
-    item.addEventListener('click', function() {
-        // Get game data from data attributes
-        const gameProvider = this.getAttribute('data-game-provider');
-        const gameId = this.getAttribute('data-game-id');
-        const isFavorited = this.getAttribute('data-is-favorited') === 'true' ? 'Yes' : 'No';
 
-        // Show an alert with the game details
-        alert(`Game Title: ${this.querySelector('h2').textContent}\n` +
-              `Provider: ${gameProvider}\n` +
-              `Game ID: ${gameId}\n` +
-              `Favorited: ${isFavorited}`);
-    });
-});
-
-// Optional: Functionality to auto-slide carousels (Optional)
-// You can adjust the animation timing or add buttons for manual control
-function slideCarousel() {
-    const carousels = document.querySelectorAll('.carousel');
-    
-    carousels.forEach(carousel => {
-        let index = 0;
-        setInterval(() => {
-            // Move the carousel to the left
-            index = (index + 1) % 5; // Assuming 5 items per carousel
-            carousel.style.transform = `translateX(-${index * 20}%)`;
-        }, 3000); // Every 3 seconds
-    });
-}
-
-
-
-</script>
   <style>
    * {
     margin: 0;
@@ -326,5 +292,40 @@ body {
   
 </div>
 <script src="./scripts/global-scripts.js"></script>
+   <script>
+ // Select all clickable carousel items and add event listeners
+document.querySelectorAll('.carousel-item.clickable').forEach(item => {
+    item.addEventListener('click', function() {
+        // Get game data from data attributes
+        const gameProvider = this.getAttribute('data-game-provider');
+        const gameId = this.getAttribute('data-game-id');
+        const isFavorited = this.getAttribute('data-is-favorited') === 'true' ? 'Yes' : 'No';
+
+        // Show an alert with the game details
+        alert(`Game Title: ${this.querySelector('h2').textContent}\n` +
+              `Provider: ${gameProvider}\n` +
+              `Game ID: ${gameId}\n` +
+              `Favorited: ${isFavorited}`);
+    });
+});
+
+// Optional: Functionality to auto-slide carousels (Optional)
+// You can adjust the animation timing or add buttons for manual control
+function slideCarousel() {
+    const carousels = document.querySelectorAll('.carousel');
+    
+    carousels.forEach(carousel => {
+        let index = 0;
+        setInterval(() => {
+            // Move the carousel to the left
+            index = (index + 1) % 5; // Assuming 5 items per carousel
+            carousel.style.transform = `translateX(-${index * 20}%)`;
+        }, 3000); // Every 3 seconds
+    });
+}
+
+
+
+</script>
 </body>
 </html>
