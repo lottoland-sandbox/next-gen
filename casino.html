@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head> 
+   <title>Casino Lobby - Chroma v1</title>
+   <link rel="stylesheet" href="./styles/global-styles.css">
+   <script src="./scripts/header-script.js" defer></script>   
+   <script src="./scripts/utm-cookie-tracker.js" defer></script> 
+   
+<!-- FULL STORY -->       
+<script>
+window['_fs_host'] = 'fullstory.com';
+window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
+window['_fs_org'] = 'o-21MNYV-na1';
+window['_fs_namespace'] = 'FS';
+!function(m,n,e,t,l,o,g,y){var s,f,a=function(h){
+return!(h in m)||(m.console&&m.console.log&&m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].'),!1)}(e)
+;function p(b){var h,d=[];function j(){h&&(d.forEach((function(b){var d;try{d=b[h[0]]&&b[h[0]](h[1])}catch(h){return void(b[3]&&b[3](h))}
+d&&d.then?d.then(b[2],b[3]):b[2]&&b[2](d)})),d.length=0)}function r(b){return function(d){h||(h=[b,d],j())}}return b(r(0),r(1)),{
+then:function(b,h){return p((function(r,i){d.push([b,h,r,i]),j()}))}}}a&&(g=m[e]=function(){var b=function(b,d,j,r){function i(i,c){
+h(b,d,j,i,c,r)}r=r||2;var c,u=/Async$/;return u.test(b)?(b=b.replace(u,""),"function"==typeof Promise?new Promise(i):p(i)):h(b,d,j,c,c,r)}
+;function h(h,d,j,r,i,c){return b._api?b._api(h,d,j,r,i,c):(b.q&&b.q.push([h,d,j,r,i,c]),null)}return b.q=[],b}(),y=function(b){function h(h){
+"function"==typeof h[4]&&h[4](new Error(b))}var d=g.q;if(d){for(var j=0;j<d.length;j++)h(d[j]);d.length=0,d.push=h}},function(){
+(o=n.createElement(t)).async=!0,o.crossOrigin="anonymous",o.src="https://"+l,o.onerror=function(){y("Error loading "+l)}
+;var b=n.getElementsByTagName(t)[0];b&&b.parentNode?b.parentNode.insertBefore(o,b):n.head.appendChild(o)}(),function(){function b(){}
+function h(b,h,d){g(b,h,d,1)}function d(b,d,j){h("setProperties",{type:b,properties:d},j)}function j(b,h){d("user",b,h)}function r(b,h,d){j({
+uid:b},d),h&&j(h,d)}g.identify=r,g.setUserVars=j,g.identifyAccount=b,g.clearUserCookie=b,g.setVars=d,g.event=function(b,d,j){h("trackEvent",{
+name:b,properties:d},j)},g.anonymize=function(){r(!1)},g.shutdown=function(){h("shutdown")},g.restart=function(){h("restart")},
+g.log=function(b,d){h("log",{level:b,msg:d})},g.consent=function(b){h("setIdentity",{consent:!arguments.length||b})}}(),s="fetch",
+f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){return g._w[s].apply(this,arguments)}),g._v="2.0.0")
+}(window,document,window._fs_namespace,"script",window._fs_script);
+</script>
+
+<!-- AMPLITUDE -->       
+<script src="https://cdn.amplitude.com/libs/analytics-browser-2.11.7-min.js.gz"></script>
+<script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.8.1-min.js.gz"></script>
+<script>
+  window.amplitude.init("3424f256a73bbb756e9d4ef8000ea179", {
+    autocapture: {
+      attribution: true,
+      pageViews: true,
+      sessions: true,
+      fileDownload: false,
+      formInteractions: true,
+      elementInteractions: true
+    },
+  });
+  const sessionReplayTracking = window.sessionReplay.plugin({sampleRate: 1}); // 100% sample rate
+  window.amplitude.add(sessionReplayTracking).promise.then(() => {
+    console.log("Session Replay plugin added successfully");
+  });
+</script>
+<script type="text/javascript" src="https://cdn.amplitude.com/script/3424f256a73bbb756e9d4ef8000ea179.experiment.js"></script>
+
+  <style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    animation: slide 15s infinite linear;
+}
+
+.carousel-item {
+    width: 20%;
+    padding: 10px;
+    background: #fff;
+    margin-right: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.carousel-item:hover {
+    transform: scale(1.05);
+}
+
+.carousel-item h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.carousel-item p {
+    font-size: 1em;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.game-info p {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.favorite {
+    width: 24px;
+    height: 24px;
+}
+
+/* Specific styles for the favorited state */
+.carousel-item[data-is-favorited="true"] .favorite {
+    content: url('favorite-icon-filled.png'); /* Use a filled favorite icon */
+}
+
+.carousel-item[data-is-favorited="false"] .favorite {
+    content: url('favorite-icon-empty.png'); /* Use an empty favorite icon */
+}
+
+/* Animation for the sliding carousel */
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-20%);
+    }
+    40% {
+        transform: translateX(-40%);
+    }
+    60% {
+        transform: translateX(-60%);
+    }
+    80% {
+        transform: translateX(-80%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+  </style>
+   
+   
+</head>
+<body>
+
+
+<div id="main" data-track-feature="registration">
+<img src="./img/lottoland.png" alt="Logo" class="logo" data-track-name="logo">
+  
+<!-- HEADER -->       
+<div class="header" data-track-container="headerArea">
+    <div class="header-links" data-track-container="header">
+      
+        <a id="link.close" class="header-link" href="homepage.html"  data-name-name="close" >Close</a>
+    </div>
+</div>
+
+
+
+<!-- HEADER -->       
+<div class="promotion">
+   - * -
+</div>
+
+   
+<div class="carousel-container">
+    <div class="carousel">
+        <div class="carousel-item" data-game-provider="XYZ Studios" data-game-id="101" data-is-favorited="true">
+            <h2>Game 1</h2>
+            <p>Description for Game 1. Enjoy playing!</p>
+            <div class="game-info">
+                <p>Game Provider: XYZ Studios</p>
+                <p>Game ID: 101</p>
+                <img src="favorite-icon.png" alt="Favorite" class="favorite">
+            </div>
+        </div>
+        <div class="carousel-item" data-game-provider="ABC Games" data-game-id="102" data-is-favorited="false">
+            <h2>Game 2</h2>
+            <p>Description for Game 2. Fun and addictive!</p>
+            <div class="game-info">
+                <p>Game Provider: ABC Games</p>
+                <p>Game ID: 102</p>
+                <img src="favorite-icon.png" alt="Favorite" class="favorite">
+            </div>
+        </div>
+        <div class="carousel-item" data-game-provider="Adventure Inc." data-game-id="103" data-is-favorited="true">
+            <h2>Game 3</h2>
+            <p>Description for Game 3. Exciting adventure awaits!</p>
+            <div class="game-info">
+                <p>Game Provider: Adventure Inc.</p>
+                <p>Game ID: 103</p>
+                <img src="favorite-icon.png" alt="Favorite" class="favorite">
+            </div>
+        </div>
+        <div class="carousel-item" data-game-provider="Action Games" data-game-id="104" data-is-favorited="false">
+            <h2>Game 4</h2>
+            <p>Description for Game 4. Ultimate action-packed game!</p>
+            <div class="game-info">
+                <p>Game Provider: Action Games</p>
+                <p>Game ID: 104</p>
+                <img src="favorite-icon.png" alt="Favorite" class="favorite">
+            </div>
+        </div>
+        <div class="carousel-item" data-game-provider="Multiplayer Studios" data-game-id="105" data-is-favorited="true">
+            <h2>Game 5</h2>
+            <p>Description for Game 5. Super fun multiplayer game!</p>
+            <div class="game-info">
+                <p>Game Provider: Multiplayer Studios</p>
+                <p>Game ID: 105</p>
+                <img src="favorite-icon.png" alt="Favorite" class="favorite">
+            </div>
+        </div>
+    </div>
+</div>
+  
+</div>
+<script src="./scripts/global-scripts.js"></script>
+</body>
+</html>
