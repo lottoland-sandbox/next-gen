@@ -126,8 +126,21 @@ body {
 .gameinfo {
     width: 24px;
     height: 24px;
-}     
-
+}    
+     
+.callout {
+    background: linear-gradient(45deg, #6a0dad, #ff69b4); /* Purple to Pink gradient */
+    color: white; /* White text */
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a soft shadow */
+    width: 80%; /* Optional: Adjust the width as needed */
+    margin: 20px auto; /* Centers the callout on the page */
+}
+     
 /* Specific styles for the favorited state */
 .carousel-item[data-is-favorited="true"] .favorite {
     content: url('./img/favorite-icon-filled.png'); /* Use a filled favorite icon */
@@ -196,6 +209,7 @@ body {
     <h1 class="carousel-title">Featured Games</h1>
     <div class="carousel">
         <div class="carousel-item clickable"  data-track-name="gameTile" data-game-name="Big Bass Splash" data-game-provider="XYZ Studios" data-game-id="101" data-is-favorited="true" data-game-position=1>
+            <span slot="text" class="callout" data-track-name="callout">EXCLUSIVE</span>
             <h2>Big Bass Splash</h2>
             <p>Enjoy playing!</p>
             <div class="game-info">
