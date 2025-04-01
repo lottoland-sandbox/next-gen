@@ -33,26 +33,6 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 }(window,document,window._fs_namespace,"script",window._fs_script);
 </script>
 
-<!-- AMPLITUDE -->       
-<script src="https://cdn.amplitude.com/libs/analytics-browser-2.11.7-min.js.gz"></script>
-<script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.8.1-min.js.gz"></script>
-<script>
-  window.amplitude.init("3424f256a73bbb756e9d4ef8000ea179", {
-    autocapture: {
-      attribution: true,
-      pageViews: true,
-      sessions: true,
-      fileDownload: false,
-      formInteractions: true,
-      elementInteractions: true
-    },
-  });
-  const sessionReplayTracking = window.sessionReplay.plugin({sampleRate: 1}); // 100% sample rate
-  window.amplitude.add(sessionReplayTracking).promise.then(() => {
-    console.log("Session Replay plugin added successfully");
-  });
-</script>
-<script type="text/javascript" src="https://cdn.amplitude.com/script/3424f256a73bbb756e9d4ef8000ea179.experiment.js"></script>
 
   <style>
    * {
