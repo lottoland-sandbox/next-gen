@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-   <title>Casino Lobby - Chroma v11</title>
+   <title>Casino Lobby - Chroma v12</title>
    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, proxy-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -379,13 +379,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Get game data from data attributes
             const gameProvider = this.getAttribute('data-track-game-provider');
-            const game-id = this.getAttribute('data-track-game-id');
-            const isFavorited = this.getAttribute('data-track-game-favourited') === 'true' ? 'Yes' : 'No';
+            const gameId = this.getAttribute('data-track-game-id');
+            const isFavorited = this.getAttribute('data-track-game-favourited') === 'yes' ? 'Yes' : 'No';
 
             // Show an alert with the game details
             alert(`Game Title: ${this.querySelector('h2').textContent}\n` +
                   `Provider: ${gameProvider}\n` +
-                  `Game ID: ${game-id}\n` +
+                  `Game ID: ${gameId}\n` +
                   `Favorited: ${isFavorited}`);
         });
     });
@@ -396,11 +396,11 @@ document.addEventListener('DOMContentLoaded', function () {
             event.stopPropagation(); // Prevent the game tile click event
             const gameItem = this.closest('.carousel-item');
             const gameName = gameItem.getAttribute('data-track-game-name');
-            const isFavorited = gameItem.getAttribute('data-track-game-favourited') === 'true';
+            const isFavorited = gameItem.getAttribute('data-track-game-favourited') === 'yes';
 
             // Toggle favorite status
             gameItem.setAttribute('data-track-game-favourited', !isFavorited);
-            //alert(`${gameName} is now ${!isFavorited ? 'Favorited' : 'Unfavorited'}`);
+            //alert(`${gameName} is now ${!isFavorited ? 'Favourited' : 'Unfavourited'}`);
         });
     });
 
@@ -411,10 +411,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const gameItem = this.closest('.carousel-item');
             const gameName = gameItem.getAttribute('data-track-game-name');
             const gameProvider = gameItem.getAttribute('data-track-game-provider');
-            const game-id = gameItem.getAttribute('data-track-game-id');
+            const gameId = gameItem.getAttribute('data-track-game-id');
 
             // Show detailed info alert
-            alert(`Game Info for ${gameName}:\nProvider: ${gameProvider}\nGame ID: ${game-id}`);
+            alert(`Game Info for ${gameName}:\nProvider: ${gameProvider}\nGame ID: ${gameId}`);
         });
     });
 });
