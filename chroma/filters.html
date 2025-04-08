@@ -27,7 +27,7 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Filter UI v8</title>
+  <title>Filter UI v9</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -128,21 +128,21 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 </head>
 <body>
 
-  <div class="filter-container">
+  <div class="filter-container" data-track-container="Filters">
     <h2>Filtering & Sorting</h2>
 
     <!-- Sorting -->
     <div class="section">
       <label>Sorting</label>
-      <div class="radio-group" data-track-container="Sort">
+      <div class="radio-group" data-track-container="Sorting">
         <input type="radio" name="sort" value="popularity" checked data-track-name="Popularity"> Popularity<br>
-        <input type="radio" name="sort" value="name-az" data-track-name="Ascending"> Name (A–Z)<br>
-        <input type="radio" name="sort" value="name-za" data-track-name="Descending"> Name (Z–A)
+        <input type="radio" name="sort" value="name-az" data-track-name="A-Z"> Name (A–Z)<br>
+        <input type="radio" name="sort" value="name-za" data-track-name="Z-A"> Name (Z–A)
       </div>
     </div>
 
     <!-- Volatility Slider -->
-    <div class="section">
+    <div class="section" data-track-container="Volatility">
       <label>Volatility</label>
       <div class="range-slider">
         <input id="volatility-slider" type="range" min="1" max="4" value="1">
@@ -159,11 +159,11 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
     <div class="section">
       <label>Game provider <span id="selected-count">(0 selected)</span></label>
       <div class="providers" data-track-container="Providers">
-        <div class="provider-btn" data-track-name="Anaxi">Anaxi</div>
-        <div class="provider-btn" data-track-name="Blueprint">Blueprint</div>
-        <div class="provider-btn" data-track-name="Boldplay">Boldplay</div>
-        <div class="provider-btn" data-track-name="Eyecon">Eyecon</div>
-        <div class="provider-btn" data-track-name="Evolution">Evolution</div>
+        <div class="provider-btn" data-track-name="Anaxi" data-track-selected="No">Anaxi</div>
+        <div class="provider-btn" data-track-name="Blueprint" data-track-selected="No">Blueprint</div>
+        <div class="provider-btn" data-track-name="Boldplay" data-track-selected="No">Boldplay</div>
+        <div class="provider-btn" data-track-name="Eyecon" data-track-selected="No">Eyecon</div>
+        <div class="provider-btn" data-track-name="Evolution" data-track-selected="No">Evolution</div>
       </div>
     </div>
 
@@ -182,6 +182,11 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
     providerButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         btn.classList.toggle('selected');
+
+    // Update the data-track-selected attribute
+    const isSelected = btn.classList.contains('selected');
+    btn.setAttribute('data-track-selected', isSelected ? 'Yes' : 'No');
+        
         updateSelectedCount();
       });
     });
