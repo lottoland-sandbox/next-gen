@@ -27,7 +27,7 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Filter UI v10</title>
+  <title>Filter UI v11</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -167,6 +167,19 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       </div>
     </div>
 
+      <!-- Minimum Bet -->
+    <div class="section">
+      <label>Minimym Bet <span id="minbet-selected-count">(0 selected)</span></label>
+      <div class="providers" data-track-container="Minimum Bet">
+        <div class="provider-btn" data-track-name="Less that £0.10" data-track-selected="No">Less that £0.10</div>
+        <div class="provider-btn" data-track-name="£0.10 - £0.50" data-track-selected="No">£0.10 - £0.50</div>
+        <div class="provider-btn" data-track-name="£0.50 - £1" data-track-selected="No">£0.50 - £1</div>
+        <div class="provider-btn" data-track-name="£1 - £2" data-track-selected="No">£1 - £2</div>
+        <div class="provider-btn" data-track-name="More than £2" data-track-selected="No">More than £2</div>
+      </div>
+    </div>
+    
+
     <!-- Actions -->
     <div class="actions" data-track-container="Actions">
       <button class="clear-btn" onclick="clearAll()"  data-track-name="Clear">Clear all</button>
@@ -174,11 +187,13 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
     </div>
   </div>
 
- <script>
+<script>
   // Providers
   const providerButtons = document.querySelectorAll('.provider-btn');
   const selectedCount = document.getElementById('selected-count');
+  const minBetSelectedCount = document.getElementById('minbet-selected-count');
 
+  // Handle selection/deselection for both Providers and Minimum Bet
   providerButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       // Toggle the selected class
@@ -188,24 +203,28 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       const isSelected = btn.classList.contains('selected');
       btn.setAttribute('data-track-selected', isSelected ? 'Yes' : 'No');
 
-      // Update the selected count
+      // Update the selected count for providers and min bet filters
       updateSelectedCount();
     });
   });
 
   function updateSelectedCount() {
-    const selected = document.querySelectorAll('.provider-btn.selected');
-    selectedCount.textContent = `(${selected.length} selected)`;
+    const selectedProviders = document.querySelectorAll('.provider-btn.selected');
+    selectedCount.textContent = `(${selectedProviders.length} selected)`;
+
+    // Update count for Minimum Bet filter
+    const selectedMinBets = document.querySelectorAll('.section[data-track-container="Minimum Bet"] .provider-btn.selected');
+    minBetSelectedCount.textContent = `(${selectedMinBets.length} selected)`;
   }
 
   // Clear All Filters
   function clearAll() {
-    // Reset selected state and data-track-selected to "No"
+    // Reset selected state and data-track-selected to "No" for both providers and min bet filters
     document.querySelectorAll('.provider-btn.selected').forEach(el => {
       el.classList.remove('selected');
       el.setAttribute('data-track-selected', 'No');
     });
-    
+
     // Reset sorting to default (Popularity)
     document.querySelector('input[name="sort"][value="popularity"]').checked = true;
 
@@ -223,6 +242,8 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
   function showResults() {
     const selectedProviders = [...document.querySelectorAll('.provider-btn.selected')]
       .map(btn => btn.getAttribute('data-track-name'));
+    const selectedMinBets = [...document.querySelectorAll('.section[data-track-container="Minimum Bet"] .provider-btn.selected')]
+      .map(btn => btn.getAttribute('data-track-name'));
     const sortOption = document.querySelector('input[name="sort"]:checked').value;
 
     const slider = document.querySelector('#volatility-slider');
@@ -231,11 +252,11 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
     console.log("Sort:", sortOption);
     console.log("Volatility:", volatility);
     console.log("Providers:", selectedProviders);
+    console.log("Minimum Bet:", selectedMinBets);
 
-    alert(`Filters applied!\nSort: ${sortOption}\nVolatility: ${volatility}\nProviders: ${selectedProviders.join(', ')}`);
+    alert(`Filters applied!\nSort: ${sortOption}\nVolatility: ${volatility}\nProviders: ${selectedProviders.join(', ')}\nMinimum Bet: ${selectedMinBets.join(', ')}`);
   }
 </script>
-
 </body>
 </html>
   <!-- Load ll-slider script -->
