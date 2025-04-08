@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volatility Filter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #131b2f;
+            color: #b6b7c0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #f72585;
+        }
+
+        .filter-container {
+            margin-bottom: 20px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin-top: 10px;
+            background-color: #44495a;
+            height: 8px;
+            border-radius: 5px;
+            appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            height: 8px;
+            background: #f72585;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            width: 16px;
+            height: 16px;
+            background: #44495a;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .tooltip {
+            background-color: #44495a;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            color: #fff;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Volatility Filter -->
+<div class="filter-container">
+    <h2>Volatility</h2>
+    <div class="tooltip">
+        Games with low volatility give you more frequent wins, but usually for smaller amounts.
+        Games with high volatility give you less frequent wins, but usually for a lot more!
+    </div>
+    <label for="volatility-slider">Select Volatility:</label>
+    <input id="volatility-slider" type="range" min="1" max="4" value="1" step="1">
+    <div class="slider-labels">
+        <span>Low</span>
+        <span>Medium</span>
+        <span>High</span>
+        <span>Extreme</span>
+    </div>
+    <p>Value: <span id="volatility-value">Low</span></p>
+</div>
+
+<script>
+    // Volatility Slider Logic
+    const volatilitySlider = document.getElementById('volatility-slider');
+    const volatilityValue = document.getElementById('volatility-value');
+
+    volatilitySlider.addEventListener('input', function() {
+        const value = parseInt(volatilitySlider.value);
+        let label = '';
+
+        switch (value) {
+            case 1:
+                label = 'Low';
+                break;
+            case 2:
+                label = 'Medium';
+                break;
+            case 3:
+                label = 'High';
+                break;
+            case 4:
+                label = 'Extreme';
+                break;
+        }
+
+        volatilityValue.textContent = label;
+    });
+</script>
+
+</body>
+</html>
