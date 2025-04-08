@@ -25,14 +25,13 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 }(window,document,window._fs_namespace,"script",window._fs_script);
 </script>
   
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Filter UI v3</title>
+ <meta charset="UTF-8">
+  <title>Filter UI v4</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background: #f9f9f9;
       padding: 20px;
-      background: #f8f9fa;
     }
     .filter-container {
       background: #fff;
@@ -40,9 +39,6 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       border-radius: 10px;
       max-width: 400px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-      margin-bottom: 20px;
     }
     .section {
       margin-bottom: 20px;
@@ -55,21 +51,6 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
     .radio-group input {
       margin-right: 5px;
     }
-    .volatility-range {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 4%;
-    }
-    .volatility-range input[type="range"] {
-      width: 48%;
-    }
-    .range-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.9em;
-      margin-top: 5px;
-    }
     .providers {
       display: flex;
       flex-wrap: wrap;
@@ -81,7 +62,6 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       border-radius: 20px;
       background: #f1f1f1;
       cursor: pointer;
-      user-select: none;
     }
     .provider-btn.selected {
       background-color: #111;
@@ -90,7 +70,6 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
     .actions {
       display: flex;
       justify-content: space-between;
-      margin-top: 20px;
     }
     button {
       padding: 10px 16px;
@@ -121,35 +100,19 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       </div>
     </div>
 
-    <!-- Volatility (Dual Slider) -->
+    <!-- Volatility with ll-slider -->
     <div class="section">
       <label>Volatility</label>
-      <div class="volatility-range">
-        <input
-          type="range"
-          id="volatility-min"
-          min="0"
-          max="3"
-          value="0"
-          step="1"
-          data-track-volatility-low="0"
-        />
-        <input
-          type="range"
-          id="volatility-max"
-          min="0"
-          max="3"
-          value="3"
-          step="1"
-          data-track-volatility-high="3"
-        />
-      </div>
-      <div class="range-labels">
-        <span>Low</span>
-        <span>Mid</span>
-        <span>High</span>
-        <span>Extreme</span>
-      </div>
+      <ll-slider
+        id="volatility-slider"
+        data-track-name="filterPanel_volatility_0_-1"
+        class="track"
+        start="1"
+        end="4"
+        unique="false"
+        rangemin="1"
+        rangemax="4">
+      </ll-slider>
     </div>
 
     <!-- Providers -->
@@ -183,8 +146,6 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
   <script>
     const providerButtons = document.querySelectorAll('.provider-btn');
     const selectedCount = document.getElementById('selected-count');
-    const volatilityMin = document.getElementById("volatility-min");
-    const volatilityMax = document.getElementById("volatility-max");
 
     providerButtons.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -198,28 +159,16 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       selectedCount.textContent = `(${selected.length} selected)`;
     }
 
-    // Prevent sliders from crossing
-    volatilityMin.addEventListener("input", () => {
-      if (parseInt(volatilityMin.value) > parseInt(volatilityMax.value)) {
-        volatilityMin.value = volatilityMax.value;
-      }
-      volatilityMin.setAttribute("data-track-volatility-low", volatilityMin.value);
-    });
-
-    volatilityMax.addEventListener("input", () => {
-      if (parseInt(volatilityMax.value) < parseInt(volatilityMin.value)) {
-        volatilityMax.value = volatilityMin.value;
-      }
-      volatilityMax.setAttribute("data-track-volatility-high", volatilityMax.value);
-    });
-
     function clearAll() {
       document.querySelectorAll('.provider-btn.selected').forEach(el => el.classList.remove('selected'));
       document.querySelector('input[name="sort"][value="popularity"]').checked = true;
-      volatilityMin.value = 0;
-      volatilityMax.value = 3;
-      volatilityMin.setAttribute("data-track-volatility-low", "0");
-      volatilityMax.setAttribute("data-track-volatility-high", "3");
+
+      const slider = document.querySelector('#volatility-slider');
+      if (slider) {
+        slider.setAttribute('start', '1');
+        slider.setAttribute('end', '4');
+      }
+
       updateSelectedCount();
     }
 
@@ -227,18 +176,23 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       const selectedProviders = [...document.querySelectorAll('.provider-btn.selected')]
         .map(btn => btn.getAttribute('data-track-provider'));
       const sortOption = document.querySelector('input[name="sort"]:checked').value;
-      const volLow = volatilityMin.value;
-      const volHigh = volatilityMax.value;
+
+      const slider = document.querySelector('#volatility-slider');
+      const volatilityStart = parseInt(slider.getAttribute('start'));
+      const volatilityEnd = parseInt(slider.getAttribute('end'));
+
+      slider.setAttribute('data-track-volatility-low', volatilityStart);
+      slider.setAttribute('data-track-volatility-high', volatilityEnd);
 
       console.log("Sort:", sortOption);
-      console.log("Volatility Range:", volLow, "to", volHigh);
+      console.log("Volatility Range:", volatilityStart, "to", volatilityEnd);
       console.log("Providers:", selectedProviders);
 
-      alert(`Filters applied!
-Sort: ${sortOption}
-Volatility: ${volLow} to ${volHigh}
-Providers: ${selectedProviders.join(', ')}`);
+      alert(`Filters applied!\nSort: ${sortOption}\nVolatility: ${volatilityStart} to ${volatilityEnd}\nProviders: ${selectedProviders.join(', ')}`);
     }
   </script>
+
+  <!-- Optional: include ll-slider component script if needed -->
+  <!-- <script src="path/to/ll-slider.js"></script> -->
 </body>
 </html>
