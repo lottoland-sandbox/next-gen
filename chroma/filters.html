@@ -27,7 +27,7 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Filter UI v12</title>
+  <title>Filter UI v13</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -126,6 +126,7 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
     }
   </style>
 </head>
+
 <body>
 
   <div class="filter-container" data-track-container="Filters">
@@ -157,8 +158,8 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 
     <!-- Providers -->
     <div class="section" data-track-container="Providers">
-      <label>Game provider <span id="selected-count">(0 selected)</span></label>
-      <div class="providers" >
+      <label>Game provider <span id="providers-selected-count">(0 selected)</span></label>
+      <div class="providers">
         <div class="provider-btn" data-track-name="Anaxi" data-track-selected="No">Anaxi</div>
         <div class="provider-btn" data-track-name="Blueprint" data-track-selected="No">Blueprint</div>
         <div class="provider-btn" data-track-name="Boldplay" data-track-selected="No">Boldplay</div>
@@ -167,30 +168,29 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       </div>
     </div>
 
-      <!-- Minimum Bet -->
+    <!-- Minimum Bet -->
     <div class="section" data-track-container="Minimum Bet">
       <label>Minimum Bet <span id="minbet-selected-count">(0 selected)</span></label>
       <div class="providers">
-        <div class="provider-btn" data-track-name="Less that £0.10" data-track-selected="No">Less that £0.10</div>
+        <div class="provider-btn" data-track-name="Less that £0.10" data-track-selected="No">Less than £0.10</div>
         <div class="provider-btn" data-track-name="£0.10 - £0.50" data-track-selected="No">£0.10 - £0.50</div>
         <div class="provider-btn" data-track-name="£0.50 - £1" data-track-selected="No">£0.50 - £1</div>
         <div class="provider-btn" data-track-name="£1 - £2" data-track-selected="No">£1 - £2</div>
         <div class="provider-btn" data-track-name="More than £2" data-track-selected="No">More than £2</div>
       </div>
     </div>
-    
 
     <!-- Actions -->
     <div class="actions" data-track-container="Actions">
-      <button class="clear-btn" onclick="clearAll()"  data-track-name="Clear">Clear all</button>
-      <button class="show-btn" onclick="showResults()"  data-track-name="Show">Show games</button>
+      <button class="clear-btn" onclick="clearAll()" data-track-name="Clear">Clear all</button>
+      <button class="show-btn" onclick="showResults()" data-track-name="Show">Show games</button>
     </div>
   </div>
 
 <script>
-  // Providers
+  // Providers and Minimum Bet filters
   const providerButtons = document.querySelectorAll('.provider-btn');
-  const selectedCount = document.getElementById('selected-count');
+  const providersSelectedCount = document.getElementById('providers-selected-count');
   const minBetSelectedCount = document.getElementById('minbet-selected-count');
 
   // Handle selection/deselection for both Providers and Minimum Bet
@@ -203,16 +203,18 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       const isSelected = btn.classList.contains('selected');
       btn.setAttribute('data-track-selected', isSelected ? 'Yes' : 'No');
 
-      // Update the selected count for providers and min bet filters
+      // Update the selected count for both Providers and Minimum Bet filters
       updateSelectedCount();
     });
   });
 
+  // Update selected count for both Providers and Minimum Bet
   function updateSelectedCount() {
-    const selectedProviders = document.querySelectorAll('.provider-btn.selected');
-    selectedCount.textContent = `(${selectedProviders.length} selected)`;
+    // Providers selection count
+    const selectedProviders = document.querySelectorAll('.section[data-track-container="Providers"] .provider-btn.selected');
+    providersSelectedCount.textContent = `(${selectedProviders.length} selected)`;
 
-    // Update count for Minimum Bet filter
+    // Minimum Bet selection count
     const selectedMinBets = document.querySelectorAll('.section[data-track-container="Minimum Bet"] .provider-btn.selected');
     minBetSelectedCount.textContent = `(${selectedMinBets.length} selected)`;
   }
@@ -240,7 +242,7 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 
   // Show Results
   function showResults() {
-    const selectedProviders = [...document.querySelectorAll('.provider-btn.selected')]
+    const selectedProviders = [...document.querySelectorAll('.section[data-track-container="Providers"] .provider-btn.selected')]
       .map(btn => btn.getAttribute('data-track-name'));
     const selectedMinBets = [...document.querySelectorAll('.section[data-track-container="Minimum Bet"] .provider-btn.selected')]
       .map(btn => btn.getAttribute('data-track-name'));
@@ -257,7 +259,9 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
     alert(`Filters applied!\nSort: ${sortOption}\nVolatility: ${volatility}\nProviders: ${selectedProviders.join(', ')}\nMinimum Bet: ${selectedMinBets.join(', ')}`);
   }
 </script>
+
 </body>
+  
 </html>
   <!-- Load ll-slider script -->
   <script src="./ll-slider.js"></script>
