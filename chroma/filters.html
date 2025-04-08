@@ -27,7 +27,7 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Filter UI v9</title>
+  <title>Filter UI v10</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -174,57 +174,67 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
     </div>
   </div>
 
-  <script>
-    // Providers
-    const providerButtons = document.querySelectorAll('.provider-btn');
-    const selectedCount = document.getElementById('selected-count');
+ <script>
+  // Providers
+  const providerButtons = document.querySelectorAll('.provider-btn');
+  const selectedCount = document.getElementById('selected-count');
 
-    providerButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.classList.toggle('selected');
+  providerButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Toggle the selected class
+      btn.classList.toggle('selected');
+      
+      // Toggle the data-track-selected attribute
+      const isSelected = btn.classList.contains('selected');
+      btn.setAttribute('data-track-selected', isSelected ? 'Yes' : 'No');
 
-    // Update the data-track-selected attribute
-    const isSelected = btn.classList.contains('selected');
-    btn.setAttribute('data-track-selected', isSelected ? 'Yes' : 'No');
-        
-        updateSelectedCount();
-      });
-    });
-
-    function updateSelectedCount() {
-      const selected = document.querySelectorAll('.provider-btn.selected');
-      selectedCount.textContent = `(${selected.length} selected)`;
-    }
-
-    // Clear All Filters
-    function clearAll() {
-      document.querySelectorAll('.provider-btn.selected').forEach(el => el.classList.remove('selected'));
-      document.querySelector('input[name="sort"][value="popularity"]').checked = true;
-
-      const slider = document.querySelector('#volatility-slider');
-      if (slider) {
-        slider.value = 1;
-      }
-
+      // Update the selected count
       updateSelectedCount();
+    });
+  });
+
+  function updateSelectedCount() {
+    const selected = document.querySelectorAll('.provider-btn.selected');
+    selectedCount.textContent = `(${selected.length} selected)`;
+  }
+
+  // Clear All Filters
+  function clearAll() {
+    // Reset selected state and data-track-selected to "No"
+    document.querySelectorAll('.provider-btn.selected').forEach(el => {
+      el.classList.remove('selected');
+      el.setAttribute('data-track-selected', 'No');
+    });
+    
+    // Reset sorting to default (Popularity)
+    document.querySelector('input[name="sort"][value="popularity"]').checked = true;
+
+    // Reset volatility slider
+    const slider = document.querySelector('#volatility-slider');
+    if (slider) {
+      slider.value = 1;
     }
 
-    // Show Results
-    function showResults() {
-      const selectedProviders = [...document.querySelectorAll('.provider-btn.selected')]
-        .map(btn => btn.getAttribute('data-track-name'));
-      const sortOption = document.querySelector('input[name="sort"]:checked').value;
+    // Update the selected count display
+    updateSelectedCount();
+  }
 
-      const slider = document.querySelector('#volatility-slider');
-      const volatility = slider.value;
+  // Show Results
+  function showResults() {
+    const selectedProviders = [...document.querySelectorAll('.provider-btn.selected')]
+      .map(btn => btn.getAttribute('data-track-name'));
+    const sortOption = document.querySelector('input[name="sort"]:checked').value;
 
-      console.log("Sort:", sortOption);
-      console.log("Volatility:", volatility);
-      console.log("Providers:", selectedProviders);
+    const slider = document.querySelector('#volatility-slider');
+    const volatility = slider.value;
 
-      alert(`Filters applied!\nSort: ${sortOption}\nVolatility: ${volatility}\nProviders: ${selectedProviders.join(', ')}`);
-    }
-  </script>
+    console.log("Sort:", sortOption);
+    console.log("Volatility:", volatility);
+    console.log("Providers:", selectedProviders);
+
+    alert(`Filters applied!\nSort: ${sortOption}\nVolatility: ${volatility}\nProviders: ${selectedProviders.join(', ')}`);
+  }
+</script>
 
 </body>
 </html>
