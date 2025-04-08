@@ -26,13 +26,15 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 </script>
   
   <meta charset="UTF-8">
-  <title>Filter UI v6/title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filter UI v6</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f9f9f9;
       padding: 20px;
     }
+
     .filter-container {
       background: #fff;
       padding: 20px;
@@ -40,22 +42,27 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       max-width: 400px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+
     .section {
       margin-bottom: 20px;
     }
+
     .section label {
       display: block;
       margin-bottom: 10px;
       font-weight: bold;
     }
+
     .radio-group input {
       margin-right: 5px;
     }
+
     .providers {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
     }
+
     .provider-btn {
       padding: 6px 12px;
       border: 1px solid #ccc;
@@ -63,27 +70,33 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       background: #f1f1f1;
       cursor: pointer;
     }
+
     .provider-btn.selected {
       background-color: #111;
       color: #fff;
     }
+
     .actions {
       display: flex;
       justify-content: space-between;
     }
+
     button {
       padding: 10px 16px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
     }
+
     .clear-btn {
       background: #eee;
     }
+
     .show-btn {
       background: #000;
       color: #fff;
     }
+
     .volatility-labels {
       display: flex;
       justify-content: space-between;
@@ -91,9 +104,30 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       margin-top: 5px;
       color: #555;
     }
+
+    .range-slider {
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    .range-slider input[type="range"] {
+      width: 100%;
+      background: #ddd;
+      height: 6px;
+      border-radius: 5px;
+    }
+
+    .range-slider input[type="range"]::-webkit-slider-thumb {
+      width: 18px;
+      height: 18px;
+      background: #111;
+      border-radius: 50%;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
+
   <div class="filter-container">
     <h2>Filtering & Sorting</h2>
 
@@ -101,31 +135,23 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
     <div class="section">
       <label>Sorting</label>
       <div class="radio-group" data-track-group="sort">
-        <input type="radio" name="sort" value="popularity" checked data-track-sort="popularity"> Popularity<br>
-        <input type="radio" name="sort" value="name-az" data-track-sort="name-az"> Name (A–Z)<br>
-        <input type="radio" name="sort" value="name-za" data-track-sort="name-za"> Name (Z–A)
+        <input type="radio" name="sort" value="popularity" checked> Popularity<br>
+        <input type="radio" name="sort" value="name-az"> Name (A–Z)<br>
+        <input type="radio" name="sort" value="name-za"> Name (Z–A)
       </div>
     </div>
 
-    <!-- Volatility with ll-slider -->
+    <!-- Volatility Slider -->
     <div class="section">
       <label>Volatility</label>
-      <ll-slider
-        id="volatility-slider"
-        data-track-name="filterPanel_volatility_0_-1"
-        class="track"
-        start="1"
-        end="4"
-        unique="false"
-        rangemin="1"
-        rangemax="4">
-      </ll-slider>
-
-      <div class="volatility-labels">
-        <span>Low</span>
-        <span>Mid</span>
-        <span>High</span>
-        <span>Extreme</span>
+      <div class="range-slider">
+        <input id="volatility-slider" type="range" min="1" max="4" value="1">
+        <div class="volatility-labels">
+          <span>Low</span>
+          <span>Mid</span>
+          <span>High</span>
+          <span>Extreme</span>
+        </div>
       </div>
     </div>
 
@@ -138,26 +164,18 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
         <div class="provider-btn" data-track-name="Boldplay">Boldplay</div>
         <div class="provider-btn" data-track-name="Eyecon">Eyecon</div>
         <div class="provider-btn" data-track-name="Evolution">Evolution</div>
-        <div class="provider-btn" data-track-name="Gaming Corps">Gaming Corps</div>
-        <div class="provider-btn" data-track-name="Gaming Realms">Gaming Realms</div>
-        <div class="provider-btn" data-track-name="G Games">G Games</div>
-        <div class="provider-btn" data-track-name="Hacksaw Gaming">Hacksaw Gaming</div>
-        <div class="provider-btn" data-track-name="Inspired">Inspired</div>
-        <div class="provider-btn" data-track-name="IWG">IWG</div>
-        <div class="provider-btn" data-track-name="Microgaming">Microgaming</div>
-        <div class="provider-btn" data-track-name="Netent">Netent</div>
-        <div class="provider-btn" data-track-name="Nolimit City">Nolimit City</div>
       </div>
     </div>
 
     <!-- Actions -->
-    <div class="actions" data-track-container="Actions">
-      <button class="clear-btn" onclick="clearAll()" data-track-name"clear">Clear all</button>
-      <button class="show-btn" onclick="showResults()" data-track-name="show">Show 3 games</button>
+    <div class="actions">
+      <button class="clear-btn" onclick="clearAll()">Clear all</button>
+      <button class="show-btn" onclick="showResults()">Show 3 games</button>
     </div>
   </div>
 
   <script>
+    // Providers
     const providerButtons = document.querySelectorAll('.provider-btn');
     const selectedCount = document.getElementById('selected-count');
 
@@ -173,39 +191,38 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       selectedCount.textContent = `(${selected.length} selected)`;
     }
 
+    // Clear All Filters
     function clearAll() {
       document.querySelectorAll('.provider-btn.selected').forEach(el => el.classList.remove('selected'));
       document.querySelector('input[name="sort"][value="popularity"]').checked = true;
 
       const slider = document.querySelector('#volatility-slider');
       if (slider) {
-        slider.setAttribute('start', '1');
-        slider.setAttribute('end', '4');
+        slider.value = 1;
       }
 
       updateSelectedCount();
     }
 
+    // Show Results
     function showResults() {
       const selectedProviders = [...document.querySelectorAll('.provider-btn.selected')]
-        .map(btn => btn.getAttribute('data-track-provider'));
+        .map(btn => btn.getAttribute('data-track-name'));
       const sortOption = document.querySelector('input[name="sort"]:checked').value;
 
       const slider = document.querySelector('#volatility-slider');
-      const volatilityStart = parseInt(slider.getAttribute('start'));
-      const volatilityEnd = parseInt(slider.getAttribute('end'));
-
-      slider.setAttribute('data-track-volatility-low', volatilityStart);
-      slider.setAttribute('data-track-volatility-high', volatilityEnd);
+      const volatility = slider.value;
 
       console.log("Sort:", sortOption);
-      console.log("Volatility Range:", volatilityStart, "to", volatilityEnd);
+      console.log("Volatility:", volatility);
       console.log("Providers:", selectedProviders);
 
-      alert(`Filters applied!\nSort: ${sortOption}\nVolatility: ${volatilityStart} to ${volatilityEnd}\nProviders: ${selectedProviders.join(', ')}`);
+      alert(`Filters applied!\nSort: ${sortOption}\nVolatility: ${volatility}\nProviders: ${selectedProviders.join(', ')}`);
     }
   </script>
 
+</body>
+</html>
   <!-- Load ll-slider script -->
   <script src="./ll-slider.js"></script>
 </body>
