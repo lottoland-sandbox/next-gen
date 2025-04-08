@@ -134,10 +134,10 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
     <!-- Sorting -->
     <div class="section">
       <label>Sorting</label>
-      <div class="radio-group" data-track-group="sort">
-        <input type="radio" name="sort" value="popularity" checked> Popularity<br>
-        <input type="radio" name="sort" value="name-az"> Name (A–Z)<br>
-        <input type="radio" name="sort" value="name-za"> Name (Z–A)
+      <div class="radio-group" data-track-container="Sort">
+        <input type="radio" name="sort" value="popularity" checked data-track-name="Popularity"> Popularity<br>
+        <input type="radio" name="sort" value="name-az" data-track-name="Ascending"> Name (A–Z)<br>
+        <input type="radio" name="sort" value="name-za" data-track-name="Descending"> Name (Z–A)
       </div>
     </div>
 
@@ -158,7 +158,7 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
     <!-- Providers -->
     <div class="section">
       <label>Game provider <span id="selected-count">(0 selected)</span></label>
-      <div class="providers" data-track-container="providers">
+      <div class="providers" data-track-container="Providers">
         <div class="provider-btn" data-track-name="Anaxi">Anaxi</div>
         <div class="provider-btn" data-track-name="Blueprint">Blueprint</div>
         <div class="provider-btn" data-track-name="Boldplay">Boldplay</div>
@@ -168,9 +168,9 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
     </div>
 
     <!-- Actions -->
-    <div class="actions">
-      <button class="clear-btn" onclick="clearAll()">Clear all</button>
-      <button class="show-btn" onclick="showResults()">Show 3 games</button>
+    <div class="actions" data-track-container="Actions">
+      <button class="clear-btn" onclick="clearAll()"  data-track-name="Clear">Clear all</button>
+      <button class="show-btn" onclick="showResults()"  data-track-name="Show">Show 3 games</button>
     </div>
   </div>
 
