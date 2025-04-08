@@ -26,7 +26,7 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 </script>
   
   <meta charset="UTF-8">
-  <title>Filter UI with ll-slider</title>
+  <title>Filter UI v6/title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -120,6 +120,7 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
         rangemin="1"
         rangemax="4">
       </ll-slider>
+
       <div class="volatility-labels">
         <span>Low</span>
         <span>Mid</span>
@@ -131,28 +132,28 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
     <!-- Providers -->
     <div class="section">
       <label>Game provider <span id="selected-count">(0 selected)</span></label>
-      <div class="providers" data-track-group="providers">
-        <div class="provider-btn" data-track-provider="Anaxi">Anaxi</div>
-        <div class="provider-btn" data-track-provider="Blueprint">Blueprint</div>
-        <div class="provider-btn" data-track-provider="Boldplay">Boldplay</div>
-        <div class="provider-btn" data-track-provider="Eyecon">Eyecon</div>
-        <div class="provider-btn" data-track-provider="Evolution">Evolution</div>
-        <div class="provider-btn" data-track-provider="Gaming Corps">Gaming Corps</div>
-        <div class="provider-btn" data-track-provider="Gaming Realms">Gaming Realms</div>
-        <div class="provider-btn" data-track-provider="G Games">G Games</div>
-        <div class="provider-btn" data-track-provider="Hacksaw Gaming">Hacksaw Gaming</div>
-        <div class="provider-btn" data-track-provider="Inspired">Inspired</div>
-        <div class="provider-btn" data-track-provider="IWG">IWG</div>
-        <div class="provider-btn" data-track-provider="Microgaming">Microgaming</div>
-        <div class="provider-btn" data-track-provider="Netent">Netent</div>
-        <div class="provider-btn" data-track-provider="Nolimit City">Nolimit City</div>
+      <div class="providers" data-track-container="providers">
+        <div class="provider-btn" data-track-name="Anaxi">Anaxi</div>
+        <div class="provider-btn" data-track-name="Blueprint">Blueprint</div>
+        <div class="provider-btn" data-track-name="Boldplay">Boldplay</div>
+        <div class="provider-btn" data-track-name="Eyecon">Eyecon</div>
+        <div class="provider-btn" data-track-name="Evolution">Evolution</div>
+        <div class="provider-btn" data-track-name="Gaming Corps">Gaming Corps</div>
+        <div class="provider-btn" data-track-name="Gaming Realms">Gaming Realms</div>
+        <div class="provider-btn" data-track-name="G Games">G Games</div>
+        <div class="provider-btn" data-track-name="Hacksaw Gaming">Hacksaw Gaming</div>
+        <div class="provider-btn" data-track-name="Inspired">Inspired</div>
+        <div class="provider-btn" data-track-name="IWG">IWG</div>
+        <div class="provider-btn" data-track-name="Microgaming">Microgaming</div>
+        <div class="provider-btn" data-track-name="Netent">Netent</div>
+        <div class="provider-btn" data-track-name="Nolimit City">Nolimit City</div>
       </div>
     </div>
 
     <!-- Actions -->
-    <div class="actions">
-      <button class="clear-btn" onclick="clearAll()" data-track-action="clear">Clear all</button>
-      <button class="show-btn" onclick="showResults()" data-track-action="show">Show 3 games</button>
+    <div class="actions" data-track-container="Actions">
+      <button class="clear-btn" onclick="clearAll()" data-track-name"clear">Clear all</button>
+      <button class="show-btn" onclick="showResults()" data-track-name="show">Show 3 games</button>
     </div>
   </div>
 
