@@ -35,6 +35,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 4%;
+    }
+    .volatility-range input[type="range"] {
+      width: 48%;
     }
     .range-labels {
       display: flex;
@@ -53,6 +57,7 @@
       border-radius: 20px;
       background: #f1f1f1;
       cursor: pointer;
+      user-select: none;
     }
     .provider-btn.selected {
       background-color: #111;
@@ -92,10 +97,29 @@
       </div>
     </div>
 
-    <!-- Volatility -->
+    <!-- Volatility (Dual Slider) -->
     <div class="section">
       <label>Volatility</label>
-      <input type="range" id="volatility-range" min="0" max="3" step="1" value="0" data-track-volatility="0" />
+      <div class="volatility-range">
+        <input
+          type="range"
+          id="volatility-min"
+          min="0"
+          max="3"
+          value="0"
+          step="1"
+          data-track-volatility-low="0"
+        />
+        <input
+          type="range"
+          id="volatility-max"
+          min="0"
+          max="3"
+          value="3"
+          step="1"
+          data-track-volatility-high="3"
+        />
+      </div>
       <div class="range-labels">
         <span>Low</span>
         <span>Mid</span>
@@ -135,7 +159,8 @@
   <script>
     const providerButtons = document.querySelectorAll('.provider-btn');
     const selectedCount = document.getElementById('selected-count');
-    const rangeInput = document.getElementById('volatility-range');
+    const volatilityMin = document.getElementById("volatility-min");
+    const volatilityMax = document.getElementById("volatility-max");
 
     providerButtons.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -149,22 +174,46 @@
       selectedCount.textContent = `(${selected.length} selected)`;
     }
 
+    // Prevent sliders from crossing
+    volatilityMin.addEventListener("input", () => {
+      if (parseInt(volatilityMin.value) > parseInt(volatilityMax.value)) {
+        volatilityMin.value = volatilityMax.value;
+      }
+      volatilityMin.setAttribute("data-track-volatility-low", volatilityMin.value);
+    });
+
+    volatilityMax.addEventListener("input", () => {
+      if (parseInt(volatilityMax.value) < parseInt(volatilityMin.value)) {
+        volatilityMax.value = volatilityMin.value;
+      }
+      volatilityMax.setAttribute("data-track-volatility-high", volatilityMax.value);
+    });
+
     function clearAll() {
       document.querySelectorAll('.provider-btn.selected').forEach(el => el.classList.remove('selected'));
       document.querySelector('input[name="sort"][value="popularity"]').checked = true;
-      rangeInput.value = 0;
+      volatilityMin.value = 0;
+      volatilityMax.value = 3;
+      volatilityMin.setAttribute("data-track-volatility-low", "0");
+      volatilityMax.setAttribute("data-track-volatility-high", "3");
       updateSelectedCount();
     }
 
     function showResults() {
-      const selectedProviders = [...document.querySelectorAll('.provider-btn.selected')].map(btn => btn.getAttribute('data-track-provider'));
+      const selectedProviders = [...document.querySelectorAll('.provider-btn.selected')]
+        .map(btn => btn.getAttribute('data-track-provider'));
       const sortOption = document.querySelector('input[name="sort"]:checked').value;
-      const volatility = rangeInput.value;
+      const volLow = volatilityMin.value;
+      const volHigh = volatilityMax.value;
 
       console.log("Sort:", sortOption);
-      console.log("Volatility:", volatility);
+      console.log("Volatility Range:", volLow, "to", volHigh);
       console.log("Providers:", selectedProviders);
-      alert(`Filters applied!\nSort: ${sortOption}\nVolatility: ${volatility}\nProviders: ${selectedProviders.join(', ')}`);
+
+      alert(`Filters applied!
+Sort: ${sortOption}
+Volatility: ${volLow} to ${volHigh}
+Providers: ${selectedProviders.join(', ')}`);
     }
   </script>
 </body>
