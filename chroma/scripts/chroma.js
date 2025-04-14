@@ -15,12 +15,12 @@ function loginSuccess() {
     FS('setIdentity', {
         uid: '654321',
         properties: {
-            displayName: 'Player 654321',
+            "identification-method": 'login',
+            "displayName": 'Player 654321',
             "player-number": '654321',
-            "account-status": 'SELFBAN',
-            "player-tier": 'SILVER',
-            "verification-status": 'PENDING',
-            "identification-method": 'login'
+            "account-status": 'REGISTERED',
+            "player-tier": 'NON-VIP',
+            "verification-status": 'PENDING'
         }
     });
 
@@ -28,8 +28,8 @@ function loginSuccess() {
     FS('trackEvent', {
         name: 'Login | Success',
         properties: {
-            "type": 'standard',
-            "2fa": 'none',
+            "identifier": 'Email | Mobile',
+            "verifier": 'Email OTP | SMS OTP | Password',
             "attempt": 1
         }
     });
@@ -44,7 +44,8 @@ function loginFailure() {
     FS('trackEvent', {
         name: 'Log In | Failure',
         properties: {
-            "type": 'standard',
+            "identifier": 'Email | Mobile',
+            "verifier": 'Email OTP | SMS OTP | Password',
             "attempt": 1,
             "error": getLoginError()
         }
