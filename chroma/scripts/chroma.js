@@ -2,6 +2,7 @@
 
 
 
+
 function registrationSuccess() {
 
 }
@@ -25,12 +26,15 @@ function loginSuccess() {
         }
     });
 
+    const identifierOptions = ['Email', 'Mobile'];
+    const verifierOptions = ['Email OTP', 'SMS OTP', 'Password'];
+
     // ** LOGIN EVENT ***
     FS('trackEvent', {
         name: 'Login | Success',
         properties: {
-            "identifier": 'Email | Mobile',
-            "verifier": 'Email OTP | SMS OTP | Password',
+            identifier: getRandomElement(identifierOptions),
+            verifier: getRandomElement(verifierOptions)
             
             "account-status": 'REGISTERED',
             "player-tier": 'NON-VIP',
@@ -45,18 +49,40 @@ function loginSuccess() {
 function loginFailure() {
     FS('setIdentity', { anonymous: true });
 
+    const identifierOptions = ['Email', 'Mobile'];
+    const verifierOptions = ['Email OTP', 'SMS OTP', 'Password']; 
     
     FS('trackEvent', {
         name: 'Log In | Failure',
         properties: {
-            "identifier": 'Email | Mobile',
-            "verifier": 'Email OTP | SMS OTP | Password',
+            identifier: getRandomElement(identifierOptions),
+            verifier: getRandomElement(verifierOptions)
+                
             "attempt": 1,
             "error": getLoginError()
         }
     });
 
     alert('Log In Failure');
+}
+
+
+
+function logoutSuccess() {
+
+  const method = Math.random() < 0.2 ? 'timeout' : 'manual';
+
+    FS('trackEvent', {
+        name: 'Logout | Success',
+        properties: {
+            method: method
+        }
+    });
+    
+
+    FS('setIdentity', { anonymous: true });
+
+    alert('Logged out');
 }
 
 
@@ -79,22 +105,6 @@ function getLoginError() {
 }
 
 
-
-
-
-function logoutSuccess() {
-
-  const method = Math.random() < 0.2 ? 'timeout' : 'manual';
-
-    FS('trackEvent', {
-        name: 'Logout | Success',
-        properties: {
-            method: method
-        }
-    });
-    
-
-    FS('setIdentity', { anonymous: true });
-
-    alert('Logged out');
+function getRandomElement(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
 }
