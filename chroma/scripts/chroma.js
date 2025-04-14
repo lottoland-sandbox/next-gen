@@ -43,7 +43,6 @@ function loginFailure() {
         name: 'Log In | Failure',
         properties: {
             "type": 'standard',
-            "2fa": 'none',
             "attempt": 1,
             "error": "InvalidCredentials"
         }
