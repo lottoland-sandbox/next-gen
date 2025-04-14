@@ -39,25 +39,54 @@ function loginSuccess() {
 
 function loginFailure() {
     FS('setIdentity', { anonymous: true });
+
+    
     FS('trackEvent', {
         name: 'Log In | Failure',
         properties: {
             "type": 'standard',
             "attempt": 1,
-            "error": "InvalidCredentials"
+            "error": getLoginError()
         }
     });
 
     alert('Log In Failure');
 }
 
+
+function getLoginError() {
+    const rand = Math.random();
+
+    let error;
+    if (rand < 0.1) {
+        error = 'SystemFailure';         // 10% chance
+    } else if (rand < 0.4) {
+        error = 'InvalidCredential';     // 30% chance
+    } else if (rand < 0.6) {
+        error = 'AccountLocked';         // 20% chance
+    } else if (rand < 0.8) {
+        error = 'SelfBan';         // 20% chance
+    } else {
+        error = 'GamstopBan';          // 20% chance
+    }
+    return error;
+}
+
+
+
+
+
 function logoutSuccess() {
+
+  const method = Math.random() < 0.2 ? 'timeout' : 'manual';
+
     FS('trackEvent', {
         name: 'Logout | Success',
         properties: {
-            method: 'manual'
+            method: method
         }
     });
+    
 
     FS('setIdentity', { anonymous: true });
 
