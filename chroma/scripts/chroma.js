@@ -37,6 +37,7 @@ function loginSuccess() {
 }
 
 function loginFailure() {
+    FS('setIdentity', { anonymous: true });
     FS('trackEvent', {
         name: 'Log In | Failure',
         properties: {
