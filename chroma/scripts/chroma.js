@@ -16,6 +16,7 @@ function loginSuccess() {
         uid: '654321',
         displayName: 'Mike',
         properties: {
+            displayName: 'Mike',
             "player-number": '123456',
             "account-status": 'SELFBAN',
             "player-tier": 'SILVER',
