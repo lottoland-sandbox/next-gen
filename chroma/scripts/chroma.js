@@ -13,7 +13,7 @@ function registrationFailure() {
 function loginSuccess() {
     // ** IDENTITY ***
     FS('setIdentity', {
-        uid: '123456',
+        uid: '654321',
         properties: {
             "player-number": '123456',
             "account-status": 'SELFBAN',
