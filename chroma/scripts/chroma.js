@@ -34,7 +34,7 @@ function loginSuccess() {
         name: 'Login | Success',
         properties: {
             identifier: getRandomElement(identifierOptions),
-            verifier: getRandomElement(verifierOptions)
+            verifier: getRandomElement(verifierOptions),
             
             "account-status": 'REGISTERED',
             "player-tier": 'NON-VIP',
@@ -56,7 +56,7 @@ function loginFailure() {
         name: 'Log In | Failure',
         properties: {
             identifier: getRandomElement(identifierOptions),
-            verifier: getRandomElement(verifierOptions)
+            verifier: getRandomElement(verifierOptions),
                 
             "attempt": 1,
             "error": getLoginError()
