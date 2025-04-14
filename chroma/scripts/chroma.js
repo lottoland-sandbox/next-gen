@@ -22,7 +22,7 @@ function loginSuccess() {
             
             "account-status": 'REGISTERED',
             "player-tier": 'NON-VIP',
-            "verification-status": 'PENDING'
+            "verification-status": 'PENDING',
         }
     });
 
@@ -38,7 +38,7 @@ function loginSuccess() {
             
             "account-status": 'REGISTERED',
             "player-tier": 'NON-VIP',
-            "verification-status": 'PENDING'
+            "verification-status": 'PENDING',
             "attempt": 1
         }
     });
