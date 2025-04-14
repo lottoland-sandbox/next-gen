@@ -1,14 +1,9 @@
-
-
-
-
-
 function registrationSuccess() {
-
+    // Implement registration success logic here if needed
 }
 
 function registrationFailure() {
-
+    // Implement registration failure logic here if needed
 }
 
 function loginSuccess() {
@@ -19,7 +14,6 @@ function loginSuccess() {
             "identification-method": 'login',
             "displayName": 'Player 654321',
             "player-number": '654321',
-            
             "account-status": 'REGISTERED',
             "player-tier": 'NON-VIP',
             "verification-status": 'PENDING',
@@ -35,7 +29,6 @@ function loginSuccess() {
         properties: {
             identifier: getRandomElement(identifierOptions),
             verifier: getRandomElement(verifierOptions),
-            
             "account-status": 'REGISTERED',
             "player-tier": 'NON-VIP',
             "verification-status": 'PENDING',
@@ -43,7 +36,7 @@ function loginSuccess() {
         }
     });
 
-    alert('Log In Success');
+    console.log('Log In Success');
 }
 
 function loginFailure() {
@@ -57,20 +50,16 @@ function loginFailure() {
         properties: {
             identifier: getRandomElement(identifierOptions),
             verifier: getRandomElement(verifierOptions),
-                
             "attempt": 1,
             "error": getLoginError()
         }
     });
 
-    alert('Log In Failure');
+    console.log('Log In Failure');
 }
 
-
-
 function logoutSuccess() {
-
-  const method = Math.random() < 0.2 ? 'timeout' : 'manual';
+    const method = Math.random() < 0.2 ? 'timeout' : 'manual';
 
     FS('trackEvent', {
         name: 'Logout | Success',
@@ -78,13 +67,11 @@ function logoutSuccess() {
             method: method
         }
     });
-    
 
     FS('setIdentity', { anonymous: true });
 
-    alert('Logged out');
+    console.log('Logged out');
 }
-
 
 function getLoginError() {
     const rand = Math.random();
@@ -97,13 +84,12 @@ function getLoginError() {
     } else if (rand < 0.6) {
         error = 'AccountLocked';         // 20% chance
     } else if (rand < 0.8) {
-        error = 'SelfBan';         // 20% chance
+        error = 'SelfBan';               // 20% chance
     } else {
-        error = 'GamstopBan';          // 20% chance
+        error = 'GamstopBan';            // 20% chance
     }
     return error;
 }
-
 
 function getRandomElement(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
