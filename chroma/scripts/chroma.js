@@ -15,8 +15,8 @@ function loginSuccess() {
     FS('setIdentity', {
         uid: '654321',
         properties: {
-            displayName: 'Player: 654321',
-            "player-number": '123456',
+            displayName: 'Player 654321',
+            "player-number": '654321',
             "account-status": 'SELFBAN',
             "player-tier": 'SILVER',
             "verification-status": 'PENDING',
