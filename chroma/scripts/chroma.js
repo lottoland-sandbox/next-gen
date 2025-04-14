@@ -18,6 +18,7 @@ function loginSuccess() {
             "identification-method": 'login',
             "displayName": 'Player 654321',
             "player-number": '654321',
+            
             "account-status": 'REGISTERED',
             "player-tier": 'NON-VIP',
             "verification-status": 'PENDING'
@@ -30,6 +31,7 @@ function loginSuccess() {
         properties: {
             "identifier": 'Email | Mobile',
             "verifier": 'Email OTP | SMS OTP | Password',
+            
             "account-status": 'REGISTERED',
             "player-tier": 'NON-VIP',
             "verification-status": 'PENDING'
