@@ -14,9 +14,8 @@ function loginSuccess() {
     // ** IDENTITY ***
     FS('setIdentity', {
         uid: '654321',
-        displayName: 'Mike',
         properties: {
-            displayName: 'Mike',
+            displayName: 'Player: 654321',
             "player-number": '123456',
             "account-status": 'SELFBAN',
             "player-tier": 'SILVER',
