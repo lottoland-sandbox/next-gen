@@ -14,6 +14,7 @@ function loginSuccess() {
     // ** IDENTITY ***
     FS('setIdentity', {
         uid: '654321',
+        displayName: "Mike",
         properties: {
             "player-number": '123456',
             "account-status": 'SELFBAN',
