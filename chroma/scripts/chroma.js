@@ -30,6 +30,9 @@ function loginSuccess() {
         properties: {
             "identifier": 'Email | Mobile',
             "verifier": 'Email OTP | SMS OTP | Password',
+            "account-status": 'REGISTERED',
+            "player-tier": 'NON-VIP',
+            "verification-status": 'PENDING'
             "attempt": 1
         }
     });
