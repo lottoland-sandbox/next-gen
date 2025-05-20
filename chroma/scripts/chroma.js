@@ -1,3 +1,19 @@
+function accountRegistrationSuccess() {
+ FS('trackEvent', {
+        name: 'Account | Registration | Success',
+        properties: {
+            
+            accountStatus: 'REGISTERED',
+            playerTier: 'NON-VIP',
+            verificationStatus: 'PENDING',
+            
+        }
+    });    
+}
+
+
+
+
 function registrationSuccess() {
     // Implement registration success logic here if needed
 }
