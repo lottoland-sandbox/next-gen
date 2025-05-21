@@ -144,6 +144,7 @@ function payinFTDFailure() {
             amount: amount,
         }
     });
+     console.log('Payin FTD Failure');
 }
 
 function getRandomAmount() {
