@@ -1,4 +1,5 @@
 function accountRegistrationSuccess() {
+
  FS('trackEvent', {
         name: 'Account | Registration | Success',
         properties: {
@@ -6,7 +7,10 @@ function accountRegistrationSuccess() {
             accountStatus: 'REGISTERED',
             playerTier: 'NON-VIP',
             verificationStatus: 'PENDING',
+
+
             
+         
         }
     });    
 }
@@ -14,12 +18,36 @@ function accountRegistrationSuccess() {
 
 
 
-function registrationSuccess() {
-    // Implement registration success logic here if needed
+function registrationSuccess() {    
+    FS('setIdentity', {
+        uid: '654321',
+        properties: {
+            method: 'Registration',
+            displayName: 'Player 654321',
+            playerNumber: '654321',
+            accountStatus: 'REGISTERED',
+            playerTier: 'NON-VIP',
+            verificationStatus: 'PENDING',
+        }
+    });
+    FS('trackEvent', {
+        name: 'Registration | Success',
+        properties: {
+            // *** None Currently ***
+        }
+    });
+    console.log('Registration Success');
 }
 
-function registrationFailure() {
-    // Implement registration failure logic here if needed
+
+function registrationFailure() {  
+    FS('trackEvent', {
+        name: 'Registration | Failure',
+        properties: {
+            error: getregistrationError()
+        }
+    });
+    console.log('Registration Failure')
 }
 
 function loginSuccess() {
@@ -29,10 +57,10 @@ function loginSuccess() {
         properties: {
             "identification-method": 'login',
             "displayName": 'Player 654321',
-            "player-number": '654321',
-            "account-status": 'REGISTERED',
-            "player-tier": 'NON-VIP',
-            "verification-status": 'PENDING',
+            "playerNumber": '654321',
+            "accountStatus": 'REGISTERED',
+            "playerTier": 'NON-VIP',
+            "verificationStatus": 'PENDING',
         }
     });
 
@@ -45,9 +73,9 @@ function loginSuccess() {
         properties: {
             identifier: getRandomElement(identifierOptions),
             verifier: getRandomElement(verifierOptions),
-            "account-status": 'REGISTERED',
-            "player-tier": 'NON-VIP',
-            "verification-status": 'PENDING',
+            "accountStatus": 'REGISTERED',
+            "playerTier": 'NON-VIP',
+            "verificationStatus": 'PENDING',
             "attempt": 1
         }
     });
@@ -106,6 +134,27 @@ function getLoginError() {
     }
     return error;
 }
+
+
+
+function getRegistrationError() {
+    const rand = Math.random();
+
+    let error;
+    if (rand < 0.1) {
+        error = 'SystemFailure';         // 10% chance
+    } else if (rand < 0.4) {
+        error = 'GamStopBan';     // 30% chance
+    } else if (rand < 0.6) {
+        error = 'AccountClosed';         // 20% chance
+    } else if (rand < 0.8) {
+        error = 'BetStopBan';               // 20% chance
+    } else {
+        error = 'SystemUnavailable';            // 20% chance
+    }
+    return error;
+}
+
 
 function getRandomElement(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
