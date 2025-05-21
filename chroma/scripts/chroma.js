@@ -95,7 +95,7 @@ function loginFailure() {
         properties: {
             identifier: getRandomElement(identifierOptions),
             verifier: getRandomElement(verifierOptions),
-            credentials: `${identifier} - ${verifier}`,
+             credentials: `${identifier} - ${verifier}`,
             "attempt": 1,
             "error": getLoginError()
         }
