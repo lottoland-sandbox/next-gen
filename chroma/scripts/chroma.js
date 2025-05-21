@@ -147,6 +147,28 @@ function payinFTDFailure() {
      console.log('Payin FTD Failure');
 }
 
+function payinSDFailure() {
+
+    var error = getRandomErrorData();
+    var method=getRandomMethod();
+    var currency='GBP';
+    var amount=getRandomAmount(); 
+
+    FS('trackEvent', {
+        name: 'Deposit | Failure | SD',
+        properties: {
+            process: 'SD',
+            method: method, 
+            code: error.code,
+            type: error.type,
+            category: error.category,
+            currency: currency,
+            amount: amount,
+        }
+    });
+     console.log('Payin SD Failure');
+}
+
 function getRandomAmount() {
     const amounts = [
         10, 20, 30, 35, 40, 50, 60, 70, 75, 80, 90,
