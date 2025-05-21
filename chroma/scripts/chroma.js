@@ -126,7 +126,6 @@ function logoutSuccess() {
 
 function payinFTDSuccess() {
 
-    var error = getRandomErrorData();
     var method=getRandomMethod();
     var currency='GBP';
     var amount=getRandomAmount(); 
@@ -169,8 +168,6 @@ function payinFTDFailure() {
 }
 
 function payinSDSuccess() {
-
-    var error = getRandomErrorData();
     var method=getRandomMethod();
     var currency='GBP';
     var amount=getRandomAmount(); 
