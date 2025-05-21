@@ -124,6 +124,26 @@ function logoutSuccess() {
     console.log('Logged out');
 }
 
+function payinFTDSuccess() {
+
+    var error = getRandomErrorData();
+    var method=getRandomMethod();
+    var currency='GBP';
+    var amount=getRandomAmount(); 
+
+    FS('trackEvent', {
+        name: 'Deposit | Success | FTD',
+        properties: {
+            process: 'FTD',
+            method: method, 
+            currency: currency,
+            amount: amount,
+        }
+    });
+     console.log('Payin FTD Success');
+}
+
+
 
 function payinFTDFailure() {
 
@@ -146,6 +166,27 @@ function payinFTDFailure() {
     });
      console.log('Payin FTD Failure');
 }
+
+function payinSDSuccess() {
+
+    var error = getRandomErrorData();
+    var method=getRandomMethod();
+    var currency='GBP';
+    var amount=getRandomAmount(); 
+
+    FS('trackEvent', {
+        name: 'Deposit | Success | SD',
+        properties: {
+            process: 'SD',
+            method: method, 
+            currency: currency,
+            amount: amount,
+        }
+    });
+     console.log('Payin SD Success');
+}
+
+
 
 function payinSDFailure() {
 
