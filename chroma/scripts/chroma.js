@@ -73,6 +73,7 @@ function loginSuccess() {
         properties: {
             identifier: getRandomElement(identifierOptions),
             verifier: getRandomElement(verifierOptions),
+            credentials: `${identifier} - ${verifier}`,
             "accountStatus": 'REGISTERED',
             "playerTier": 'NON-VIP',
             "verificationStatus": 'PENDING',
@@ -94,6 +95,7 @@ function loginFailure() {
         properties: {
             identifier: getRandomElement(identifierOptions),
             verifier: getRandomElement(verifierOptions),
+            credentials: `${identifier} - ${verifier}`,
             "attempt": 1,
             "error": getLoginError()
         }
