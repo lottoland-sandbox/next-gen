@@ -162,7 +162,7 @@ function payinFTDFailure() {
             category: error.category,
             currency: currency,
             amount: amount,
-            error: `${method} | ${error.code} | ${error.type} | ${error.category}`,
+            error: `${error.code} | ${error.type} | ${error.category}`,
         }
     });
      console.log('Payin FTD Failure');
@@ -206,7 +206,7 @@ function payinSDFailure() {
             category: error.category,
             currency: currency,
             amount: amount,
-            error: `${method} | ${error.code} | ${error.type} | ${error.category}`,
+            error: `${error.code} | ${error.type} | ${error.category}`,
         }
     });
      console.log('Payin SD Failure');
