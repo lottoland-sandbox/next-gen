@@ -67,17 +67,20 @@ function loginSuccess() {
     const identifierOptions = ['Email', 'Mobile'];
     const verifierOptions = ['Email OTP', 'SMS OTP', 'Password'];
 
+    const identifier = getRandomElement(identifierOptions);
+    const verifier = getRandomElement(verifierOptions);
+
     // ** LOGIN EVENT ***
     FS('trackEvent', {
         name: 'Login | Success',
         properties: {
-            identifier: getRandomElement(identifierOptions),
-            verifier: getRandomElement(verifierOptions),
+            identifier: identifier,
+            verifier: verifier,
             credentials: `${identifier} - ${verifier}`,
-            "accountStatus": 'REGISTERED',
-            "playerTier": 'NON-VIP',
-            "verificationStatus": 'PENDING',
-            "attempt": 1
+            accountStatus: 'REGISTERED',
+            playerTier: 'NON-VIP',
+            verificationStatus: 'PENDING',
+            attempt: 1
         }
     });
 
@@ -89,21 +92,23 @@ function loginFailure() {
 
     const identifierOptions = ['Email', 'Mobile'];
     const verifierOptions = ['Email OTP', 'SMS OTP', 'Password']; 
-    
+
+    const identifier = getRandomElement(identifierOptions);
+    const verifier = getRandomElement(verifierOptions);
+
     FS('trackEvent', {
         name: 'Log In | Failure',
         properties: {
-            identifier: getRandomElement(identifierOptions),
-            verifier: getRandomElement(verifierOptions),
-             credentials: `${identifier} - ${verifier}`,
-            "attempt": 1,
-            "error": getLoginError()
+            identifier: identifier,
+            verifier: verifier,
+            credentials: `${identifier} - ${verifier}`,
+            attempt: 1,
+            error: getLoginError()
         }
     });
 
     console.log('Log In Failure');
 }
-
 function logoutSuccess() {
     const method = Math.random() < 0.2 ? 'timeout' : 'manual';
 
