@@ -35,41 +35,41 @@
     function sendFrontEndEvents() {
       parsedData.forEach(row => {
         FS.event('Registration | Success', {
-          PlayerID: row['Player ID'],
+          PlayerID: row['Player_ID'],
           Timestamp: row['Timestamp'],
-          AccountStatus: row['Account Status'],
-          PlayerTier: row['Player Tier'],
-          VerificationStatus: row['Verification Status'],
-          UTMMedium: row['UTM Medium'],
-          UTMSource: row['UTM Source'],
-          UTMCampaign: row['UTM Campaign']
+          AccountStatus: row['Account_Status'],
+          PlayerTier: row['Player_Tier'],
+          VerificationStatus: row['Verification_Status'],
+          UTMMedium: row['Channel'],
+          UTMSource: row['Partner'],
+          UTMCampaign: row['Partner_Group']
         });
-        log('Front-End Event sent for Player ID: ' + row['Player ID']);
+        log('Front-End Event sent for Player ID: ' + row['Player_ID']);
       });
     }
 
     function sendBackEndEvents() {
       parsedData.forEach(row => {
         FS.event('Account | Registration | Success', {
-          PlayerID: row['Player ID'],
+          PlayerID: row['Player_ID'],
           Timestamp: row['Timestamp'],
-          DisplayName: row['Display Name'],
+          DisplayName: row['Display_Name'],
           uid: row['uid'],
           Domain: row['Domain'],
           Language: row['Language'],
           Country: row['Country'],
           Channel: row['Channel'],
           Partner: row['Partner'],
-          PartnerGroup: row['Partner Group'],
-          UserPlatform: row['User Platform'],
-          DeviceType: row['Device Type'],
+          PartnerGroup: row['Partner_Group'],
+          UserPlatform: row['User_Platform'],
+          DeviceType: row['Device_Type'],
           OS: row['OS'],
           Browser: row['Browser'],
-          AccountStatus: row['Account Status'],
-          PlayerTier: row['Player Tier'],
-          VerificationStatus: row['Verification Status']
+          AccountStatus: row['Account_Status'],
+          PlayerTier: row['Player_Tier'],
+          VerificationStatus: row['Verification_Status']
         });
-        log('Back-End Event sent for Player ID: ' + row['Player ID']);
+        log('Back-End Event sent for Player ID: ' + row['Player_ID']);
       });
     }
   </script>
