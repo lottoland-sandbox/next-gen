@@ -32,6 +32,21 @@
       document.getElementById('log').textContent += message + '\n';
     }
 
+    function reformatTimestamp(rawTime) {
+  if (!rawTime || !rawTime.includes(':')) return null;
+
+  const now = new Date(); // Replace with fixed base date if needed
+  const [minStr, secStr] = rawTime.split(':');
+  const minutes = parseInt(minStr, 10);
+  const seconds = parseFloat(secStr);
+
+  now.setMinutes(minutes);
+  now.setSeconds(Math.floor(seconds));
+  now.setMilliseconds(0);
+
+  return now.toLocaleString('en-GB'); // Format: "DD/MM/YYYY HH:mm:ss"
+}
+
     function sendFrontEndEvents() {
       parsedData.forEach(row => {
         FS.event('Registration | Success', {
@@ -48,29 +63,55 @@
       });
     }
 
-    function sendBackEndEvents() {
-      parsedData.forEach(row => {
-        FS.event('Account | Registration | Success', {
-          PlayerID: row['PLAYER_ID'],
-          Timestamp: row['TIMESTAMP'],
-          DisplayName: row['DISPLAY_NAME'],
-          uid: row['UID'],
-          Domain: row['DOMAIN'],
-          Language: row['LANGUAGE'],
-          Country: row['COUNTRY'],
-          Channel: row['CHANNEL'],
-          Partner: row['PARTNER'],
-          PartnerGroup: row['PARTNER_GROUP'],
-          UserPlatform: row['USER_PLATFORM'],
-          DeviceType: row['USER_DEVICE'],
-          OS: row['OS'],
-          AccountStatus: row['ACCOUNT_STATUS'],
-          PlayerTier: row['PLAYER_TIER'],
-          VerificationStatus: row['VERIFICATION_STATUS']
-        });
-        log('Back-End Event sent for Player ID: ' + row['PLAYER_ID']);
+    // Timestamp converter: assumes raw is in MM:SS.s format
+  function reformatTimestamp(rawTime) {
+    if (!rawTime || !rawTime.includes(':')) return null;
+
+    const now = new Date(); // You can set a fixed base date here if needed
+    const [minStr, secStr] = rawTime.split(':');
+    const minutes = parseInt(minStr, 10);
+    const seconds = parseFloat(secStr);
+
+    now.setMinutes(minutes);
+    now.setSeconds(Math.floor(seconds));
+    now.setMilliseconds(0);
+
+    return now.toLocaleString('en-GB'); // Format: "DD/MM/YYYY HH:mm:ss"
+  }
+
+  function sendBackEndEvents(parsedData) {
+    parsedData.forEach((row, index) => {
+      const timestamp = reformatTimestamp(row['TIMESTAMP']);
+
+      // Safeguard against missing Player ID
+      const playerId = row['PLAYER_ID'];
+      if (!playerId) {
+        console.warn(`Row ${index + 1}: Missing PLAYER_ID`);
+        return;
+      }
+
+      FS.event('Account | Registration | Success', {
+        PlayerID: playerId,
+        Timestamp: timestamp,
+        DisplayName: row['DISPLAY_NAME'],
+        UID: row['UID'],
+        Domain: row['DOMAIN'],
+        Language: row['LANGUAGE'],
+        Country: row['COUNTRY'],
+        Channel: row['CHANNEL'],
+        Partner: row['PARTNER'],
+        PartnerGroup: row['PARTNER_GROUP'],
+        AcquisitionApplication: row['ACQUISITION_APPLICATION'],
+        AcquisitionDevice: row['ACQUISITION_DEVICE'],
+        AcquisitionOS: row['ACQUISITION_OS'],
+        AccountStatus: row['ACCOUNT_STATUS'],
+        PlayerTier: row['PLAYER_TIER'],
+        VerificationStatus: row['VERIFICATION_STATUS']
       });
-    }
+
+      console.log(`Back-End Event sent for Player ID: ${playerId}`);
+    });
+  }
   </script>
 
   <!-- Make sure FullStory snippet is added to this page in your sandbox -->
