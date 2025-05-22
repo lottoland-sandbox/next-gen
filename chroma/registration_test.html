@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FullStory Event Sandbox</title>
+</head>
+<body>
+  <h1>FullStory Event Simulator</h1>
+
+  <input type="file" id="csvUpload" accept=".csv" />
+  <button onclick="sendFrontEndEvents()">Send Front-End Events</button>
+  <button onclick="sendBackEndEvents()">Send Back-End Events</button>
+
+  <pre id="log"></pre>
+
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script>
+    let parsedData = [];
+
+    document.getElementById('csvUpload').addEventListener('change', function (e) {
+      Papa.parse(e.target.files[0], {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          parsedData = results.data;
+          log('CSV loaded with ' + parsedData.length + ' rows');
+        }
+      });
+    });
+
+    function log(message) {
+      document.getElementById('log').textContent += message + '\n';
+    }
+
+    function sendFrontEndEvents() {
+      parsedData.forEach(row => {
+        FS.event('Registration | Success', {
+          PlayerID: row['Player ID'],
+          Timestamp: row['Timestamp'],
+          AccountStatus: row['Account Status'],
+          PlayerTier: row['Player Tier'],
+          VerificationStatus: row['Verification Status'],
+          UTMMedium: row['UTM Medium'],
+          UTMSource: row['UTM Source'],
+          UTMCampaign: row['UTM Campaign']
+        });
+        log('Front-End Event sent for Player ID: ' + row['Player ID']);
+      });
+    }
+
+    function sendBackEndEvents() {
+      parsedData.forEach(row => {
+        FS.event('Account | Registration | Success', {
+          PlayerID: row['Player ID'],
+          Timestamp: row['Timestamp'],
+          DisplayName: row['Display Name'],
+          uid: row['uid'],
+          Domain: row['Domain'],
+          Language: row['Language'],
+          Country: row['Country'],
+          Channel: row['Channel'],
+          Partner: row['Partner'],
+          PartnerGroup: row['Partner Group'],
+          UserPlatform: row['User Platform'],
+          DeviceType: row['Device Type'],
+          OS: row['OS'],
+          Browser: row['Browser'],
+          AccountStatus: row['Account Status'],
+          PlayerTier: row['Player Tier'],
+          VerificationStatus: row['Verification Status']
+        });
+        log('Back-End Event sent for Player ID: ' + row['Player ID']);
+      });
+    }
+  </script>
+
+  <!-- Make sure FullStory snippet is added to this page in your sandbox -->
+  <script>
+    window['_fs_debug'] = false;
+    window['_fs_host'] = 'fullstory.com';
+    window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
+    window['_fs_org'] = 'YOUR_ORG_ID'; // replace with your actual FullStory Org ID
+    window['_fs_namespace'] = 'FS';
+    (function(m,n,e,t,l,o,g,y){
+        if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');} return;}
+        g=m[e]=function(a,b){g.q?g.q.push([a,b]):g._api(a,b);};g.q=[];
+        o=n.createElement(t);o.async=1;o.crossOrigin='anonymous';o.src='https://'+_fs_script;
+        y=n.getElementsByTagName(t)[0];y.parentNode.insertBefore(o,y);
+        g.identify=function(i,v){g(l,{uid:i},v)};g.setUserVars=function(v){g('userVars',v)};
+        g.event=function(i,v){g('event',{n:i,p:v})};
+        g.shutdown=function(){g("rec",!1)};g.restart=function(){g("rec",!0)};
+        g.consent=function(a){g("consent",!arguments.length||a)};
+        g.identifyAccount=function(i,v){g("account",{acctId:i},v)};
+        g.clearUserCookie=function(){};
+    })(window,document,window['_fs_namespace'],'script','user');
+  </script>
+</body>
+</html>
