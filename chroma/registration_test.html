@@ -8,15 +8,19 @@
   <h1>FullStory Event Simulator</h1>
 
   <input type="file" id="csvUpload" accept=".csv" />
+  <br /><br />
   <button onclick="sendFrontEndEvents()">Registration - Send Front-End Events</button>
   <button onclick="sendBackEndEvents()">Registration - Send Back-End Events</button>
 
   <pre id="log"></pre>
 
+  <!-- PapaParse for CSV parsing -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
   <script>
     let parsedData = [];
 
+    // CSV Upload Handler
     document.getElementById('csvUpload').addEventListener('change', function (e) {
       Papa.parse(e.target.files[0], {
         header: true,
@@ -24,34 +28,41 @@
         complete: function (results) {
           parsedData = results.data;
           log('CSV loaded with ' + parsedData.length + ' rows');
+          console.log('Parsed Data:', parsedData);
         }
       });
     });
 
+    // Log to UI
     function log(message) {
       document.getElementById('log').textContent += message + '\n';
     }
 
+    // Timestamp reformatter from MM:SS.s to readable format
     function reformatTimestamp(rawTime) {
-  if (!rawTime || !rawTime.includes(':')) return null;
+      if (!rawTime || !rawTime.includes(':')) return null;
 
-  const now = new Date(); // Replace with fixed base date if needed
-  const [minStr, secStr] = rawTime.split(':');
-  const minutes = parseInt(minStr, 10);
-  const seconds = parseFloat(secStr);
+      const now = new Date(); // current date/time
+      const [minStr, secStr] = rawTime.split(':');
+      const minutes = parseInt(minStr, 10);
+      const seconds = parseFloat(secStr);
 
-  now.setMinutes(minutes);
-  now.setSeconds(Math.floor(seconds));
-  now.setMilliseconds(0);
+      now.setMinutes(minutes);
+      now.setSeconds(Math.floor(seconds));
+      now.setMilliseconds(0);
 
-  return now.toLocaleString('en-GB'); // Format: "DD/MM/YYYY HH:mm:ss"
-}
+      return now.toLocaleString('en-GB'); // Format: "DD/MM/YYYY HH:mm:ss"
+    }
 
+    // Front-End Event Trigger
     function sendFrontEndEvents() {
-      parsedData.forEach(row => {
+      parsedData.forEach((row, index) => {
+        const playerId = row['PLAYER_ID'];
+        const timestamp = reformatTimestamp(row['TIMESTAMP']);
+
         FS.event('Registration | Success', {
-          PlayerID: row['PLAYER_ID'],
-          Timestamp: row['TIMESTAMP'],
+          PlayerID: playerId,
+          Timestamp: timestamp,
           AccountStatus: row['ACCOUNT_STATUS'],
           PlayerTier: row['PLAYER_TIER'],
           VerificationStatus: row['VERIFICATION_STATUS'],
@@ -59,69 +70,61 @@
           UTMSource: row['PARTNER'],
           UTMCampaign: row['PARTNER_GROUP']
         });
-        log('Front-End Event sent for Player ID: ' + row['PLAYER_ID']);
+
+        log('Front-End Event sent for Player ID: ' + playerId);
       });
     }
 
-    // Timestamp converter: assumes raw is in MM:SS.s format
-  function reformatTimestamp(rawTime) {
-    if (!rawTime || !rawTime.includes(':')) return null;
+    // Back-End Event Trigger
+    function sendBackEndEvents() {
+      console.log('Back-End event function triggered');
 
-    const now = new Date(); // You can set a fixed base date here if needed
-    const [minStr, secStr] = rawTime.split(':');
-    const minutes = parseInt(minStr, 10);
-    const seconds = parseFloat(secStr);
+      parsedData.forEach((row, index) => {
+        console.log(`Row ${index + 1}:`, row);
+        console.log('Keys:', Object.keys(row));
 
-    now.setMinutes(minutes);
-    now.setSeconds(Math.floor(seconds));
-    now.setMilliseconds(0);
+        const playerId = row['PLAYER_ID'];
+        const timestamp = reformatTimestamp(row['TIMESTAMP']);
 
-    return now.toLocaleString('en-GB'); // Format: "DD/MM/YYYY HH:mm:ss"
-  }
+        if (!playerId) {
+          console.warn(`Row ${index + 1}: Missing PLAYER_ID`);
+          return;
+        }
 
-  function sendBackEndEvents() {
-  parsedData.forEach((row, index) => {
-    console.log(`Row ${index + 1}:`, row);
-    console.log('Keys:', Object.keys(row));
+        try {
+          FS.event('Account | Registration | Success', {
+            PlayerID: playerId,
+            Timestamp: timestamp,
+            DisplayName: row['DISPLAY_NAME'],
+            UID: row['UID'],
+            Domain: row['DOMAIN'],
+            Language: row['LANGUAGE'],
+            Country: row['COUNTRY'],
+            Channel: row['CHANNEL'],
+            Partner: row['PARTNER'],
+            PartnerGroup: row['PARTNER_GROUP'],
+            AcquisitionApplication: row['ACQUISITION_APPLICATION'],
+            AcquisitionDevice: row['ACQUISITION_DEVICE'],
+            AcquisitionOS: row['ACQUISITION_OS'],
+            AccountStatus: row['ACCOUNT_STATUS'],
+            PlayerTier: row['PLAYER_TIER'],
+            VerificationStatus: row['VERIFICATION_STATUS']
+          });
 
-    const playerId = row['PLAYER_ID'];
-    const timestamp = reformatTimestamp(row['TIMESTAMP']);
-
-    if (!playerId) {
-      console.warn(`Row ${index + 1}: Missing PLAYER_ID`);
-      return;
+          log(`Back-End Event sent for Player ID: ${playerId}`);
+        } catch (err) {
+          console.error('Error sending FullStory event:', err);
+        }
+      });
     }
-
-    FS.event('Account | Registration | Success', {
-      PlayerID: playerId,
-      Timestamp: timestamp,
-      DisplayName: row['DISPLAY_NAME'],
-      UID: row['UID'],
-      Domain: row['DOMAIN'],
-      Language: row['LANGUAGE'],
-      Country: row['COUNTRY'],
-      Channel: row['CHANNEL'],
-      Partner: row['PARTNER'],
-      PartnerGroup: row['PARTNER_GROUP'],
-      AcquisitionApplication: row['ACQUISITION_APPLICATION'],
-      AcquisitionDevice: row['ACQUISITION_DEVICE'],
-      AcquisitionOS: row['ACQUISITION_OS'],
-      AccountStatus: row['ACCOUNT_STATUS'],
-      PlayerTier: row['PLAYER_TIER'],
-      VerificationStatus: row['VERIFICATION_STATUS']
-    });
-
-    console.log(`Back-End Event sent for Player ID: ${playerId}`);
-  });
-}
   </script>
 
-  <!-- Make sure FullStory snippet is added to this page in your sandbox -->
+  <!-- FullStory Snippet (replace ORG ID below) -->
   <script>
     window['_fs_debug'] = false;
     window['_fs_host'] = 'fullstory.com';
     window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
-    window['_fs_org'] = 'o-22YWXK-na1'; // replace with your actual FullStory Org ID
+    window['_fs_org'] = 'o-22YWXK-na1'; // ← Replace this with your actual FullStory Org ID
     window['_fs_namespace'] = 'FS';
     (function(m,n,e,t,l,o,g,y){
         if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');} return;}
