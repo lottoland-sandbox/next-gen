@@ -79,7 +79,7 @@
     return now.toLocaleString('en-GB'); // Format: "DD/MM/YYYY HH:mm:ss"
   }
 
-  function sendBackEndEvents(parsedData) {
+  function sendBackEndEvents() {
   parsedData.forEach((row, index) => {
     console.log(`Row ${index + 1}:`, row);
     console.log('Keys:', Object.keys(row));
