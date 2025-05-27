@@ -167,7 +167,7 @@ function payinSDPending() {
             amount: amount,
         }
     });
-     console.log('Payin FTD Pending');
+     console.log('Payin SD Pending');
 }
 
 
