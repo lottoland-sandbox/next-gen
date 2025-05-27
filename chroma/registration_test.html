@@ -61,14 +61,14 @@
         const timestamp = reformatTimestamp(row['TIMESTAMP']);
 
         FS.event('Registration | Success', {
-          PlayerID: playerId,
-          Timestamp: timestamp,
-          AccountStatus: row['ACCOUNT_STATUS'],
-          PlayerTier: row['PLAYER_TIER'],
-          VerificationStatus: row['VERIFICATION_STATUS'],
-          UTMMedium: row['CHANNEL'],
-          UTMSource: row['PARTNER'],
-          UTMCampaign: row['PARTNER_GROUP']
+          playerID: playerId,
+          timestamp: timestamp,
+          accountStatus: row['ACCOUNT_STATUS'],
+          playerTier: row['PLAYER_TIER'],
+          verificationStatus: row['VERIFICATION_STATUS'],
+          utmMedium: row['CHANNEL'],
+          utmSource: row['PARTNER'],
+          utmCampaign: row['PARTNER_GROUP']
         });
 
         log('Front-End Event sent for Player ID: ' + playerId);
