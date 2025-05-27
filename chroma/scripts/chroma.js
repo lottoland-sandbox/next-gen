@@ -55,7 +55,7 @@ function loginSuccess() {
     FS('setIdentity', {
         uid: '654321',
         properties: {
-            "identification-method": 'login',
+            "method": 'login',
             "displayName": 'Player 654321',
             "playerNumber": '654321',
             "accountStatus": 'REGISTERED',
