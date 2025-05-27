@@ -24,6 +24,10 @@ function registrationSuccess() {
 }
 
 
+
+
+
+
 function registrationFailure() {  
     FS('trackEvent', {
         name: 'Registration | Failure',
@@ -124,6 +128,46 @@ function payinFTDSuccess() {
         }
     });
      console.log('Payin FTD Success');
+}
+
+
+
+
+function payinFTDPending() {
+
+    var method=getRandomMethod();
+    var currency='GBP';
+    var amount=getRandomAmount(); 
+
+    FS('trackEvent', {
+        name: 'Deposit | Pending',
+        properties: {
+            process: 'FTD',
+            method: method, 
+            currency: currency,
+            amount: amount,
+        }
+    });
+     console.log('Payin FTD Pending');
+}
+
+
+function payinSDPending() {
+
+    var method=getRandomMethod();
+    var currency='GBP';
+    var amount=getRandomAmount(); 
+
+    FS('trackEvent', {
+        name: 'Deposit | Pending',
+        properties: {
+            process: 'SD',
+            method: method, 
+            currency: currency,
+            amount: amount,
+        }
+    });
+     console.log('Payin FTD Pending');
 }
 
 
