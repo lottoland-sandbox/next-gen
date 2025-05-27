@@ -80,38 +80,40 @@
   }
 
   function sendBackEndEvents(parsedData) {
-    parsedData.forEach((row, index) => {
-      const timestamp = reformatTimestamp(row['TIMESTAMP']);
+  parsedData.forEach((row, index) => {
+    console.log(`Row ${index + 1}:`, row);
+    console.log('Keys:', Object.keys(row));
 
-      // Safeguard against missing Player ID
-      const playerId = row['PLAYER_ID'];
-      if (!playerId) {
-        console.warn(`Row ${index + 1}: Missing PLAYER_ID`);
-        return;
-      }
+    const playerId = row['PLAYER_ID'];
+    const timestamp = reformatTimestamp(row['TIMESTAMP']);
 
-      FS.event('Account | Registration | Success', {
-        PlayerID: playerId,
-        Timestamp: timestamp,
-        DisplayName: row['DISPLAY_NAME'],
-        UID: row['UID'],
-        Domain: row['DOMAIN'],
-        Language: row['LANGUAGE'],
-        Country: row['COUNTRY'],
-        Channel: row['CHANNEL'],
-        Partner: row['PARTNER'],
-        PartnerGroup: row['PARTNER_GROUP'],
-        AcquisitionApplication: row['ACQUISITION_APPLICATION'],
-        AcquisitionDevice: row['ACQUISITION_DEVICE'],
-        AcquisitionOS: row['ACQUISITION_OS'],
-        AccountStatus: row['ACCOUNT_STATUS'],
-        PlayerTier: row['PLAYER_TIER'],
-        VerificationStatus: row['VERIFICATION_STATUS']
-      });
+    if (!playerId) {
+      console.warn(`Row ${index + 1}: Missing PLAYER_ID`);
+      return;
+    }
 
-      console.log(`Back-End Event sent for Player ID: ${playerId}`);
+    FS.event('Account | Registration | Success', {
+      PlayerID: playerId,
+      Timestamp: timestamp,
+      DisplayName: row['DISPLAY_NAME'],
+      UID: row['UID'],
+      Domain: row['DOMAIN'],
+      Language: row['LANGUAGE'],
+      Country: row['COUNTRY'],
+      Channel: row['CHANNEL'],
+      Partner: row['PARTNER'],
+      PartnerGroup: row['PARTNER_GROUP'],
+      AcquisitionApplication: row['ACQUISITION_APPLICATION'],
+      AcquisitionDevice: row['ACQUISITION_DEVICE'],
+      AcquisitionOS: row['ACQUISITION_OS'],
+      AccountStatus: row['ACCOUNT_STATUS'],
+      PlayerTier: row['PLAYER_TIER'],
+      VerificationStatus: row['VERIFICATION_STATUS']
     });
-  }
+
+    console.log(`Back-End Event sent for Player ID: ${playerId}`);
+  });
+}
   </script>
 
   <!-- Make sure FullStory snippet is added to this page in your sandbox -->
