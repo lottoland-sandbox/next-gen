@@ -131,7 +131,7 @@ function payinFTDSuccess() {
     var amount=getRandomAmount(); 
 
     FS('trackEvent', {
-        name: 'Deposit | Success | FTD',
+        name: 'Deposit | Success',
         properties: {
             process: 'FTD',
             method: method, 
@@ -152,7 +152,7 @@ function payinFTDFailure() {
     var amount=getRandomAmount(); 
 
     FS('trackEvent', {
-        name: 'Deposit | Failure | FTD',
+        name: 'Deposit | Failure',
         properties: {
             process: 'FTD',
             method: method, 
@@ -173,7 +173,7 @@ function payinSDSuccess() {
     var amount=getRandomAmount(); 
 
     FS('trackEvent', {
-        name: 'Deposit | Success | SD',
+        name: 'Deposit | Success',
         properties: {
             process: 'SD',
             method: method, 
@@ -194,7 +194,7 @@ function payinSDFailure() {
     var amount=getRandomAmount(); 
 
     FS('trackEvent', {
-        name: 'Deposit | Failure | SD',
+        name: 'Deposit | Failure',
         properties: {
             process: 'SD',
             method: method, 
