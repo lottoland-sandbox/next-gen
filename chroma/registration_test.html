@@ -93,22 +93,22 @@
 
         try {
           FS.event('Account | Registration | Success', {
-            PlayerID: playerId,
-            Timestamp: timestamp,
-            DisplayName: row['DISPLAY_NAME'],
-            UID: row['UID'],
-            Domain: row['DOMAIN'],
-            Language: row['LANGUAGE'],
-            Country: row['COUNTRY'],
-            Channel: row['CHANNEL'],
-            Partner: row['PARTNER'],
-            PartnerGroup: row['PARTNER_GROUP'],
-            AcquisitionApplication: row['USER_PLATFORM'],
-            AcquisitionDevice: row['USER_DEVICE'],
-            AcquisitionOS: row['OS'],
-            AccountStatus: row['ACCOUNT_STATUS'],
-            PlayerTier: row['PLAYER_TIER'],
-            VerificationStatus: row['VERIFICATION_STATUS']
+            playerID: playerId,
+            timestamp: timestamp,
+            displayName: row['DISPLAY_NAME'],
+            uid: row['UID'],
+            domain: row['DOMAIN'],
+            language: row['LANGUAGE'],
+            country: row['COUNTRY'],
+            channel: row['CHANNEL'],
+            partner: row['PARTNER'],
+            partnerGroup: row['PARTNER_GROUP'],
+            acquisitionApplication: row['USER_PLATFORM'],
+            acquisitionDevice: row['USER_DEVICE'],
+            acquisitionOS: row['OS'],
+            accountStatus: row['ACCOUNT_STATUS'],
+            playerTier: row['PLAYER_TIER'],
+            verificationStatus: row['VERIFICATION_STATUS']
           });
 
           log(`Back-End Event sent for Player ID: ${playerId}`);
