@@ -1,0 +1,220 @@
+<!-- NEW -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FullStory Event Sandbox</title>
+</head>
+<body>
+  <h1>FullStory Event Simulator</h1>
+
+  <input type="file" id="csvUpload" accept=".csv" />
+  <br/><br/>
+
+  <!-- Registration -->
+  <button onclick="sendFrontEndRegistration()">Registration - Send Front-End Events</button>
+  <button onclick="sendBackEndRegistration()">Registration - Send Back-End Events</button>
+  <br/><br/>
+
+  <!-- Login -->
+  <button onclick="sendFrontEndLogin()">Login - Send Front-End Events</button>
+  <button onclick="sendBackEndLogin()">Login - Send Back-End Events</button>
+
+  <pre id="log"></pre>
+
+  <!-- Load PapaParse -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <script>
+    let parsedData = [];
+
+    document.getElementById('csvUpload').addEventListener('change', function (e) {
+      Papa.parse(e.target.files[0], {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          parsedData = results.data;
+          log('CSV loaded with ' + parsedData.length + ' rows');
+        }
+      });
+    });
+
+    function log(message) {
+      document.getElementById('log').textContent += message + '\n';
+    }
+
+    // Format: 56:28.123 → 2025-05-21 10:56:28.123
+    function reformatTimestamp(rawTime) {
+      if (!rawTime || !rawTime.includes(':')) return null;
+
+      const base = new Date('2025-05-21T10:00:00');
+      const [minStr, secStr] = rawTime.split(':');
+      const minutes = parseInt(minStr);
+      const seconds = Math.floor(parseFloat(secStr));
+      const milliseconds = Math.round((parseFloat(secStr) - seconds) * 1000);
+
+      base.setMinutes(minutes);
+      base.setSeconds(seconds);
+      base.setMilliseconds(milliseconds);
+
+      const yyyy = base.getFullYear();
+      const mm = String(base.getMonth() + 1).padStart(2, '0');
+      const dd = String(base.getDate()).padStart(2, '0');
+      const hh = String(base.getHours()).padStart(2, '0');
+      const mi = String(base.getMinutes()).padStart(2, '0');
+      const ss = String(base.getSeconds()).padStart(2, '0');
+      const ms = String(base.getMilliseconds()).padStart(3, '0');
+
+      return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}.${ms}`;
+    }
+
+
+    function sendFrontEndRegistration() {
+      parsedData.forEach(row => {
+        FS.event('Registration | Success', {
+          playerId: row['PLAYER_ID'],
+          timestamp: reformatTimestamp(row['TIMESTAMP']),
+          accountStatus: row['ACCOUNT_STATUS'],
+          playerTier: row['PLAYER_TIER'],
+          verificationStatus: row['VERIFICATION_STATUS'],
+          utmMedium: row['CHANNEL'],
+          utmSource: row['PARTNER'],
+          utmCampaign: row['PARTNER_GROUP']
+        });
+        log('Front-End Registration sent for Player ID: ' + row['PLAYER_ID']);
+      });
+    }
+
+    function sendBackEndRegistration() {
+      parsedData.forEach(row => {
+        const playerId = row['PLAYER_ID'];
+        if (!playerId) return;
+
+        FS.event('Account | Registration | Success', {
+          playerId: playerId,
+            timestamp: timestamp,
+            displayName: row['DISPLAY_NAME'],
+            uid: row['UID'],
+            domain: row['DOMAIN'],
+            language: row['LANGUAGE'],
+            country: row['COUNTRY'],
+            userPlatform: row['USER_PLATFORM'],
+            deviceType: row['DEVICE_TYPE'],
+            os: row['OS'],
+            appVersion: row['ATTRIBUTE_APPVERSION'],
+            applicationId: row['ATTRIBUTE_APPLICATIONID'],
+            screensize: row['ATTRIBUTE_SCREENSIZE'],
+            accountStatus: row['ACCOUNT_STATUS'],
+            playerTier: row['PLAYER_TIER'],
+            verificationStatus: row['VERIFICATION_STATUS']
+            channel: row['CHANNEL'],
+            partner: row['PARTNER'],
+            partnerGroup: row['PARTNER_GROUP'],
+            pid: row['ATTRIBUTE_PID'],
+            affid: row['ATTRIBUTE_AFFID'],
+            sid: row['ATTRIBUTE_SID'], 
+            mediaCode: row['ATTRIBUTE_MC'],
+            offerBundleCode: row['ATTRIBUTE_OFFERBUNDLECODE'],
+            trckA: row['ATTRIBUTE_TRACKING_A'],
+            trck1: row['ATTRIBUTE_TRACKING_1'],
+            trck4: row['ATTRIBUTE_TRACKING_4'],
+            trck5: row['ATTRIBUTE_TRACKING_5'],
+            mugCampaignId: row['ATTRIBUTE_MUG_CAMPAIGN_ID'],	
+            mugChannel: row['ATTRIBUTE_MUG_CHANNEL'],	
+            mugPartner: row['ATTRIBUTE_MUG_PARTNER'],	
+            mugAdditionalInfo: row['ATTRIBUTE_MUG_ADDITIONAL_INFO'],	
+            mugScoreType: row['ATTRIBUTE_MUG_SOURCE_TYPE'],	
+            mugSourceValue: row['ATTRIBUTE_MUG_SOURCE_VALUE'],	
+            mugPathName: row['ATTRIBUTE_MUG_PATH_NAME'],	
+            mugDepartment: row['ATTRIBUTE_MUG_DEPARTMENT'],	
+            mugSource: row['ATTRIBUTE_MUG_SOURCE'],	
+        });
+        log('Back-End Registration sent for Player ID: ' + playerId);
+      });
+    }
+
+    function sendFrontEndLogin() {
+      parsedData.forEach(row => {
+        FS.event('Login | Success', {
+          method: row['METHOD'],
+          playerId: row['PLAYER_ID'],
+          timestamp: reformatTimestamp(row['TIMESTAMP']),
+          country: row['COUNTRY_NAME'],
+          platform: row['USER_PLATFORM'],
+        });
+        log('Front-End Login sent for Player ID: ' + row['PLAYER_ID']);
+      });
+    }
+
+    function sendBackEndLogin() {
+      parsedData.forEach(row => {
+        const playerId = row['PLAYER_ID'];
+        if (!playerId) return;
+
+        FS.event('Account | Login | Success', {
+          playerId: playerId,
+          timestamp: reformatTimestamp(row['DATE_TIME']),
+          failedAttempts: row['FAILED_ATTEMPTS'],
+          uid: row['UID'],
+          displayName: row['DISPLAY_NAME'],
+          domain: row['ATTRIBUTE_MARKET_URL'],
+          country: row['COUNTRY_NAME'],
+          userPlatform: row['USER_PLATFORM'],
+          deviceType: row['DEVICE_TYPE'],
+          os: row['OS_NAME'],
+          osVersion: row['OS_VERSION'],
+          browser: row['BROWSER_NAME'],
+          browserVersion: row['BROWSER_VERSION'],
+          appVersion: row['ATTRIBUTE_APPVERSION'],
+          applicationId: row['ATTRIBUTE_APPLICATIONID'],
+          screensize: row['ATTRIBUTE_SCREENSIZE'],
+          accountStatus: row['ACCOUNT_STATUS'],
+          playerTier: row['PLAYER_TIER'],
+          verificationStatus: row['VERIFICATION_STATUS']
+          pid: row['ATTRIBUTE_PID'],
+          affid: row['ATTRIBUTE_AFFID'],
+          sid: row['ATTRIBUTE_SID'], 
+          mediaCode: row['ATTRIBUTE_MC'],
+          offerBundleCode: row['ATTRIBUTE_OFFERBUNDLECODE'],
+          trckA: row['ATTRIBUTE_TRACKING_A'],
+          trck1: row['ATTRIBUTE_TRACKING_1'],
+          trck4: row['ATTRIBUTE_TRACKING_4'],
+          trck5: row['ATTRIBUTE_TRACKING_5'],
+          mugCampaignId: row['ATTRIBUTE_MUG_CAMPAIGN_ID'],	
+          mugChannel: row['ATTRIBUTE_MUG_CHANNEL'],	
+          mugPartner: row['ATTRIBUTE_MUG_PARTNER'],	
+          mugAdditionalInfo: row['ATTRIBUTE_MUG_ADDITIONAL_INFO'],	
+          mugScoreType: row['ATTRIBUTE_MUG_SOURCE_TYPE'],	
+          mugSourceValue: row['ATTRIBUTE_MUG_SOURCE_VALUE'],	
+          mugPathName: row['ATTRIBUTE_MUG_PATH_NAME'],	
+          mugDepartment: row['ATTRIBUTE_MUG_DEPARTMENT'],	
+          mugSource: row['ATTRIBUTE_MUG_SOURCE'],	
+
+        });
+        log('Back-End Login sent for Player ID: ' + playerId);
+      });
+    }
+  </script>
+
+  <!-- FullStory Snippet (replace 'your_code_here') -->
+  <script>
+    window['_fs_debug'] = false;
+    window['_fs_host'] = 'fullstory.com';
+    window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
+    window['_fs_org'] = 'o-22YWXK-na1';  // <-- Replace this with your actual FullStory Org ID
+    window['_fs_namespace'] = 'FS';
+    (function(m,n,e,t,l,o,g,y){
+        if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');} return;}
+        g=m[e]=function(a,b){g.q?g.q.push([a,b]):g._api(a,b);};g.q=[];
+        o=n.createElement(t);o.async=1;o.crossOrigin='anonymous';o.src='https://'+_fs_script;
+        y=n.getElementsByTagName(t)[0];y.parentNode.insertBefore(o,y);
+        g.identify=function(i,v){g(l,{uid:i},v)};g.setUserVars=function(v){g('userVars',v)};
+        g.event=function(i,v){g('event',{n:i,p:v})};
+        g.shutdown=function(){g("rec",!1)};g.restart=function(){g("rec",!0)};
+        g.consent=function(a){g("consent",!arguments.length||a)};
+        g.identifyAccount=function(i,v){g("account",{acctId:i},v)};
+        g.clearUserCookie=function(){};
+    })(window,document,window['_fs_namespace'],'script','user');
+  </script>
+</body>
+</html>
