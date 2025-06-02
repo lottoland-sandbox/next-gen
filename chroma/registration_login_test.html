@@ -18,9 +18,10 @@
   <input type="file" id="loginUpload" accept=".csv" />
   <button onclick="sendFrontEndLogin()">Send Front-End Login Events</button>
   <button onclick="sendBackEndLogin()">Send Back-End Login Events</button>
+  <!--
   <button onclick="sendFrontEndLoginFailed()">Send Front-End Login Failed</button>
   <button onclick="sendBackEndLoginFailed()">Send Back-End Login Failed</button>
-
+  -->
   <pre id="log"></pre>
 
   <!-- Load PapaParse -->
@@ -190,6 +191,7 @@
          log('Back-End Login Event sent for Player ID: ' + row['PLAYER_ID']);
       });
     }
+   
      function sendFrontEndLoginFailed() {
       loginData.forEach(row => {
         FS.event('Login | Failed', {
