@@ -106,7 +106,7 @@
             screensize: row['ATTRIBUTE_SCREENSIZE'],
             accountStatus: row['ACCOUNT_STATUS'],
             playerTier: row['PLAYER_TIER'],
-            verificationStatus: row['VERIFICATION_STATUS']
+            verificationStatus: row['VERIFICATION_STATUS'],
             channel: row['CHANNEL'],
             partner: row['PARTNER'],
             partnerGroup: row['PARTNER_GROUP'],
@@ -166,7 +166,7 @@
           screensize: row['ATTRIBUTE_SCREENSIZE'],
           accountStatus: row['ACCOUNT_STATUS'],
           playerTier: row['PLAYER_TIER'],
-          verificationStatus: row['VERIFICATION_STATUS']
+          verificationStatus: row['VERIFICATION_STATUS'],
           pid: row['ATTRIBUTE_PID'],
           affid: row['ATTRIBUTE_AFFID'],
           sid: row['ATTRIBUTE_SID'], 
@@ -197,7 +197,7 @@
           timestamp: reformatTimestamp(row['TIMESTAMP']),
           failureReason: row['FAILURE_REASON'] || 'Unknown',
           domain: row['ATTRIBUTE_MARKET_URL'],
-          country: row['COUNTRY_NAME'],
+          country: row['COUNTRY_NAME']
         });
         log('Front-End Login Failed sent for Player ID: ' + row['PLAYER_ID']);
       });
