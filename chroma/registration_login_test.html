@@ -11,13 +11,16 @@
   <br/><br/>
 
   <!-- Registration -->
-  <button onclick="sendFrontEndRegistration()">Registration - Send Front-End Events</button>
-  <button onclick="sendBackEndRegistration()">Registration - Send Back-End Events</button>
-  <br/><br/>
+  <input type="file" id="registrationUpload" accept=".csv" />
+  <button onclick="sendFrontEndRegistration()">Send Front-End Registration Events</button>
+  <button onclick="sendBackEndRegistration()">Send Back-End Registration Events</button>
 
   <!-- Login -->
-  <button onclick="sendFrontEndLogin()">Login - Send Front-End Events</button>
-  <button onclick="sendBackEndLogin()">Login - Send Back-End Events</button>
+  <input type="file" id="loginUpload" accept=".csv" />
+  <button onclick="sendFrontEndLogin()">Send Front-End Login Events</button>
+  <button onclick="sendBackEndLogin()">Send Back-End Login Events</button>
+  <button onclick="sendFrontEndLoginFailed()">Send Front-End Login Failed</button>
+  <button onclick="sendBackEndLoginFailed()">Send Back-End Login Failed</button>
 
   <pre id="log"></pre>
 
@@ -25,15 +28,27 @@
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <script>
-    let parsedData = [];
+   let registrationData = [];
+    let loginData = [];
 
-    document.getElementById('csvUpload').addEventListener('change', function (e) {
+    document.getElementById('registrationUpload').addEventListener('change', function (e) {
       Papa.parse(e.target.files[0], {
         header: true,
         skipEmptyLines: true,
         complete: function (results) {
-          parsedData = results.data;
-          log('CSV loaded with ' + parsedData.length + ' rows');
+          registrationData = results.data;
+          log('Registration CSV loaded with ' + registrationData.length + ' rows');
+        }
+      });
+    });
+
+    document.getElementById('loginUpload').addEventListener('change', function (e) {
+      Papa.parse(e.target.files[0], {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          loginData = results.data;
+          log('Login CSV loaded with ' + loginData.length + ' rows');
         }
       });
     });
@@ -42,32 +57,21 @@
       document.getElementById('log').textContent += message + '\n';
     }
 
-    // Format: 56:28.123 → 2025-05-21 10:56:28.123
     function reformatTimestamp(rawTime) {
       if (!rawTime || !rawTime.includes(':')) return null;
-
-      const base = new Date('2025-05-21T10:00:00');
       const [minStr, secStr] = rawTime.split(':');
-      const minutes = parseInt(minStr);
-      const seconds = Math.floor(parseFloat(secStr));
-      const milliseconds = Math.round((parseFloat(secStr) - seconds) * 1000);
+      const baseDate = new Date('2025-05-21T10:00:00');
+      baseDate.setMinutes(parseInt(minStr, 10));
+      baseDate.setSeconds(Math.floor(parseFloat(secStr)));
+      baseDate.setMilliseconds((parseFloat(secStr) % 1) * 1000);
 
-      base.setMinutes(minutes);
-      base.setSeconds(seconds);
-      base.setMilliseconds(milliseconds);
+      const pad = num => num.toString().padStart(2, '0');
+      const ms = baseDate.getMilliseconds().toString().padStart(3, '0');
 
-      const yyyy = base.getFullYear();
-      const mm = String(base.getMonth() + 1).padStart(2, '0');
-      const dd = String(base.getDate()).padStart(2, '0');
-      const hh = String(base.getHours()).padStart(2, '0');
-      const mi = String(base.getMinutes()).padStart(2, '0');
-      const ss = String(base.getSeconds()).padStart(2, '0');
-      const ms = String(base.getMilliseconds()).padStart(3, '0');
-
-      return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}.${ms}`;
+      return `${baseDate.getFullYear()}-${pad(baseDate.getMonth() + 1)}-${pad(baseDate.getDate())} ` +
+             `${pad(baseDate.getHours())}:${pad(baseDate.getMinutes())}:${pad(baseDate.getSeconds())}.${ms}`;
     }
-
-
+  
     function sendFrontEndRegistration() {
       parsedData.forEach(row => {
         FS.event('Registration | Success', {
@@ -85,10 +89,8 @@
     }
 
     function sendBackEndRegistration() {
-      parsedData.forEach(row => {
-        const playerId = row['PLAYER_ID'];
-        if (!playerId) return;
-
+     registrationData.forEach(row => {
+        if (!row['PLAYER_ID']) return;
         FS.event('Account | Registration | Success', {
           playerId: playerId,
             timestamp: timestamp,
@@ -128,12 +130,11 @@
             marketingDepartment: row['ATTRIBUTE_MUG_DEPARTMENT'],	
             marketingSource: row['ATTRIBUTE_MUG_SOURCE'],	
         });
-        log('Back-End Registration sent for Player ID: ' + playerId);
+         log('Back-End Registration Event sent for Player ID: ' + row['PLAYER_ID']);
       });
-    }
-
+  
     function sendFrontEndLogin() {
-      parsedData.forEach(row => {
+      loginData.forEach(row => {
         FS.event('Login | Success', {
           method: row['METHOD'],
           playerId: row['PLAYER_ID'],
@@ -141,15 +142,12 @@
           country: row['COUNTRY_NAME'],
           platform: row['USER_PLATFORM'],
         });
-        log('Front-End Login sent for Player ID: ' + row['PLAYER_ID']);
+         log('Front-End Login Event sent for Player ID: ' + row['PLAYER_ID']);
       });
     }
 
     function sendBackEndLogin() {
-      parsedData.forEach(row => {
-        const playerId = row['PLAYER_ID'];
-        if (!playerId) return;
-
+     loginData.forEach(row => {
         FS.event('Account | Login | Success', {
           playerId: playerId,
           timestamp: reformatTimestamp(row['DATE_TIME']),
@@ -190,9 +188,40 @@
           marketingSource: row['ATTRIBUTE_MUG_SOURCE'],	
 
         });
-        log('Back-End Login sent for Player ID: ' + playerId);
+         log('Back-End Login Event sent for Player ID: ' + row['PLAYER_ID']);
       });
     }
+     function sendFrontEndLoginFailed() {
+      loginData.forEach(row => {
+        FS.event('Login | Failed', {
+          playerId: row['PLAYER_ID'],
+          timestamp: reformatTimestamp(row['TIMESTAMP']),
+          failureReason: row['FAILURE_REASON'] || 'Unknown',
+          domain: row['ATTRIBUTE_MARKET_URL'],
+          country: row['COUNTRY_NAME'],
+        });
+        log('Front-End Login Failed sent for Player ID: ' + row['PLAYER_ID']);
+      });
+    }
+
+    function sendBackEndLoginFailed() {
+      loginData.forEach(row => {
+        FS.event('Account | Login | Failed', {
+          playerId: row['PLAYER_ID'],
+          timestamp: reformatTimestamp(row['TIMESTAMP']),
+          uid: row['UID'],
+          displayName: row['DISPLAY_NAME'],
+          failureReason: row['FAILURE_REASON'] || 'Invalid credentials',
+          language: row['LANGUAGE'],
+          country: row['COUNTRY'],
+          device: row['USER_DEVICE'],
+          os: row['OS'],
+          platform: row['USER_PLATFORM']
+        });
+        log('Back-End Login Failed sent for Player ID: ' + row['PLAYER_ID']);
+      });
+    }
+    
   </script>
 
   <!-- FullStory Snippet (replace 'your_code_here') -->
