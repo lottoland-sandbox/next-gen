@@ -10,13 +10,11 @@
   <!-- Registration -->
   <h2>Upload Registration Data</h2>
   <input type="file" id="registrationUpload" accept=".csv" />
-  <button onclick="sendFrontEndRegistration()">Send Front-End Registration Events</button>
   <button onclick="sendBackEndRegistration()">Send Back-End Registration Events</button>
 
   <!-- Login -->
   <h2>Upload Login Data</h2>
   <input type="file" id="loginUpload" accept=".csv" />
-  <button onclick="sendFrontEndLogin()">Send Front-End Login Events</button>
   <button onclick="sendBackEndLogin()">Send Back-End Login Events</button>
   <!--
   <button onclick="sendFrontEndLoginFailed()">Send Front-End Login Failed</button>
@@ -72,21 +70,6 @@
              `${pad(baseDate.getHours())}:${pad(baseDate.getMinutes())}:${pad(baseDate.getSeconds())}.${ms}`;
     }
   
-    function sendFrontEndRegistration() {
-      parsedData.forEach(row => {
-        FS.event('Registration | Success', {
-          playerId: row['PLAYER_ID'],
-          timestamp: reformatTimestamp(row['TIMESTAMP']),
-          accountStatus: row['ACCOUNT_STATUS'],
-          playerTier: row['PLAYER_TIER'],
-          verificationStatus: row['VERIFICATION_STATUS'],
-          utmMedium: row['CHANNEL'],
-          utmSource: row['PARTNER'],
-          utmCampaign: row['PARTNER_GROUP']
-        });
-        log('Front-End Registration sent for Player ID: ' + row['PLAYER_ID']);
-      });
-    }
 
     function sendBackEndRegistration() {
      registrationData.forEach(row => {
@@ -97,6 +80,12 @@
             displayName: row['DISPLAY_NAME'],
             uid: row['UID'],
             domain: row['DOMAIN'],
+            accountStatus: row['ACCOUNT_STATUS'],
+            playerTier: row['PLAYER_TIER'],
+            verificationStatus: row['VERIFICATION_STATUS'],
+          /*
+            availble if needed:
+            screenSize: row['ATTRIBUTE_SCREENSIZE'], 
             language: row['LANGUAGE'],
             country: row['COUNTRY'],
             userPlatform: row['USER_PLATFORM'],
@@ -104,15 +93,11 @@
             os: row['OS'],
             appVersion: row['ATTRIBUTE_APPVERSION'],
             applicationId: row['ATTRIBUTE_APPLICATIONID'],
-            screensize: row['ATTRIBUTE_SCREENSIZE'],
-            accountStatus: row['ACCOUNT_STATUS'],
-            playerTier: row['PLAYER_TIER'],
-            verificationStatus: row['VERIFICATION_STATUS'],
             channel: row['CHANNEL'],
             partner: row['PARTNER'],
             partnerGroup: row['PARTNER_GROUP'],
             pid: row['ATTRIBUTE_PID'],
-            affid: row['ATTRIBUTE_AFFID'],
+            affiliateId: row['ATTRIBUTE_AFFID'],
             sid: row['ATTRIBUTE_SID'], 
             mediaCode: row['ATTRIBUTE_MC'],
             offerBundleCode: row['ATTRIBUTE_OFFERBUNDLECODE'],
@@ -129,22 +114,12 @@
             marketingPathName: row['ATTRIBUTE_MUG_PATH_NAME'],	
             marketingDepartment: row['ATTRIBUTE_MUG_DEPARTMENT'],	
             marketingSource: row['ATTRIBUTE_MUG_SOURCE'],	
+       */     
+          
         });
          log('Back-End Registration Event sent for Player ID: ' + row['PLAYER_ID']);
       });
   
-    function sendFrontEndLogin() {
-      loginData.forEach(row => {
-        FS.event('Login | Success', {
-          method: row['METHOD'],
-          playerId: row['PLAYER_ID'],
-          timestamp: reformatTimestamp(row['TIMESTAMP']),
-          country: row['COUNTRY_NAME'],
-          platform: row['USER_PLATFORM'],
-        });
-         log('Front-End Login Event sent for Player ID: ' + row['PLAYER_ID']);
-      });
-    }
 
     function sendBackEndLogin() {
      loginData.forEach(row => {
@@ -155,6 +130,8 @@
           uid: row['UID'],
           displayName: row['DISPLAY_NAME'],
           domain: row['ATTRIBUTE_MARKET_URL'],
+/*
+          --
           country: row['COUNTRY_NAME'],
           userPlatform: row['USER_PLATFORM'],
           deviceType: row['DEVICE_TYPE'],
@@ -186,7 +163,7 @@
           marketingPathName: row['ATTRIBUTE_MUG_PATH_NAME'],	
           marketingDepartment: row['ATTRIBUTE_MUG_DEPARTMENT'],	
           marketingSource: row['ATTRIBUTE_MUG_SOURCE'],	
-
+*/
         });
          log('Back-End Login Event sent for Player ID: ' + row['PLAYER_ID']);
       });
