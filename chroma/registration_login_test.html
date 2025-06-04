@@ -7,18 +7,17 @@
 <body>
   <h1>FullStory Event Simulator</h1>
 
-  <!-- File uploaders -->
-  <label><strong>Upload Registration CSV:</strong></label>
+  <!-- File uploader & action button registration -->
+  <h2>Upload Registration Data</h2>
   <input type="file" id="registrationCsvUpload" accept=".csv" />
-  <br><br>
-
-  <label><strong>Upload Login CSV:</strong></label>
-  <input type="file" id="loginCsvUpload" accept=".csv" />
-  <br><br>
-
-  <!-- Action buttons -->
   <button onclick="sendBackEndRegistrationEvents()">Send Back-End Registration Events</button>
+  <br><br>
+
+  <!-- File uploader & action button login -->
+  <h2>Upload Login Data</h2>
+  <input type="file" id="loginCsvUpload" accept=".csv" />
   <button onclick="sendBackEndLoginEvents()">Send Back-End Login Events</button>
+  <br><br>
 
   <!-- Log output -->
   <pre id="log"></pre>
@@ -52,8 +51,7 @@
       });
     });
 
-
-   function log(message) {
+    function log(message) {
       document.getElementById('log').textContent += message + '\n';
     }
 
@@ -128,7 +126,7 @@
             marketingSource: row['ATTRIBUTE_MUG_SOURCE'],	
 */        
 
-function sendBackEndLoginEvents() {
+    function sendBackEndLoginEvents() {
       loginData.forEach(row => {
         const timestamp = formatTimestamp(row['TIMESTAMP']);
         if (!row['PLAYER_ID']) {
@@ -136,7 +134,7 @@ function sendBackEndLoginEvents() {
           return;
         }
 
-        FS.event('Account | Login | Success', {
+        FS.event('Account | Login | Success', {  
           playerId: playerId,
           timestamp: reformatTimestamp(row['DATE_TIME']),
           failedAttempts: row['FAILED_ATTEMPTS'],
@@ -146,6 +144,7 @@ function sendBackEndLoginEvents() {
 
         log('Back-End Login Event sent for Player ID: ' + row['PLAYER_ID']);
       });
+}
     
 /*        availble if needed for login backend:
           uid: row['UID'],
