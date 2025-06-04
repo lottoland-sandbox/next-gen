@@ -80,7 +80,7 @@
         }
 
         FS.event('Account | Registration | Success', {
-           playerId: playerId,
+           playerId: row['PLAYER_ID'],
            timestamp: timestamp,
            displayName: row['DISPLAY_NAME'],
             uid: row['UID'],
@@ -135,7 +135,7 @@
         }
 
         FS.event('Account | Login | Success', {  
-          playerId: playerId,
+          playerId: row['PLAYER_ID'],
           timestamp: reformatTimestamp(row['DATE_TIME']),
           failedAttempts: row['FAILED_ATTEMPTS'],
           displayName: row['DISPLAY_NAME'],
