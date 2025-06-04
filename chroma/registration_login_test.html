@@ -11,11 +11,16 @@
   <h2>Upload Registration Data</h2>
   <input type="file" id="registrationUpload" accept=".csv" />
   <button onclick="sendBackEndRegistration()">Send Back-End Registration Events</button>
+  <!-- Registration Front-End -->
+  <!-- <button onclick="sendRegistrationFrontEndEvents()">Registration - Send Front-End Events</button> -->
 
   <!-- Login -->
   <h2>Upload Login Data</h2>
   <input type="file" id="loginUpload" accept=".csv" />
   <button onclick="sendBackEndLogin()">Send Back-End Login Events</button>
+  <!-- Login Front-End -->
+  <!-- <button onclick="sendLoginFrontEndEvents()">Login - Send Front-End Events</button> -->
+  <!-- Login Fail Events -->
   <!--
   <button onclick="sendFrontEndLoginFailed()">Send Front-End Login Failed</button>
   <button onclick="sendBackEndLoginFailed()">Send Back-End Login Failed</button>
@@ -83,7 +88,7 @@
             accountStatus: row['ACCOUNT_STATUS'],
             playerTier: row['PLAYER_TIER'],
             verificationStatus: row['VERIFICATION_STATUS'],
-          /*
+/*
             availble if needed:
             screenSize: row['ATTRIBUTE_SCREENSIZE'], 
             language: row['LANGUAGE'],
@@ -114,12 +119,29 @@
             marketingPathName: row['ATTRIBUTE_MUG_PATH_NAME'],	
             marketingDepartment: row['ATTRIBUTE_MUG_DEPARTMENT'],	
             marketingSource: row['ATTRIBUTE_MUG_SOURCE'],	
-       */     
-          
+*/        
         });
          log('Back-End Registration Event sent for Player ID: ' + row['PLAYER_ID']);
       });
-  
+
+/*
+      // Registration Front-End Event
+      function sendRegistrationFrontEndEvents() {
+        registrationData.forEach(row => {
+          FS.event('Registration | Success', {
+            PlayerID: row['PLAYER_ID'],
+            Timestamp: formatTimestamp(row['TIMESTAMP']),
+            AccountStatus: row['ACCOUNT_STATUS'],
+            PlayerTier: row['PLAYER_TIER'],
+            VerificationStatus: row['VERIFICATION_STATUS'],
+            UTMMedium: row['CHANNEL'],
+            UTMSource: row['PARTNER'],
+            UTMCampaign: row['PARTNER_GROUP']
+          });
+          log('Front-End Registration Event sent for Player ID: ' + row['PLAYER_ID']);
+        });
+      } 
+*/
 
     function sendBackEndLogin() {
      loginData.forEach(row => {
@@ -168,7 +190,7 @@
          log('Back-End Login Event sent for Player ID: ' + row['PLAYER_ID']);
       });
     }
-   /*
+/*
      function sendFrontEndLoginFailed() {
       loginData.forEach(row => {
         FS.event('Login | Failed', {
@@ -199,8 +221,9 @@
         log('Back-End Login Failed sent for Player ID: ' + row['PLAYER_ID']);
       });
     }
-    */
-  </script>
+*/
+
+</script>
 
   <!-- FullStory Snippet (replace 'your_code_here') -->
   <script>
