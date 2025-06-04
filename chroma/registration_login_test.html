@@ -132,7 +132,7 @@
 
     function sendBackEndLoginEvents() {
       loginData.forEach(row => {
-        const timestamp = formatTimestamp(row['TIMESTAMP']);
+        const timestamp = formatTimestamp(row['DATE_TIME']);
         if (!row['PLAYER_ID']) {
           log('Skipping login row due to missing PLAYER_ID');
           return;
