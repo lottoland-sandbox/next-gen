@@ -19,17 +19,18 @@
   <button onclick="sendBackEndLoginEvents()">Send Back-End Login Events</button>
   <br><br>
 
-  <!-- Log output -->
+ <!-- Event log -->
   <pre id="log"></pre>
 
-  <!-- PapaParse -->
+  <!-- PapaParse for CSV parsing -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <script>
    let registrationData = [];
    let loginData = [];
-
-   document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
+    
+// File upload listeners
+    document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
       Papa.parse(e.target.files[0], {
         header: true,
         skipEmptyLines: true,
@@ -51,31 +52,34 @@
       });
     });
 
+// Logger
     function log(message) {
       document.getElementById('log').textContent += message + '\n';
     }
 
+ // Format timestamp to: YYYY-MM-DD HH:mm:ss.000
     function formatTimestamp(rawTime) {
       if (!rawTime || !rawTime.includes(':')) return null;
 
       const [minStr, secStr] = rawTime.split(':');
       const minutes = parseInt(minStr, 10);
       const seconds = parseFloat(secStr);
-      const now = new Date();
+      const baseDate = new Date('2025-05-21T10:00:00Z'); // Example base date/time
 
-      now.setHours(10); // Default or arbitrary hour
-      now.setMinutes(minutes);
-      now.setSeconds(Math.floor(seconds));
-      now.setMilliseconds(Math.round((seconds % 1) * 1000));
+      baseDate.setMinutes(minutes);
+      baseDate.setSeconds(Math.floor(seconds));
+      baseDate.setMilliseconds(Math.round((seconds % 1) * 1000));
 
-      return now.toISOString().replace('T', ' ').slice(0, 23); // "YYYY-MM-DD HH:mm:ss.000"
+      const pad = num => num.toString().padStart(2, '0');
+      const ms = baseDate.getMilliseconds().toString().padStart(3, '0');
+      return `${baseDate.getFullYear()}-${pad(baseDate.getMonth() + 1)}-${pad(baseDate.getDate())} ${pad(baseDate.getHours())}:${pad(baseDate.getMinutes())}:${pad(baseDate.getSeconds())}.${ms}`;
     }
 
-  function sendBackEndRegistrationEvents() {
+ function sendBackEndRegistrationEvents() {
       registrationData.forEach(row => {
         const timestamp = formatTimestamp(row['TIMESTAMP']);
         if (!row['PLAYER_ID']) {
-          log('Skipping row due to missing PLAYER_ID');
+          log('Skipping registration row due to missing PLAYER_ID');
           return;
         }
 
@@ -88,7 +92,7 @@
             accountStatus: row['ACCOUNT_STATUS'],
             playerTier: row['PLAYER_TIER'],
             verificationStatus: row['VERIFICATION_STATUS'],
-        });
+       });
 
         log('Back-End Registration Event sent for Player ID: ' + row['PLAYER_ID']);
       });
@@ -133,18 +137,19 @@
           log('Skipping login row due to missing PLAYER_ID');
           return;
         }
-
-        FS.event('Account | Login | Success', {  
+        
+        FS.event('Account | Login | Success', {
           playerId: row['PLAYER_ID'],
           timestamp: reformatTimestamp(row['DATE_TIME']),
           failedAttempts: row['FAILED_ATTEMPTS'],
           displayName: row['DISPLAY_NAME'],
           domain: row['ATTRIBUTE_MARKET_URL'],
-        });
+         });
 
         log('Back-End Login Event sent for Player ID: ' + row['PLAYER_ID']);
       });
-}
+    }
+</script>    
     
 /*        availble if needed for login backend:
           uid: row['UID'],
@@ -180,10 +185,8 @@
           marketingDepartment: row['ATTRIBUTE_MUG_DEPARTMENT'],	
           marketingSource: row['ATTRIBUTE_MUG_SOURCE'],	
 */
-    
-</script>
 
-  <!-- FullStory Snippet (replace 'your_code_here') -->
+  <!-- FullStory Snippet -->
   <script>
     window['_fs_debug'] = false;
     window['_fs_host'] = 'fullstory.com';
