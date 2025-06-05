@@ -29,7 +29,7 @@
     let registrationData = [];
     let loginData = [];
 
-    // Trim headers to avoid key mismatch
+    // CSV upload handlers
     document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
       Papa.parse(e.target.files[0], {
         header: true,
@@ -52,29 +52,28 @@
           log('Login CSV loaded with ' + loginData.length + ' rows');
         }
       });
-    });
 
+    // Log helper
     function log(message) {
       document.getElementById('log').textContent += message + '\n';
     }
 
-    // Format MM:SS.s to YYYY-MM-DD HH:mm:ss.SSS
+    // Convert TIMESTAMP (e.g., 56:28.0) into YYYY-MM-DD HH:mm:ss.000
     function formatTimestamp(rawTime) {
       if (!rawTime || !rawTime.includes(':')) return null;
 
       const [minStr, secStr] = rawTime.split(':');
       const minutes = parseInt(minStr, 10);
       const seconds = parseFloat(secStr);
-      const baseDate = new Date('2025-05-21T10:00:00Z'); // Fixed base date
+      const baseDate = new Date('2025-05-21T10:00:00Z');
 
-      baseDate.setUTCMinutes(minutes);
-      baseDate.setUTCSeconds(Math.floor(seconds));
-      baseDate.setUTCMilliseconds(Math.round((seconds % 1) * 1000));
+      baseDate.setMinutes(minutes);
+      baseDate.setSeconds(Math.floor(seconds));
+      baseDate.setMilliseconds(Math.round((seconds % 1) * 1000));
 
       const pad = num => num.toString().padStart(2, '0');
-      const ms = baseDate.getUTCMilliseconds().toString().padStart(3, '0');
-      return `${baseDate.getUTCFullYear()}-${pad(baseDate.getUTCMonth() + 1)}-${pad(baseDate.getUTCDate())} ` +
-             `${pad(baseDate.getUTCHours())}:${pad(baseDate.getUTCMinutes())}:${pad(baseDate.getUTCSeconds())}.${ms}`;
+      const ms = baseDate.getMilliseconds().toString().padStart(3, '0');
+      return `${baseDate.getFullYear()}-${pad(baseDate.getMonth() + 1)}-${pad(baseDate.getDate())} ${pad(baseDate.getHours())}:${pad(baseDate.getMinutes())}:${pad(baseDate.getSeconds())}.${ms}`;
     }
 
   // Send registration backend event  
@@ -103,18 +102,15 @@
 
 
     // Send login backend event 
-    
-  function sendBackEndLoginEvents() {
-  loginData.forEach(row => {
-    const timestamp = formatTimestamp(row['DATE_TIME']);
-    if (!row['PLAYER_ID']) {
-      log('Skipping login row due to missing PLAYER_ID');
-      return;
-    }
+   function sendBackEndLoginEvents() {
+      loginData.forEach(row => {
+        const timestamp = formatTimestamp(row['DATE_TIME']);
+        if (!row['PLAYER_ID']) {
+          log('Skipping login row due to missing PLAYER_ID');
+          return;
+        }
 
-    console.log('Row:', row); // Debug line
-
-        
+        console.log('Row:', row); // Debugging
         FS.event('Account | Login | Success', {
           playerId: row['PLAYER_ID'],
           timestamp: reformatTimestamp(row['DATE_TIME']),
@@ -126,7 +122,8 @@
         log('Back-End Login Event sent for Player ID: ' + row['PLAYER_ID']);
       });
     }
-
+</script>  
+  
 /*          availble if needed for registration backend:
             screenSize: row['ATTRIBUTE_SCREENSIZE'], 
             language: row['LANGUAGE'],
@@ -160,8 +157,6 @@
 */        
 
     
-</script>    
-
   <!-- FullStory Snippet -->
   <script>
    window['_fs_debug'] = false;
