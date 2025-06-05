@@ -101,6 +101,32 @@
       });
     }
 
+
+    // Send login backend event 
+    
+  function sendBackEndLoginEvents() {
+  loginData.forEach(row => {
+    const timestamp = formatTimestamp(row['DATE_TIME']);
+    if (!row['PLAYER_ID']) {
+      log('Skipping login row due to missing PLAYER_ID');
+      return;
+    }
+
+    console.log('Row:', row); // Debug line
+
+        
+        FS.event('Account | Login | Success', {
+          playerId: row['PLAYER_ID'],
+          timestamp: reformatTimestamp(row['DATE_TIME']),
+          failedAttempts: row['FAILED_ATTEMPTS'],
+          displayName: row['DISPLAY_NAME'],
+          domain: row['TOPLEVELDOMAINNAME'],
+         });
+
+        log('Back-End Login Event sent for Player ID: ' + row['PLAYER_ID']);
+      });
+    }
+
 /*          availble if needed for registration backend:
             screenSize: row['ATTRIBUTE_SCREENSIZE'], 
             language: row['LANGUAGE'],
@@ -133,30 +159,7 @@
             marketingSource: row['ATTRIBUTE_MUG_SOURCE'],	
 */        
 
-    // Send login backend event 
     
-  function sendBackEndLoginEvents() {
-  loginData.forEach(row => {
-    const timestamp = formatTimestamp(row['DATE_TIME']);
-    if (!row['PLAYER_ID']) {
-      log('Skipping login row due to missing PLAYER_ID');
-      return;
-    }
-
-    console.log('Row:', row); // Debug line
-
-        
-        FS.event('Account | Login | Success', {
-          playerId: row['PLAYER_ID'],
-          timestamp: reformatTimestamp(row['DATE_TIME']),
-          failedAttempts: row['FAILED_ATTEMPTS'],
-          displayName: row['DISPLAY_NAME'],
-          domain: row['TOPLEVELDOMAINNAME'],
-         });
-
-        log('Back-End Login Event sent for Player ID: ' + row['PLAYER_ID']);
-      });
-    }
 </script>    
 
   <!-- FullStory Snippet -->
