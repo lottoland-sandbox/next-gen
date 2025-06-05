@@ -7,29 +7,29 @@
 <body>
   <h1>FullStory Event Simulator</h1>
 
-  <!-- File uploader & action button registration -->
+  <!-- Registration Upload -->
   <h2>Upload Registration Data</h2>
   <input type="file" id="registrationCsvUpload" accept=".csv" />
   <button onclick="sendBackEndRegistrationEvents()">Send Back-End Registration Events</button>
   <br><br>
 
-  <!-- File uploader & action button login -->
+  <!-- Login Upload -->
   <h2>Upload Login Data</h2>
   <input type="file" id="loginCsvUpload" accept=".csv" />
   <button onclick="sendBackEndLoginEvents()">Send Back-End Login Events</button>
   <br><br>
 
- <!-- Event log -->
+  <!-- Log Output -->
   <pre id="log"></pre>
 
-  <!-- PapaParse for CSV parsing -->
+  <!-- PapaParse -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <script>
-   let registrationData = [];
-   let loginData = [];
+    let registrationData = [];
+    let loginData = [];
 
-// Trim headers to avoid key mismatch
+    // Trim headers to avoid key mismatch
     document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
       Papa.parse(e.target.files[0], {
         header: true,
@@ -54,31 +54,27 @@
       });
     });
 
-function log(message) {
-      document.getElementById('log').textContent += message + '\n';
-    }
-
-// Logger
     function log(message) {
       document.getElementById('log').textContent += message + '\n';
     }
 
- // Format timestamp to: YYYY-MM-DD HH:mm:ss.000
-   function formatTimestamp(rawTime) {
+    // Format MM:SS.s to YYYY-MM-DD HH:mm:ss.SSS
+    function formatTimestamp(rawTime) {
       if (!rawTime || !rawTime.includes(':')) return null;
 
       const [minStr, secStr] = rawTime.split(':');
       const minutes = parseInt(minStr, 10);
       const seconds = parseFloat(secStr);
-      const baseDate = new Date('2025-05-21T10:00:00Z'); // Example base date/time
+      const baseDate = new Date('2025-05-21T10:00:00Z'); // Fixed base date
 
-      baseDate.setMinutes(minutes);
-      baseDate.setSeconds(Math.floor(seconds));
-      baseDate.setMilliseconds(Math.round((seconds % 1) * 1000));
+      baseDate.setUTCMinutes(minutes);
+      baseDate.setUTCSeconds(Math.floor(seconds));
+      baseDate.setUTCMilliseconds(Math.round((seconds % 1) * 1000));
 
       const pad = num => num.toString().padStart(2, '0');
-      const ms = baseDate.getMilliseconds().toString().padStart(3, '0');
-      return `${baseDate.getFullYear()}-${pad(baseDate.getMonth() + 1)}-${pad(baseDate.getDate())} ${pad(baseDate.getHours())}:${pad(baseDate.getMinutes())}:${pad(baseDate.getSeconds())}.${ms}`;
+      const ms = baseDate.getUTCMilliseconds().toString().padStart(3, '0');
+      return `${baseDate.getUTCFullYear()}-${pad(baseDate.getUTCMonth() + 1)}-${pad(baseDate.getUTCDate())} ` +
+             `${pad(baseDate.getUTCHours())}:${pad(baseDate.getUTCMinutes())}:${pad(baseDate.getUTCSeconds())}.${ms}`;
     }
 
   // Send registration backend event  
