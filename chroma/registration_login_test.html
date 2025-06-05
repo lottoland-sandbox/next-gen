@@ -30,36 +30,47 @@
     let loginData = [];
 
     // CSV upload handlers
-    document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
+      document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
       Papa.parse(e.target.files[0], {
         header: true,
         skipEmptyLines: true,
         transformHeader: header => header.trim(),
         complete: function (results) {
           registrationData = results.data;
-          log('Registration CSV loaded with ' + registrationData.length + ' rows');
+          log('✅ Registration CSV loaded with ' + registrationData.length + ' rows');
+        },
+        error: function (err) {
+          log('❌ Error parsing registration CSV: ' + err.message);
         }
       });
     });
 
-    document.getElementById('loginCsvUpload').addEventListener('change', function (e) {
+   document.getElementById('loginCsvUpload').addEventListener('change', function (e) {
       Papa.parse(e.target.files[0], {
         header: true,
         skipEmptyLines: true,
         transformHeader: header => header.trim(),
         complete: function (results) {
           loginData = results.data;
-          log('Login CSV loaded with ' + loginData.length + ' rows');
+          log('✅ Login CSV loaded with ' + loginData.length + ' rows');
+        },
+        error: function (err) {
+          log('❌ Error parsing login CSV: ' + err.message);
         }
       });
+    });
 
     // Log helper
     function log(message) {
-      document.getElementById('log').textContent += message + '\n';
+      const logBox = document.getElementById('log');
+      logBox.textContent += message + '\n';
+      console.log(message);
+    }
+
     }
 
     // Convert TIMESTAMP (e.g., 56:28.0) into YYYY-MM-DD HH:mm:ss.000
-    function formatTimestamp(rawTime) {
+   function formatTimestamp(rawTime) {
       if (!rawTime || !rawTime.includes(':')) return null;
 
       const [minStr, secStr] = rawTime.split(':');
@@ -71,17 +82,22 @@
       baseDate.setSeconds(Math.floor(seconds));
       baseDate.setMilliseconds(Math.round((seconds % 1) * 1000));
 
-      const pad = num => num.toString().padStart(2, '0');
+      const pad = n => n.toString().padStart(2, '0');
       const ms = baseDate.getMilliseconds().toString().padStart(3, '0');
       return `${baseDate.getFullYear()}-${pad(baseDate.getMonth() + 1)}-${pad(baseDate.getDate())} ${pad(baseDate.getHours())}:${pad(baseDate.getMinutes())}:${pad(baseDate.getSeconds())}.${ms}`;
     }
 
   // Send registration backend event  
  function sendBackEndRegistrationEvents() {
+      if (!window.FS || typeof FS.event !== 'function') {
+        log("❌ FS not initialized. Cannot send registration events.");
+        return;
+      }
+
       registrationData.forEach(row => {
         const timestamp = formatTimestamp(row['TIMESTAMP']);
         if (!row['PLAYER_ID']) {
-          log('Skipping registration row due to missing PLAYER_ID');
+          log('⚠️ Skipping registration row due to missing PLAYER_ID');
           return;
         }
 
@@ -96,20 +112,23 @@
             verificationStatus: row['VERIFICATION_STATUS'],
        });
 
-        log('Back-End Registration Event sent for Player ID: ' + row['PLAYER_ID']);
+        log('✅ Sent Registration Event for PLAYER_ID: ' + row['PLAYER_ID']);
       });
     }
 
     // Send login backend event 
    function sendBackEndLoginEvents() {
+      if (!window.FS || typeof FS.event !== 'function') {
+        log("❌ FS not initialized. Cannot send login events.");
+        return;
+      }
+
       loginData.forEach(row => {
         const timestamp = formatTimestamp(row['DATE_TIME']);
         if (!row['PLAYER_ID']) {
-          log('Skipping login row due to missing PLAYER_ID');
+          log('⚠️ Skipping login row due to missing PLAYER_ID');
           return;
         }
-
-        console.log('Row:', row); // Debugging
         FS.event('Account | Login | Success', {
           playerId: row['PLAYER_ID'],
           timestamp: reformatTimestamp(row['DATE_TIME']),
@@ -118,7 +137,9 @@
           domain: row['TOPLEVELDOMAINNAME'],
          });
 
-        log('Back-End Login Event sent for Player ID: ' + row['PLAYER_ID']);
+        });
+
+        log('✅ Sent Login Event for PLAYER_ID: ' + row['PLAYER_ID']);
       });
     }
 </script>  
