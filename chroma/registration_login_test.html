@@ -58,7 +58,7 @@
     }
 
  // Format timestamp to: YYYY-MM-DD HH:mm:ss.000
-    function formatTimestamp(rawTime) {
+   function formatTimestamp(rawTime) {
       if (!rawTime || !rawTime.includes(':')) return null;
 
       const [minStr, secStr] = rawTime.split(':');
@@ -75,6 +75,7 @@
       return `${baseDate.getFullYear()}-${pad(baseDate.getMonth() + 1)}-${pad(baseDate.getDate())} ${pad(baseDate.getHours())}:${pad(baseDate.getMinutes())}:${pad(baseDate.getSeconds())}.${ms}`;
     }
 
+  // Send registration backend event  
  function sendBackEndRegistrationEvents() {
       registrationData.forEach(row => {
         const timestamp = formatTimestamp(row['TIMESTAMP']);
@@ -130,15 +131,16 @@
             marketingSource: row['ATTRIBUTE_MUG_SOURCE'],	
 */        
 
-    function sendBackEndLoginEvents() {
-  loginData.forEach((row, index) => {
-    console.log(`Login row ${index + 1}:`, row);
+    // Send login backend event 
+   function sendBackEndLoginEvents() {
+      loginData.forEach((row, index) => {
+        console.log(`Login row ${index + 1}:`, row);
 
-    const timestamp = formatTimestamp(row['DATE_TIME']);
-    if (!row['PLAYER_ID']) {
-      log('Skipping login row due to missing PLAYER_ID');
-      return;
-    }
+        const timestamp = formatTimestamp(row['DATE_TIME']);
+        if (!row['PLAYER_ID']) {
+          log('Skipping login row due to missing PLAYER_ID');
+          return;
+        }
         
         FS.event('Account | Login | Success', {
           playerId: row['PLAYER_ID'],
@@ -155,24 +157,22 @@
 
   <!-- FullStory Snippet -->
   <script>
-    window['_fs_debug'] = false;
+   window['_fs_debug'] = false;
     window['_fs_host'] = 'fullstory.com';
     window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
     window['_fs_org'] = 'o-22YWXK-na1';  // <-- Replace this with your actual FullStory Org ID
     window['_fs_namespace'] = 'FS';
     (function(m,n,e,t,l,o,g,y){
-        if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');} return;}
-        g=m[e]=function(a,b){g.q?g.q.push([a,b]):g._api(a,b);};g.q=[];
-        o=n.createElement(t);o.async=1;o.crossOrigin='anonymous';o.src='https://'+_fs_script;
-        y=n.getElementsByTagName(t)[0];y.parentNode.insertBefore(o,y);
-        g.identify=function(i,v){g(l,{uid:i},v)};
-        g.setUserVars=function(v){g('userVars',v)};
-        g.event=function(i,v){g('event',{n:i,p:v})};
-        g.shutdown=function(){g("rec",!1)};
-        g.restart=function(){g("rec",!0)};
-        g.consent=function(a){g("consent",!arguments.length||a)};
-        g.identifyAccount=function(i,v){g("account",{acctId:i},v)};
-        g.clearUserCookie=function(){};
+      if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');} return;}
+      g=m[e]=function(a,b){g.q?g.q.push([a,b]):g._api(a,b);};g.q=[];
+      o=n.createElement(t);o.async=1;o.crossOrigin='anonymous';o.src='https://'+_fs_script;
+      y=n.getElementsByTagName(t)[0];y.parentNode.insertBefore(o,y);
+      g.identify=function(i,v){g(l,{uid:i},v)};g.setUserVars=function(v){g('userVars',v)};
+      g.event=function(i,v){g('event',{n:i,p:v})};
+      g.shutdown=function(){g("rec",!1)};g.restart=function(){g("rec",!0)};
+      g.consent=function(a){g("consent",!arguments.length||a)};
+      g.identifyAccount=function(i,v){g("account",{acctId:i},v)};
+      g.clearUserCookie=function(){};
     })(window,document,window['_fs_namespace'],'script','user');
   </script>
 </body>
