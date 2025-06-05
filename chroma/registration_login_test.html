@@ -131,12 +131,14 @@
 */        
 
     function sendBackEndLoginEvents() {
-      loginData.forEach(row => {
-        const timestamp = formatTimestamp(row['DATE_TIME']);
-        if (!row['PLAYER_ID']) {
-          log('Skipping login row due to missing PLAYER_ID');
-          return;
-        }
+  loginData.forEach((row, index) => {
+    console.log(`Login row ${index + 1}:`, row);
+
+    const timestamp = formatTimestamp(row['DATE_TIME']);
+    if (!row['PLAYER_ID']) {
+      log('Skipping login row due to missing PLAYER_ID');
+      return;
+    }
         
         FS.event('Account | Login | Success', {
           playerId: row['PLAYER_ID'],
