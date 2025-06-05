@@ -28,12 +28,13 @@
   <script>
    let registrationData = [];
    let loginData = [];
-    
-// File upload listeners
+
+// Trim headers to avoid key mismatch
     document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
       Papa.parse(e.target.files[0], {
         header: true,
         skipEmptyLines: true,
+        transformHeader: header => header.trim(),
         complete: function (results) {
           registrationData = results.data;
           log('Registration CSV loaded with ' + registrationData.length + ' rows');
@@ -45,12 +46,17 @@
       Papa.parse(e.target.files[0], {
         header: true,
         skipEmptyLines: true,
+        transformHeader: header => header.trim(),
         complete: function (results) {
           loginData = results.data;
           log('Login CSV loaded with ' + loginData.length + ' rows');
         }
       });
     });
+
+function log(message) {
+      document.getElementById('log').textContent += message + '\n';
+    }
 
 // Logger
     function log(message) {
