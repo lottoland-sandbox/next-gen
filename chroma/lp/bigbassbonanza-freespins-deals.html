@@ -12,7 +12,7 @@
 <script>
 window['_fs_host'] = 'fullstory.com';
 window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
-window['_fs_org'] = 'o-21MNYV-na1';
+window['_fs_org'] = 'YOUR_ORG_ID_HERE';
 window['_fs_namespace'] = 'FS';
 !function(m,n,e,t,l,o,g,y){var s,f,a=function(h){
 return!(h in m)||(m.console&&m.console.log&&m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].'),!1)}(e)
@@ -32,41 +32,20 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 }(window,document,window._fs_namespace,"script",window._fs_script);
 </script>
 
-<!-- AMPLITUDE -->       
-<script src="https://cdn.amplitude.com/libs/analytics-browser-2.11.7-min.js.gz"></script>
-<script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.8.1-min.js.gz"></script>
-<script>
-  window.amplitude.init("3424f256a73bbb756e9d4ef8000ea179", {
-    autocapture: {
-      attribution: true,
-      pageViews: true,
-      sessions: true,
-      fileDownload: false,
-      formInteractions: true,
-      elementInteractions: true
-    },
-  });
-  const sessionReplayTracking = window.sessionReplay.plugin({sampleRate: 1}); // 100% sample rate
-  window.amplitude.add(sessionReplayTracking).promise.then(() => {
-    console.log("Session Replay plugin added successfully");
-  });
-</script>
-<script type="text/javascript" src="https://cdn.amplitude.com/script/3424f256a73bbb756e9d4ef8000ea179.experiment.js"></script>
-   
-    
+  
 </head>
 <body>
     <img src="../img/lottoland.png" alt="Logo" class="logo">
     <h2>Big Bass Bonanza - 100 Free</h2>
 
     <!-- HEADER -->    
-    <div id="main" data-analytics-component="landing">
+    <div id="main" data-track-component="landing">
     
         <div class="offers-container" 
-             data-analytics-section="offer"
-             data-analytics-genre="casino" 
-             data-analytics-category="freeSpins" 
-             data-analytics-product="BigBassBonanza">
+             data-track-section="offer"
+             data-track-genre="casino" 
+             data-track-category="freeSpins" 
+             data-track-product="BigBassBonanza">
              
             <button id="button.register" 
                     onclick="window.location.href='../join.html'" 
