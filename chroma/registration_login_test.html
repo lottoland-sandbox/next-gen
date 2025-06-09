@@ -88,19 +88,22 @@
     }
 
   // Send registration backend event  
- function sendBackEndRegistrationEvents() {
-      if (!window.FS || typeof FS.event !== 'function') {
-        log("❌ FS not initialized. Cannot send registration events.");
-        return;
-      }
+ function sendBackEndEvents() {
+      console.log('Back-End event function triggered');
 
-      registrationData.forEach(row => {
-        const timestamp = formatTimestamp(row['TIMESTAMP']);
-        if (!row['PLAYER_ID']) {
-          log('⚠️ Skipping registration row due to missing PLAYER_ID');
+      parsedData.forEach((row, index) => {
+        console.log(`Row ${index + 1}:`, row);
+        console.log('Keys:', Object.keys(row));
+
+        const playerId = row['PLAYER_ID'];
+        const timestamp = reformatTimestamp(row['TIMESTAMP']);
+
+        if (!playerId) {
+          console.warn(`Row ${index + 1}: Missing PLAYER_ID`);
           return;
         }
 
+        try {
         FS.event('Account | Registration | Success', {
            playerId: row['PLAYER_ID'],
            timestamp: timestamp,
@@ -110,39 +113,32 @@
             accountStatus: row['ACCOUNT_STATUS'],
             playerTier: row['PLAYER_TIER'],
             verificationStatus: row['VERIFICATION_STATUS'],
-       });
+   });
 
-        log('✅ Sent Registration Event for PLAYER_ID: ' + row['PLAYER_ID']);
+          log(`Back-End Event sent for Player ID: ${playerId}`);
+        } catch (err) {
+          console.error('Error sending FullStory event:', err);
+        }
       });
     }
 
     // Send login backend event 
-   function sendBackEndLoginEvents() {
-      if (!window.FS || typeof FS.event !== 'function') {
-        log("❌ FS not initialized. Cannot send login events.");
-        return;
-      }
+  function sendBackEndLogin() {
+      parsedData.forEach(row => {
+        const playerId = row['PLAYER_ID'];
+        if (!playerId) return;
 
-      loginData.forEach(row => {
-        const timestamp = formatTimestamp(row['DATE_TIME']);
-        if (!row['PLAYER_ID']) {
-          log('⚠️ Skipping login row due to missing PLAYER_ID');
-          return;
-        }
         FS.event('Account | Login | Success', {
           playerId: row['PLAYER_ID'],
           timestamp: reformatTimestamp(row['DATE_TIME']),
           failedAttempts: row['FAILED_ATTEMPTS'],
           displayName: row['DISPLAY_NAME'],
           domain: row['TOPLEVELDOMAINNAME'],
-         });
-
-        });
-
-        log('✅ Sent Login Event for PLAYER_ID: ' + row['PLAYER_ID']);
+});
+        log('Back-End Login sent for Player ID: ' + playerId);
       });
     }
-</script>  
+  </script>
     
   <!-- FullStory Snippet -->
   <script>
