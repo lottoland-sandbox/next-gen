@@ -10,7 +10,7 @@
   <!-- Registration Upload -->
   <h2>Upload Registration Data</h2>
   <input type="file" id="registrationCsvUpload" accept=".csv" />
-  <button onclick="sendBackEndRegistrationEvents()">Send Back-End Registration Events</button>
+  <button id="sendEventsButton" disabled>Send Back-End Registration Events</button>
   <br><br>
 
   <!-- Log Output -->
@@ -20,81 +20,92 @@
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <script>
-    let parsedData = [];
+  let parsedData = [];
 
-    // Log helper
-    function log(message) {
-      const logElem = document.getElementById('log');
-      logElem.textContent += message + '\n';
-      console.log(message);
-    }
+  function log(message) {
+    const logElem = document.getElementById('log');
+    logElem.textContent += message + '\n';
+    console.log(message);
+  }
 
-    // Timestamp formatter
-    function formatTimestamp(rawTime) {
-      if (!rawTime || !rawTime.includes(':')) return null;
+  function formatTimestamp(rawTime) {
+    if (!rawTime || !rawTime.includes(':')) return null;
+    const [minStr, secStr] = rawTime.split(':');
+    const minutes = parseInt(minStr, 10);
+    const seconds = parseFloat(secStr);
+    const baseDate = new Date('2025-05-21T10:00:00Z');
 
-      const [minStr, secStr] = rawTime.split(':');
-      const minutes = parseInt(minStr, 10);
-      const seconds = parseFloat(secStr);
-      const baseDate = new Date('2025-05-21T10:00:00Z');
+    baseDate.setMinutes(minutes);
+    baseDate.setSeconds(Math.floor(seconds));
+    baseDate.setMilliseconds(Math.round((seconds % 1) * 1000));
 
-      baseDate.setMinutes(minutes);
-      baseDate.setSeconds(Math.floor(seconds));
-      baseDate.setMilliseconds(Math.round((seconds % 1) * 1000));
+    const pad = n => n.toString().padStart(2, '0');
+    const ms = baseDate.getMilliseconds().toString().padStart(3, '0');
+    return `${baseDate.getFullYear()}-${pad(baseDate.getMonth() + 1)}-${pad(baseDate.getDate())} ${pad(baseDate.getHours())}:${pad(baseDate.getMinutes())}:${pad(baseDate.getSeconds())}.${ms}`;
+  }
 
-      const pad = n => n.toString().padStart(2, '0');
-      const ms = baseDate.getMilliseconds().toString().padStart(3, '0');
-      return `${baseDate.getFullYear()}-${pad(baseDate.getMonth() + 1)}-${pad(baseDate.getDate())} ${pad(baseDate.getHours())}:${pad(baseDate.getMinutes())}:${pad(baseDate.getSeconds())}.${ms}`;
-    }
-
-    // CSV Upload Handler
-    document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
-      Papa.parse(e.target.files[0], {
-        header: true,
-        skipEmptyLines: true,
-        complete: function (results) {
-          parsedData = results.data;
-          log('✅ CSV loaded with ' + parsedData.length + ' rows');
-          console.log('Parsed Data:', parsedData);
-        }
-      });
+  document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
+    Papa.parse(e.target.files[0], {
+      header: true,
+      skipEmptyLines: true,
+      complete: function (results) {
+        parsedData = results.data;
+        log('✅ CSV loaded with ' + parsedData.length + ' rows');
+      }
     });
+  });
 
-    // Send Events
-    function sendBackEndRegistrationEvents() {
-      if (!window.FS || typeof FS.event !== 'function') {
-        log("❌ FS is not ready or not initialized.");
+  function sendBackEndRegistrationEvents() {
+    if (!window.FS || typeof FS.event !== 'function') {
+      log("❌ FS is not ready or not initialized.");
+      return;
+    }
+
+    parsedData.forEach((row, index) => {
+      const playerId = row['PLAYER_ID'];
+      const timestamp = formatTimestamp(row['TIMESTAMP']);
+
+      if (!playerId) {
+        log(`⚠️ Row ${index + 1} skipped: Missing PLAYER_ID`);
         return;
       }
 
-      parsedData.forEach((row, index) => {
-        const playerId = row['PLAYER_ID'];
-        const timestamp = formatTimestamp(row['TIMESTAMP']);
+      try {
+        FS.event('Account | Registration | Success', {
+          PlayerID: playerId,
+          Timestamp: timestamp,
+          DisplayName: row['DISPLAY_NAME'],
+          UID: row['UID'],
+          Domain: row['DOMAIN'],
+          AccountStatus: row['ACCOUNT_STATUS'],
+          PlayerTier: row['PLAYER_TIER'],
+          VerificationStatus: row['VERIFICATION_STATUS'],
+        });
+        log(`✅ Event sent for Player ID: ${playerId}`);
+      } catch (err) {
+        log(`❌ Error sending event for Player ID: ${playerId}`);
+        console.error(err);
+      }
+    });
+  }
 
-        if (!playerId) {
-          console.warn(`⚠️ Row ${index + 1} skipped: Missing PLAYER_ID`);
-          return;
-        }
+  // Wait for FS to be ready before enabling button
+  function waitForFullStory(callback) {
+    const interval = setInterval(() => {
+      if (typeof FS !== 'undefined' && typeof FS.event === 'function') {
+        clearInterval(interval);
+        log('✅ FullStory is ready');
+        document.getElementById('sendEventsButton').disabled = false;
+        document.getElementById('sendEventsButton').addEventListener('click', callback);
+      } else {
+        console.log('⏳ Waiting for FullStory to load...');
+      }
+    }, 500);
+  }
 
-        try {
-          FS.event('Account | Registration | Success', {
-            PlayerID: playerId,
-            Timestamp: timestamp,
-            DisplayName: row['DISPLAY_NAME'],
-            UID: row['UID'],
-            Domain: row['DOMAIN'],
-            AccountStatus: row['ACCOUNT_STATUS'],
-            PlayerTier: row['PLAYER_TIER'],
-            VerificationStatus: row['VERIFICATION_STATUS'],
-          });
+  waitForFullStory(sendBackEndRegistrationEvents);
+</script>
 
-          log(`✅ Event sent for Player ID: ${playerId}`);
-        } catch (err) {
-          console.error(`❌ Error sending event for Player ID: ${playerId}`, err);
-        }
-      });
-    }
-  </script>
 
   <!-- FullStory Snippet -->
   <script>
