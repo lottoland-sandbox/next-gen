@@ -13,36 +13,24 @@
   <button onclick="sendBackEndRegistrationEvents()">Send Back-End Registration Events</button>
   <br><br>
 
-
   <!-- Log Output -->
   <pre id="log"></pre>
 
   <!-- PapaParse -->
- <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <script>
     let parsedData = [];
 
-    // CSV Upload Handler
-    document.getElementById('csvUpload').addEventListener('change', function (e) {
-      Papa.parse(e.target.files[0], {
-        header: true,
-        skipEmptyLines: true,
-        complete: function (results) {
-          parsedData = results.data;
-          log('CSV loaded with ' + parsedData.length + ' rows');
-          console.log('Parsed Data:', parsedData);
-        }
-      });
-    });
-
     // Log helper
     function log(message) {
-      document.getElementById('log').textContent += message + '\n';
+      const logElem = document.getElementById('log');
+      logElem.textContent += message + '\n';
+      console.log(message);
     }
 
-    // Convert TIMESTAMP (e.g., 56:28.0) into YYYY-MM-DD HH:mm:ss.000
-   function formatTimestamp(rawTime) {
+    // Timestamp formatter
+    function formatTimestamp(rawTime) {
       if (!rawTime || !rawTime.includes(':')) return null;
 
       const [minStr, secStr] = rawTime.split(':');
@@ -59,60 +47,63 @@
       return `${baseDate.getFullYear()}-${pad(baseDate.getMonth() + 1)}-${pad(baseDate.getDate())} ${pad(baseDate.getHours())}:${pad(baseDate.getMinutes())}:${pad(baseDate.getSeconds())}.${ms}`;
     }
 
-function sendBackEndEvents() {
-      console.log('Back-End event function triggered');
+    // CSV Upload Handler
+    document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
+      Papa.parse(e.target.files[0], {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          parsedData = results.data;
+          log('✅ CSV loaded with ' + parsedData.length + ' rows');
+          console.log('Parsed Data:', parsedData);
+        }
+      });
+    });
+
+    // Send Events
+    function sendBackEndRegistrationEvents() {
+      if (!window.FS || typeof FS.event !== 'function') {
+        log("❌ FS is not ready or not initialized.");
+        return;
+      }
 
       parsedData.forEach((row, index) => {
-        console.log(`Row ${index + 1}:`, row);
-        console.log('Keys:', Object.keys(row));
-
         const playerId = row['PLAYER_ID'];
-        const timestamp = reformatTimestamp(row['TIMESTAMP']);
+        const timestamp = formatTimestamp(row['TIMESTAMP']);
 
         if (!playerId) {
-          console.warn(`Row ${index + 1}: Missing PLAYER_ID`);
+          console.warn(`⚠️ Row ${index + 1} skipped: Missing PLAYER_ID`);
           return;
         }
 
         try {
-        FS.event('Account | Registration | Success', {
-           playerId: row['PLAYER_ID'],
-           timestamp: timestamp,
-           displayName: row['DISPLAY_NAME'],
-            uid: row['UID'],
-            domain: row['DOMAIN'],
-            accountStatus: row['ACCOUNT_STATUS'],
-            playerTier: row['PLAYER_TIER'],
-            verificationStatus: row['VERIFICATION_STATUS'],
- });
+          FS.event('Account | Registration | Success', {
+            PlayerID: playerId,
+            Timestamp: timestamp,
+            DisplayName: row['DISPLAY_NAME'],
+            UID: row['UID'],
+            Domain: row['DOMAIN'],
+            AccountStatus: row['ACCOUNT_STATUS'],
+            PlayerTier: row['PLAYER_TIER'],
+            VerificationStatus: row['VERIFICATION_STATUS'],
+          });
 
-          log(`Back-End Event sent for Player ID: ${playerId}`);
+          log(`✅ Event sent for Player ID: ${playerId}`);
         } catch (err) {
-          console.error('Error sending FullStory event:', err);
+          console.error(`❌ Error sending event for Player ID: ${playerId}`, err);
         }
       });
     }
   </script>
-    
+
   <!-- FullStory Snippet -->
   <script>
-   window['_fs_debug'] = false;
+    window['_fs_debug'] = false;
     window['_fs_host'] = 'fullstory.com';
     window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
-    window['_fs_org'] = 'o-22YWXK-na1';  // <-- Replace this with your actual FullStory Org ID
+    window['_fs_org'] = 'o-22YWXK-na1';  // Replace with your real FullStory Org ID
     window['_fs_namespace'] = 'FS';
+
     (function(m,n,e,t,l,o,g,y){
-      if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');} return;}
-      g=m[e]=function(a,b){g.q?g.q.push([a,b]):g._api(a,b);};g.q=[];
-      o=n.createElement(t);o.async=1;o.crossOrigin='anonymous';o.src='https://'+_fs_script;
-      y=n.getElementsByTagName(t)[0];y.parentNode.insertBefore(o,y);
-      g.identify=function(i,v){g(l,{uid:i},v)};g.setUserVars=function(v){g('userVars',v)};
-      g.event=function(i,v){g('event',{n:i,p:v})};
-      g.shutdown=function(){g("rec",!1)};g.restart=function(){g("rec",!0)};
-      g.consent=function(a){g("consent",!arguments.length||a)};
-      g.identifyAccount=function(i,v){g("account",{acctId:i},v)};
-      g.clearUserCookie=function(){};
-    })(window,document,window['_fs_namespace'],'script','user');
-  </script>
-</body>
-</html>
+      if (e in m) return;
+      g = m[e] = function(a,b){ g.q ? g.q.push([a,b]) :
