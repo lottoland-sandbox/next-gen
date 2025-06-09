@@ -18,49 +18,27 @@
   <pre id="log"></pre>
 
   <!-- PapaParse -->
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <script>
-    let registrationData = [];
+    let parsedData = [];
 
-    // CSV upload handlers
-      document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
+    // CSV Upload Handler
+    document.getElementById('csvUpload').addEventListener('change', function (e) {
       Papa.parse(e.target.files[0], {
         header: true,
         skipEmptyLines: true,
-        transformHeader: header => header.trim(),
         complete: function (results) {
-          registrationData = results.data;
-          log('✅ Registration CSV loaded with ' + registrationData.length + ' rows');
-        },
-        error: function (err) {
-          log('❌ Error parsing registration CSV: ' + err.message);
-        }
-      });
-    });
-
-   document.getElementById('loginCsvUpload').addEventListener('change', function (e) {
-      Papa.parse(e.target.files[0], {
-        header: true,
-        skipEmptyLines: true,
-        transformHeader: header => header.trim(),
-        complete: function (results) {
-          loginData = results.data;
-          log('✅ Login CSV loaded with ' + loginData.length + ' rows');
-        },
-        error: function (err) {
-          log('❌ Error parsing login CSV: ' + err.message);
+          parsedData = results.data;
+          log('CSV loaded with ' + parsedData.length + ' rows');
+          console.log('Parsed Data:', parsedData);
         }
       });
     });
 
     // Log helper
     function log(message) {
-      const logBox = document.getElementById('log');
-      logBox.textContent += message + '\n';
-      console.log(message);
-    }
-
+      document.getElementById('log').textContent += message + '\n';
     }
 
     // Convert TIMESTAMP (e.g., 56:28.0) into YYYY-MM-DD HH:mm:ss.000
@@ -81,8 +59,7 @@
       return `${baseDate.getFullYear()}-${pad(baseDate.getMonth() + 1)}-${pad(baseDate.getDate())} ${pad(baseDate.getHours())}:${pad(baseDate.getMinutes())}:${pad(baseDate.getSeconds())}.${ms}`;
     }
 
-  // Send registration backend event  
- function sendBackEndEvents() {
+function sendBackEndEvents() {
       console.log('Back-End event function triggered');
 
       parsedData.forEach((row, index) => {
@@ -107,7 +84,7 @@
             accountStatus: row['ACCOUNT_STATUS'],
             playerTier: row['PLAYER_TIER'],
             verificationStatus: row['VERIFICATION_STATUS'],
-   });
+ });
 
           log(`Back-End Event sent for Player ID: ${playerId}`);
         } catch (err) {
