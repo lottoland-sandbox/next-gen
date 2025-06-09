@@ -7,97 +7,115 @@
 <body>
   <h1>FullStory Event Simulator</h1>
 
-  <!-- Registration Upload -->
+  <!-- Upload Section -->
   <h2>Upload Registration Data</h2>
   <input type="file" id="registrationCsvUpload" accept=".csv" />
-  <button id="sendEventsButton" disabled>Send Back-End Registration Events</button>
+  <button onclick="sendBackEndRegistrationEvents()">Send Back-End Registration Events</button>
   <br><br>
 
-  <!-- Log Output -->
-  <pre id="log"></pre>
+  <!-- Output Log -->
+  <pre id="log" style="background:#f0f0f0; padding:10px;"></pre>
 
-  <!-- PapaParse -->
+  <!-- PapaParse CSV Parser -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <script>
-  let parsedData = [];
+    let parsedData = [];
 
-  // CSV Upload Handler
-  document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
-    Papa.parse(e.target.files[0], {
-      header: true,
-      skipEmptyLines: true,
-      complete: function (results) {
-        parsedData = results.data;
-        log('✅ CSV loaded with ' + parsedData.length + ' rows');
-        console.log('Parsed Data:', parsedData);
-      }
+    // CSV File Upload Handler
+    document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
+      Papa.parse(e.target.files[0], {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          parsedData = results.data;
+          log('✅ CSV loaded with ' + parsedData.length + ' rows');
+          console.log('Parsed Data:', parsedData);
+        }
+      });
     });
-  });
 
-  function log(message) {
-    document.getElementById('log').textContent += message + '\n';
-  }
-
-  function formatTimestamp(rawTime) {
-    if (!rawTime || !rawTime.includes(':')) return null;
-    const [minStr, secStr] = rawTime.split(':');
-    const minutes = parseInt(minStr, 10);
-    const seconds = parseFloat(secStr);
-    const baseDate = new Date('2025-05-21T10:00:00Z');
-    baseDate.setMinutes(minutes);
-    baseDate.setSeconds(Math.floor(seconds));
-    baseDate.setMilliseconds(Math.round((seconds % 1) * 1000));
-    const pad = n => n.toString().padStart(2, '0');
-    const ms = baseDate.getMilliseconds().toString().padStart(3, '0');
-    return `${baseDate.getFullYear()}-${pad(baseDate.getMonth() + 1)}-${pad(baseDate.getDate())} ${pad(baseDate.getHours())}:${pad(baseDate.getMinutes())}:${pad(baseDate.getSeconds())}.${ms}`;
-  }
-
-  function sendBackEndRegistrationEvents() {
-    if (typeof FS === 'undefined' || typeof FS.event !== 'function') {
-      log('❌ FS is not ready or not initialized.');
-      return;
+    // Logging Helper
+    function log(message) {
+      document.getElementById('log').textContent += message + '\n';
     }
 
-    parsedData.forEach((row, index) => {
-      const playerId = row['PLAYER_ID'];
-      const timestamp = formatTimestamp(row['TIMESTAMP']);
+    // Format timestamp like: 56:28.0 → 2025-05-21 10:56:28.000
+    function formatTimestamp(rawTime) {
+      if (!rawTime || !rawTime.includes(':')) return null;
 
-      if (!playerId) {
-        log(`❌ Row ${index + 1}: Missing PLAYER_ID`);
+      const [minStr, secStr] = rawTime.split(':');
+      const minutes = parseInt(minStr, 10);
+      const seconds = parseFloat(secStr);
+      const baseDate = new Date('2025-05-21T10:00:00Z'); // base session date/time
+
+      baseDate.setMinutes(minutes);
+      baseDate.setSeconds(Math.floor(seconds));
+      baseDate.setMilliseconds(Math.round((seconds % 1) * 1000));
+
+      const pad = n => n.toString().padStart(2, '0');
+      const ms = baseDate.getMilliseconds().toString().padStart(3, '0');
+      return `${baseDate.getFullYear()}-${pad(baseDate.getMonth() + 1)}-${pad(baseDate.getDate())} ${pad(baseDate.getHours())}:${pad(baseDate.getMinutes())}:${pad(baseDate.getSeconds())}.${ms}`;
+    }
+
+    // Send FullStory Registration Events
+    function sendBackEndRegistrationEvents() {
+      if (typeof FS === 'undefined' || typeof FS.event !== 'function') {
+        log('❌ FS is not ready or not initialized.');
         return;
       }
 
-      try {
-        FS.event('Account | Registration | Success', {
-          PlayerID: playerId,
-          Timestamp: timestamp,
-          DisplayName: row['DISPLAY_NAME'],
-          UID: row['UID'],
-          Domain: row['DOMAIN'],
-          AccountStatus: row['ACCOUNT_STATUS'],
-          PlayerTier: row['PLAYER_TIER'],
-          VerificationStatus: row['VERIFICATION_STATUS'],
-        });
+      parsedData.forEach((row, index) => {
+        const playerId = row['PLAYER_ID'];
+        const timestamp = formatTimestamp(row['TIMESTAMP']);
 
-        log(`✅ Back-End Registration Event sent for Player ID: ${playerId}`);
-      } catch (err) {
-        console.error('Error sending FullStory event:', err);
-        log(`❌ Error sending event for Player ID: ${playerId}`);
-      }
-    });
-  }
-</script>
+        if (!playerId) {
+          log(`❌ Row ${index + 1}: Missing PLAYER_ID`);
+          return;
+        }
 
+        try {
+          FS.event('Account | Registration | Success', {
+            PlayerID: playerId,
+            Timestamp: timestamp,
+            DisplayName: row['DISPLAY_NAME'],
+            UID: row['UID'],
+            Domain: row['DOMAIN'],
+            AccountStatus: row['ACCOUNT_STATUS'],
+            PlayerTier: row['PLAYER_TIER'],
+            VerificationStatus: row['VERIFICATION_STATUS'],
+          });
+
+          log(`✅ Event sent for Player ID: ${playerId}`);
+        } catch (err) {
+          console.error(err);
+          log(`❌ Error sending event for Player ID: ${playerId}`);
+        }
+      });
+    }
+  </script>
 
   <!-- FullStory Snippet -->
   <script>
     window['_fs_debug'] = false;
     window['_fs_host'] = 'fullstory.com';
     window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
-    window['_fs_org'] = 'FS_Code';  // Replace with your real FullStory Org ID
+    window['_fs_org'] = 'FS_CODE';  // 🔁 Replace with your FullStory Org ID
     window['_fs_namespace'] = 'FS';
-
     (function(m,n,e,t,l,o,g,y){
-      if (e in m) return;
-      g = m[e] = function(a,b){ g.q ? g.q.push([a,b]) :
+      if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict.'); } return;}
+      g = m[e] = function(a,b){ g.q ? g.q.push([a,b]) : g._api(a,b); }; g.q = [];
+      o = n.createElement(t); o.async = 1; o.crossOrigin = 'anonymous'; o.src = 'https://' + _fs_script;
+      y = n.getElementsByTagName(t)[0]; y.parentNode.insertBefore(o,y);
+      g.identify = function(i,v){ g(l,{uid:i},v) };
+      g.setUserVars = function(v){ g('userVars',v) };
+      g.event = function(i,v){ g('event',{n:i,p:v}) };
+      g.shutdown = function(){ g('rec',false) };
+      g.restart = function(){ g('rec',true) };
+      g.consent = function(a){ g('consent', !arguments.length || a) };
+      g.identifyAccount = function(i,v){ g('account',{acctId:i},v) };
+      g.clearUserCookie = function(){};
+    })(window,document,window['_fs_namespace'],'script','user');
+  </script>
+</body>
+</html>
