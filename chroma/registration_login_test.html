@@ -7,10 +7,16 @@
 <body>
   <h1>FullStory Event Simulator</h1>
 
-  <!-- Upload Section -->
+  <!-- Registration Upload -->
   <h2>Upload Registration Data</h2>
   <input type="file" id="registrationCsvUpload" accept=".csv" />
   <button onclick="sendBackEndRegistrationEvents()">Send Back-End Registration Events</button>
+  <br><br>
+
+  <!-- Login Upload -->
+  <h2>Upload Login Data</h2>
+  <input type="file" id="loginCsvUpload" accept=".csv" />
+  <button onclick="sendBackEndLoginEvents()">Send Back-End Login Events</button>
   <br><br>
 
   <!-- Output Log -->
@@ -20,34 +26,45 @@
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <script>
-    let parsedData = [];
+    let registrationData = [];
+    let loginData = [];
 
-    // CSV File Upload Handler
+    // File Upload Handlers
     document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
       Papa.parse(e.target.files[0], {
         header: true,
         skipEmptyLines: true,
         complete: function (results) {
-          parsedData = results.data;
-          log('✅ CSV loaded with ' + parsedData.length + ' rows');
-          console.log('Parsed Data:', parsedData);
+          registrationData = results.data;
+          log('✅ Registration CSV loaded with ' + registrationData.length + ' rows');
         }
       });
     });
 
-    // Logging Helper
+    document.getElementById('loginCsvUpload').addEventListener('change', function (e) {
+      Papa.parse(e.target.files[0], {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          loginData = results.data;
+          log('✅ Login CSV loaded with ' + loginData.length + ' rows');
+        }
+      });
+    });
+
+    // Log helper
     function log(message) {
       document.getElementById('log').textContent += message + '\n';
     }
 
-    // Format timestamp like: 56:28.0 → 2025-05-21 10:56:28.000
+    // Convert TIMESTAMP or DATE_TIME to formatted date
     function formatTimestamp(rawTime) {
       if (!rawTime || !rawTime.includes(':')) return null;
 
       const [minStr, secStr] = rawTime.split(':');
       const minutes = parseInt(minStr, 10);
       const seconds = parseFloat(secStr);
-      const baseDate = new Date('2025-05-21T10:00:00Z'); // base session date/time
+      const baseDate = new Date('2025-05-21T10:00:00Z');
 
       baseDate.setMinutes(minutes);
       baseDate.setSeconds(Math.floor(seconds));
@@ -58,14 +75,14 @@
       return `${baseDate.getFullYear()}-${pad(baseDate.getMonth() + 1)}-${pad(baseDate.getDate())} ${pad(baseDate.getHours())}:${pad(baseDate.getMinutes())}:${pad(baseDate.getSeconds())}.${ms}`;
     }
 
-    // Send FullStory Registration Events
+    // Send Registration Events
     function sendBackEndRegistrationEvents() {
       if (typeof FS === 'undefined' || typeof FS.event !== 'function') {
         log('❌ FS is not ready or not initialized.');
         return;
       }
 
-      parsedData.forEach((row, index) => {
+      registrationData.forEach((row, index) => {
         const playerId = row['PLAYER_ID'];
         const timestamp = formatTimestamp(row['TIMESTAMP']);
 
@@ -85,11 +102,42 @@
             PlayerTier: row['PLAYER_TIER'],
             VerificationStatus: row['VERIFICATION_STATUS'],
           });
-
-          log(`✅ Event sent for Player ID: ${playerId}`);
+          log(`✅ Registration event sent for Player ID: ${playerId}`);
         } catch (err) {
           console.error(err);
-          log(`❌ Error sending event for Player ID: ${playerId}`);
+          log(`❌ Error sending registration event for Player ID: ${playerId}`);
+        }
+      });
+    }
+
+    // Send Login Events
+    function sendBackEndLoginEvents() {
+      if (typeof FS === 'undefined' || typeof FS.event !== 'function') {
+        log('❌ FS is not ready or not initialized.');
+        return;
+      }
+
+      loginData.forEach((row, index) => {
+        const playerId = row['PLAYER_ID'];
+        const timestamp = formatTimestamp(row['DATE_TIME']);
+
+        if (!playerId) {
+          log(`❌ Row ${index + 1}: Missing PLAYER_ID`);
+          return;
+        }
+
+        try {
+          FS.event('Account | Login | Success', {
+            PlayerID: playerId,
+            Timestamp: timestamp,
+            DisplayName: row['DISPLAY_NAME'],
+            FailedAttempts: row['FAILED_ATTEMPTS'],
+            Domain: row['TOPLEVELDOMAINNAME']
+          });
+          log(`✅ Login event sent for Player ID: ${playerId}`);
+        } catch (err) {
+          console.error(err);
+          log(`❌ Error sending login event for Player ID: ${playerId}`);
         }
       });
     }
@@ -100,7 +148,7 @@
     window['_fs_debug'] = false;
     window['_fs_host'] = 'fullstory.com';
     window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
-    window['_fs_org'] = 'FS_CODE';  // 🔁 Replace with your FullStory Org ID
+    window['_fs_org'] = 'FS_CODE';  // 🔁 Replace this with your actual FullStory Org ID
     window['_fs_namespace'] = 'FS';
     (function(m,n,e,t,l,o,g,y){
       if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict.'); } return;}
