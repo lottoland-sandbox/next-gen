@@ -22,10 +22,21 @@
   <script>
   let parsedData = [];
 
+  // CSV Upload Handler
+  document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
+    Papa.parse(e.target.files[0], {
+      header: true,
+      skipEmptyLines: true,
+      complete: function (results) {
+        parsedData = results.data;
+        log('✅ CSV loaded with ' + parsedData.length + ' rows');
+        console.log('Parsed Data:', parsedData);
+      }
+    });
+  });
+
   function log(message) {
-    const logElem = document.getElementById('log');
-    logElem.textContent += message + '\n';
-    console.log(message);
+    document.getElementById('log').textContent += message + '\n';
   }
 
   function formatTimestamp(rawTime) {
@@ -34,30 +45,17 @@
     const minutes = parseInt(minStr, 10);
     const seconds = parseFloat(secStr);
     const baseDate = new Date('2025-05-21T10:00:00Z');
-
     baseDate.setMinutes(minutes);
     baseDate.setSeconds(Math.floor(seconds));
     baseDate.setMilliseconds(Math.round((seconds % 1) * 1000));
-
     const pad = n => n.toString().padStart(2, '0');
     const ms = baseDate.getMilliseconds().toString().padStart(3, '0');
     return `${baseDate.getFullYear()}-${pad(baseDate.getMonth() + 1)}-${pad(baseDate.getDate())} ${pad(baseDate.getHours())}:${pad(baseDate.getMinutes())}:${pad(baseDate.getSeconds())}.${ms}`;
   }
 
-  document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
-    Papa.parse(e.target.files[0], {
-      header: true,
-      skipEmptyLines: true,
-      complete: function (results) {
-        parsedData = results.data;
-        log('✅ CSV loaded with ' + parsedData.length + ' rows');
-      }
-    });
-  });
-
   function sendBackEndRegistrationEvents() {
-    if (!window.FS || typeof FS.event !== 'function') {
-      log("❌ FS is not ready or not initialized.");
+    if (typeof FS === 'undefined' || typeof FS.event !== 'function') {
+      log('❌ FS is not ready or not initialized.');
       return;
     }
 
@@ -66,7 +64,7 @@
       const timestamp = formatTimestamp(row['TIMESTAMP']);
 
       if (!playerId) {
-        log(`⚠️ Row ${index + 1} skipped: Missing PLAYER_ID`);
+        log(`❌ Row ${index + 1}: Missing PLAYER_ID`);
         return;
       }
 
@@ -81,29 +79,14 @@
           PlayerTier: row['PLAYER_TIER'],
           VerificationStatus: row['VERIFICATION_STATUS'],
         });
-        log(`✅ Event sent for Player ID: ${playerId}`);
+
+        log(`✅ Back-End Registration Event sent for Player ID: ${playerId}`);
       } catch (err) {
+        console.error('Error sending FullStory event:', err);
         log(`❌ Error sending event for Player ID: ${playerId}`);
-        console.error(err);
       }
     });
   }
-
-  // Wait for FS to be ready before enabling button
-  function waitForFullStory(callback) {
-    const interval = setInterval(() => {
-      if (typeof FS !== 'undefined' && typeof FS.event === 'function') {
-        clearInterval(interval);
-        log('✅ FullStory is ready');
-        document.getElementById('sendEventsButton').disabled = false;
-        document.getElementById('sendEventsButton').addEventListener('click', callback);
-      } else {
-        console.log('⏳ Waiting for FullStory to load...');
-      }
-    }, 500);
-  }
-
-  waitForFullStory(sendBackEndRegistrationEvents);
 </script>
 
 
@@ -112,7 +95,7 @@
     window['_fs_debug'] = false;
     window['_fs_host'] = 'fullstory.com';
     window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
-    window['_fs_org'] = 'o-22YWXK-na1';  // Replace with your real FullStory Org ID
+    window['_fs_org'] = 'FS_Code';  // Replace with your real FullStory Org ID
     window['_fs_namespace'] = 'FS';
 
     (function(m,n,e,t,l,o,g,y){
