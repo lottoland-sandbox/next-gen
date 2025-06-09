@@ -13,11 +13,6 @@
   <button onclick="sendBackEndRegistrationEvents()">Send Back-End Registration Events</button>
   <br><br>
 
-  <!-- Login Upload -->
-  <h2>Upload Login Data</h2>
-  <input type="file" id="loginCsvUpload" accept=".csv" />
-  <button onclick="sendBackEndLoginEvents()">Send Back-End Login Events</button>
-  <br><br>
 
   <!-- Log Output -->
   <pre id="log"></pre>
@@ -27,7 +22,6 @@
 
   <script>
     let registrationData = [];
-    let loginData = [];
 
     // CSV upload handlers
       document.getElementById('registrationCsvUpload').addEventListener('change', function (e) {
@@ -119,23 +113,6 @@
         } catch (err) {
           console.error('Error sending FullStory event:', err);
         }
-      });
-    }
-
-    // Send login backend event 
-  function sendBackEndLogin() {
-      parsedData.forEach(row => {
-        const playerId = row['PLAYER_ID'];
-        if (!playerId) return;
-
-        FS.event('Account | Login | Success', {
-          playerId: row['PLAYER_ID'],
-          timestamp: reformatTimestamp(row['DATE_TIME']),
-          failedAttempts: row['FAILED_ATTEMPTS'],
-          displayName: row['DISPLAY_NAME'],
-          domain: row['TOPLEVELDOMAINNAME'],
-});
-        log('Back-End Login sent for Player ID: ' + playerId);
       });
     }
   </script>
