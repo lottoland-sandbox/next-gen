@@ -35,13 +35,17 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 </head>
 <body>
 <h1>Mock Custom Events</h1>
+
+<hr>
+<button id="button.submit.registration.success" onclick="registrationSuccess()"  data-track-name="registration-success" >Registration Success</button>
+<button id="button.submit.registration.failure" onclick="registrationFailure()" data-track-name="registration-failure">Registration Failure</button>   
+
+<!--   
 <hr>
 <button id="button.submit.login.success" onclick="loginSuccess()"  data-track-name="login-success" >Login Success</button>
 <button id="button.submit.login.failure" onclick="loginFailure()" data-track-name="login-failure">Login Failure</button>
 <button id="button.submit.logout.success" onclick="logoutSuccess()" data-track-name="logout-success">Logout Success</button>   
-<hr>
-<button id="button.submit.registration.success" onclick="registrationSuccess()"  data-track-name="registration-success" >Registration Success</button>
-<button id="button.submit.registration.failure" onclick="registrationFailure()" data-track-name="registration-failure">Registration Failure</button>   
+
 <hr>
 <button id="button.submit.payin.ftd.success" onclick="payinFTDSuccess()"  data-track-name="payin-ftd-success" >Payin FTD Success</button>
 <button id="button.submit.payin.sd.success" onclick="payinSDSuccess()"  data-track-name="payin-sd-success" >Payin SD Success</button>
@@ -52,7 +56,7 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 <button id="button.submit.payin.ftd.failure" onclick="payinFTDFailure()" data-track-name="payin-ftd-failure">Payin FTD Failure</button>      
 <button id="button.submit.payin.sd.failure" onclick="payinSDFailure()" data-track-name="payin-sd-failure">Payin SD Failure</button>      
 <hr> 
-
+-->
    
  <script src="./scripts/chroma.js"></script> 
 </body>
