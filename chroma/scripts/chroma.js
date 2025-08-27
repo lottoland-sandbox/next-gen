@@ -1,9 +1,10 @@
 function setSite(siteName) {
-    FS.setVars({
+    FS.setVars('session', {
       site: siteName
-    });   
+    });
     console.log(siteName);   
 }
+
 
 
 
