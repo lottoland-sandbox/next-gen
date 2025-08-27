@@ -32,16 +32,19 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 }(window,document,window._fs_namespace,"script",window._fs_script);
 </script>
 <script>
-   function setSite(siteName) {
-       if (typeof FS !== 'undefined' && FS.setVars) {
-           FS.setVars('session', {
-               site: siteName
-           });
-           console.log(`FS.setVars called with site: ${siteName}`);
-       } else {
-           console.warn('FullStory not loaded yet. siteName:', siteName);
-       }
-   } 
+
+function setSite(siteName, retries = 10) {
+    if (typeof FS !== 'undefined' && FS.setVars) {
+        FS.setVars('session', { site: siteName });
+        console.log(`FS.setVars called with site: ${siteName}`);
+    } else if (retries > 0) {
+        console.warn('FullStory not loaded yet, retrying...');
+        setTimeout(() => setSite(siteName, retries - 1), 500);
+    } else {
+        console.error('Failed to set site in FullStory after retries');
+    }
+}
+
 </script>
 </head>
 
