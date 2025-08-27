@@ -1,8 +1,13 @@
+
 function setSite(siteName) {
-    FS.setVars('session', {
-      site: siteName
-    });
-    console.log(siteName);   
+    if (typeof FS !== 'undefined' && FS.setVars) {
+        FS.setVars('session', {
+            site: siteName
+        });
+        console.log(`FS.setVars called with site: ${siteName}`);
+    } else {
+        console.warn('FullStory not loaded yet. siteName:', siteName);
+    }
 }
 
 
