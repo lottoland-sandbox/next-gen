@@ -1,8 +1,8 @@
-function setSite() {
+function setSite(siteName) {
     FS.setVars({
-      site: "sandbox.bet.br"
+      site: siteName
     });   
-    console.log('sandbox.bet.br');   
+    console.log(siteName);   
 }
 
 
