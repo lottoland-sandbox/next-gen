@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-   <title>v45</title>
+   <title>v1 new</title>
 
 
  
@@ -31,61 +31,49 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 </script> 
 
 <script>
-
-   function getRegistrationError() {
+  function getRegistrationError() {
     const rand = Math.random();
-
     let error;
+
     if (rand < 0.1) {
-        error = 'SystemFailure';         // 10% chance
+      error = 'SystemFailure';         // 10% chance
     } else if (rand < 0.4) {
-        error = 'GamStopBan';     // 30% chance
+      error = 'GamStopBan';            // 30% chance
     } else if (rand < 0.6) {
-        error = 'AccountClosed';         // 20% chance
+      error = 'AccountClosed';         // 20% chance
     } else if (rand < 0.8) {
-        error = 'BetStopBan';               // 20% chance
+      error = 'BetStopBan';            // 20% chance
     } else {
-        error = 'SystemUnavailable';            // 20% chance
+      error = 'SystemUnavailable';     // 20% chance
     }
+
     return error;
-}
+  }
 
-   
-   function registrationSuccess() {    
-    FS('setIdentity', {
-        uid: '654321',
-        properties: {
-            method: 'Registration',
-            displayName: 'Player 654321',
-            playerNumber: '654321',
-            accountStatus: 'REGISTERED',
-            playerTier: 'NON-VIP',
-            verificationStatus: 'PENDING',
-        }
+  function registrationSuccess() {
+    // FullStory v2: identify user
+    FS.identify('654321', {
+      displayName: 'Player 654321',
+      method: 'Registration',
+      playerNumber: '654321',
+      accountStatus: 'REGISTERED',
+      playerTier: 'NON-VIP',
+      verificationStatus: 'PENDING'
     });
-    FS('trackEvent', {
-        name: 'Registration | Success',
-        properties: {
-            // *** None Currently ***
-        }
-    });
+
+    // FullStory v2: event tracking
+    FS.event('Registration | Success', {});
+
     console.log('Registration Success');
-}
+  }
 
+  function registrationFailure() {
+    FS.event('Registration | Failure', {
+      error: getRegistrationError()
+    });
 
-
-function registrationFailure() {  
-    FS('trackEvent', {
-        name: 'Registration | Failure',
-        properties: {
-            error: getRegistrationError()
-        }
-    }); 
-    console.log('Registration Failure')
-}
-
-
-   
+    console.log('Registration Failure');
+  }
 </script>
    
 </head>
