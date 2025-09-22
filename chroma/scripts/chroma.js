@@ -40,12 +40,10 @@ function registrationSuccess() {
 
 
 function registrationFailure() {  
-    FS('trackEvent', {
-        name: 'Registration | Failure',
-        properties: {
-            error: getRegistrationError()
-        }
-    });
+FS.event('Registration | Failure', {
+    error: getRegistrationError()
+});
+    
     console.log('Registration Failure')
 }
 
