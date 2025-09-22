@@ -11,8 +11,6 @@ function setSite(siteName) {
 }
 
 
-
-
 function registrationSuccess() {    
     FS('setIdentity', {
         uid: '654321',
