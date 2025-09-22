@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-   <title>v2 **DEV** o-7VRZ-eu1 Custom Events </title>
+   <title>v3 **DEV** o-7VRZ-eu1 Custom Events </title>
    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, proxy-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -76,13 +76,15 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 }
 
 function registrationFailure() {  
-FS('trackEvent', {
-    name: 'Registration | Failure',
-    properties: {
-        error: getRegistrationError()
-    });
+    FS('trackEvent', {
+        name: 'Registration | Failure',
+        properties: {
+            error: getRegistrationError()
+        } // <-- Missing this closing brace
+    }); // <-- Missing this closing parenthesis
     console.log('Registration Failure')
 }
+   
 </script>
    
 </head>
