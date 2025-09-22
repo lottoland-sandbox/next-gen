@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-   <title>**DEV** o-7VRZ-eu1 Custom Events - Chroma v9</title>
+   <title>v1 **DEV** o-7VRZ-eu1 Custom Events </title>
    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, proxy-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -32,6 +32,39 @@ g.log=function(b,d){h("log",{level:b,msg:d})},g.consent=function(b){h("setIdenti
 f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){return g._w[s].apply(this,arguments)}),g._v="2.0.0")
 }(window,document,window._fs_namespace,"script",window._fs_script);
 </script>
+
+<script>
+   function registrationSuccess() {    
+    FS('setIdentity', {
+        uid: '654321',
+        properties: {
+            method: 'Registration',
+            displayName: 'Player 654321',
+            playerNumber: '654321',
+            accountStatus: 'REGISTERED',
+            playerTier: 'NON-VIP',
+            verificationStatus: 'PENDING',
+        }
+    });
+    FS('trackEvent', {
+        name: 'Registration | Success',
+        properties: {
+            // *** None Currently ***
+        }
+    });
+    console.log('Registration Success');
+}
+
+function registrationFailure() {  
+FS('trackEvent', {
+    name: 'Registration | Failure',
+    properties: {
+        error: getRegistrationError()
+    });
+    console.log('Registration Failure')
+}
+</script>
+   
 </head>
 <body>
 <h1>Mock Custom Events</h1>
@@ -40,10 +73,6 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 <button id="button.submit.registration.success" onclick="registrationSuccess()"  data-track-name="registration-success" >Registration Success</button>
 <button id="button.submit.registration.failure" onclick="registrationFailure()" data-track-name="registration-failure">Registration Failure</button>   
 
-
-
-   
- <script src="./scripts/chroma.js"></script> 
 </body>
 
 </html>
