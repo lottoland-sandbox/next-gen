@@ -31,7 +31,15 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 </script>
 </head>
 <body>
-
+<script>
+  document.querySelectorAll('[data-track-name]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      // simple click feedback — button briefly flashes
+      btn.classList.add('ring-4', 'ring-offset-2', 'ring-blue-300');
+      setTimeout(() => btn.classList.remove('ring-4', 'ring-offset-2', 'ring-blue-300'), 200);
+    });
+  });
+</script>
 
 
 <div data-track-container="Group A" class="flex gap-4 p-4 bg-gray-100 rounded-2xl shadow-md w-fit">
