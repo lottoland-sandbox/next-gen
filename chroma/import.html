@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-   <title>*Sand* o-22YWXK-na1 Import Match v1</title>
+   <title>*Sand* o-22YWXK-na1 Import Match v7</title>
    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, proxy-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -43,7 +43,7 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 <hr>
 <button id="button.submit.login.success" onclick="loginSuccess()"  data-track-name="login-success" >Login Success</button>
 <hr>
-<button id="button.submit.login.failure" onclick="manualVerification()" data-track-name="login-failure">Manual Verification</button>
+<button id="button.submit.verification.manual" onclick="manualVerification()" data-track-name="verificaiton-manual">Manual Verification</button>
 <hr>
 
    
@@ -56,7 +56,7 @@ function getRandomElement(arr) {
 function loginSuccess() {
   // Identify the user (v2)
   FS('setIdentity', {
-    uid: '123456',
+    uid: '1234567',
     properties: {
       method: 'login',
       displayName: 'Player 654321',
@@ -92,7 +92,7 @@ function loginSuccess() {
 function manualVerification() {
   // Identify again if needed (v2)
   FS('setIdentity', {
-    uid: '123456',
+    uid: '1234567',
     properties: {
       displayName: 'Player 654321'
     }
