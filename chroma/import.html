@@ -42,7 +42,74 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 <hr>
 
    
- <script src="./scripts/chroma.js"></script> 
+
+<script>
+function getRandomElement(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function loginSuccess() {
+  // Identify the user (v2)
+  FS('setIdentity', {
+    uid: '123456',
+    properties: {
+      method: 'login',
+      displayName: 'Player 654321',
+      playerNumber: '654321',
+      accountStatus: 'REGISTERED',
+      playerTier: 'NON‑VIP',
+      verificationStatus: 'PENDING'
+    }
+  });
+
+  const identifierOptions = ['Email', 'Mobile'];
+  const verifierOptions   = ['Email OTP', 'SMS OTP', 'Password'];
+  const identifier = getRandomElement(identifierOptions);
+  const verifier   = getRandomElement(verifierOptions);
+
+  // Track event (v2)
+  FS('trackEvent', {
+    name: 'Login | Success',
+    properties: {
+      identifier:       identifier,
+      verifier:         verifier,
+      credentials:      `${identifier} - ${verifier}`,
+      accountStatus:    'REGISTERED',
+      playerTier:       'NON‑VIP',
+      verificationStatus:'PENDING',
+      attempt:          1
+    }
+  });
+
+  console.log('Log In Success');
+}
+
+function manualVerification() {
+  // Identify again if needed (v2)
+  FS('setIdentity', {
+    uid: '123456',
+    properties: {
+      displayName: 'Player 654321'
+    }
+  });
+
+  // Track event (v2)
+  FS('trackEvent', {
+    name: 'Verification | Success',
+    properties: {
+      verificationService: 'Manual Review',
+      documentType:        'Passport',
+      issuingCountry:      'USA'
+    }
+  });
+
+  console.log('Manual Verification Success');
+}
+</script>
+
+
+
+   
 </body>
 
 </html>
