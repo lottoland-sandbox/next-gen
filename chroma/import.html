@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-   <title>*Import Match v8</title>
+   <title>*Import Match v02</title>
    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, proxy-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -41,9 +41,9 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 <body>
 <h1>Mock Custom Events</h1>
 <hr>
-<button id="button.submit.login.success" onclick="loginSuccess()"  data-track-name="login-success" >Login Success</button>
+<button id="button.submit.login.success" onclick="loginSuccess()"  data-track-name="login-success" >Login Success - MIKE </button>
 <hr>
-<button id="button.submit.verification.manual" onclick="manualVerification()" data-track-name="verificaiton-manual">Manual Verification</button>
+<button id="button.submit.verification.manual" onclick="manualVerification()" data-track-name="verificaiton-manual">Manual Verification - MICH</button>
 <hr>
 
    
@@ -56,11 +56,11 @@ function getRandomElement(arr) {
 function loginSuccess() {
   // Identify the user (v2)
   FS('setIdentity', {
-    uid: '12345678',
+    uid: '2',
     properties: {
       method: 'login',
-      displayName: 'Player 8654321',
-      playerNumber: '8654321',
+      displayName: 'Player 02',
+      playerNumber: '02',
       accountStatus: 'REGISTERED',
       playerTier: 'NON‑VIP',
       verificationStatus: 'PENDING'
@@ -92,9 +92,9 @@ function loginSuccess() {
 function manualVerification() {
   // Identify again if needed (v2)
   FS('setIdentity', {
-    uid: '12345678',
+    uid: '2',
     properties: {
-      displayName: 'Player 8654321'
+      displayName: 'Player 02'
     }
   });
 
