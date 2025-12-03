@@ -53,18 +53,21 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 
     const props = getQueryParams();
     if (Object.keys(props).length > 0) {
-      FS("setProperties", { type: "page", properties: props });
+      FS("setProperties", {
+        type: "page",
+        properties: props
+      });
     }
   }
 
-  // Run once FullStory is truly ready
-  window.addEventListener("FSR", sendPageParams);
+  // Correct FullStory ready event
+  window.addEventListener("FS_READY", sendPageParams);
 
-  // Safety fallback: run after a short delay too
-  setTimeout(sendPageParams, 300);
-
+  // Safety fallback after FS loads
+  setTimeout(sendPageParams, 500);
 })();
 </script>
+
 
 
   
