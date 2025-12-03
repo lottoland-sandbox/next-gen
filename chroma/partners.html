@@ -1,4 +1,72 @@
 
+<scriot>
+(function () {
+  // --- Config: Adjust if needed ---
+  const DENY_LIST = [
+    'password',
+    'pass',
+    'token',
+    'auth',
+    'authorization',
+    'jwt',
+    'code'
+  ];
+
+  // Turn ?a=1&b=2 into { a: "1", b: "2" }
+  function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    const result = {};
+
+    for (const [key, value] of params.entries()) {
+      // Skip denied keys for safety
+      if (DENY_LIST.includes(key.toLowerCase())) continue;
+      result[key] = value;
+    }
+
+    return result;
+  }
+
+  // Send to FullStory
+  function sendPageParams() {
+    if (typeof FS !== 'function') return;
+
+    const props = getQueryParams();
+
+    // Only send if there's something to send
+    if (Object.keys(props).length > 0) {
+      FS('setProperties', {
+        type: 'page',
+        properties: props
+      });
+    }
+  }
+
+  // Initial call
+  sendPageParams();
+
+  // Optional SPA support — re-run when the URL changes via pushState/replaceState
+  (function historyPatch() {
+    const pushState = history.pushState;
+    const replaceState = history.replaceState;
+
+    history.pushState = function () {
+      pushState.apply(history, arguments);
+      sendPageParams();
+    };
+
+    history.replaceState = function () {
+      replaceState.apply(history, arguments);
+      sendPageParams();
+    };
+
+    window.addEventListener('popstate', sendPageParams);
+  })();
+})();
+
+  
+</scriot>
+
+
 <a href="https://beta.lottoland.co.uk/a/stake-20-get-100-free-spins-on-BigBassBonanza-aff25">stake-20-get-100-free-spins-on-BigBassBonanza-aff25</a>
 <hr>
 <a href="https://beta.lottoland.co.uk/a/stake-20-get-100-free-spins-lottoland-big-bass-bonanza">stake-20-get-100-free-spins-lottoland-big-bass-bonanza</a>
