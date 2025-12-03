@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-   <title>**10 SANDBOXV** o-22YWXK-na1 Custom Events - Chroma v9</title>
+   <title>**11 SANDBOXV** o-22YWXK-na1 Custom Events - Chroma v9</title>
    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, proxy-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -42,31 +42,29 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
     const result = {};
     for (const [key, value] of params.entries()) {
       if (!DENY_LIST.includes(key.toLowerCase())) {
-        result[key] = value;
+        result[`qp_${key}`] = String(value);
       }
     }
     return result;
   }
 
-  function sendPageParams() {
-    if (typeof FS !== "function") return;
-
+  function sendUserProperties() {
+    if (typeof FS !== "function") return; // FS not ready
     const props = getQueryParams();
     if (Object.keys(props).length > 0) {
-      FS("setProperties", {
-        type: "page",
-        properties: props
-      });
+      FS("setProperties", { type: "user", properties: props });
+      console.log("FullStory user properties set:", props);
     }
   }
 
-  // Correct FullStory ready event
-  window.addEventListener("FS_READY", sendPageParams);
+  // Run when FS is ready
+  window.addEventListener("FS_READY", sendUserProperties);
 
-  // Safety fallback after FS loads
-  setTimeout(sendPageParams, 500);
+  // Safety fallback in case FS_READY fires before this script
+  setTimeout(sendUserProperties, 1000);
 })();
 </script>
+
 
 
 
