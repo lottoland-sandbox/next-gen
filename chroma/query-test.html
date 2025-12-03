@@ -32,7 +32,7 @@
         const result = {};
         for (const [key, value] of params.entries()) {
           if (!DENY_LIST.includes(key.toLowerCase())) {
-            result[`qp_${key}`] = String(value);
+            result[`${key}`] = String(value);
           }
         }
         return result;
