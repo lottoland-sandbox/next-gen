@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FS Test</title>
+  <script>
+  window['_fs_host'] = 'www.fullstory.com';
+  window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
+    window['_fs_org'] = 'o-22YWXK-na1';
+    window['_fs_namespace'] = 'FS';
+  </script>
+  <script src="https://edge.eu1.fullstory.com/s/fs.js" async></script>
+</head>
+<body>
+  <h1>FS Test</h1>
+  <script>
+    setTimeout(function(){
+      if(typeof FS==="function"){
+        console.log("FS loaded:", FS.version);
+        FS("setProperties",{type:"user",properties:{test:"123"}});
+      } else {
+        console.log("FS not loaded yet");
+      }
+    },1000);
+  </script>
+</body>
+</html>
