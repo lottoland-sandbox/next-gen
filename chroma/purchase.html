@@ -1,0 +1,33 @@
+<script>
+  // Example purchase data
+  const purchase = {
+    orderId: "ORDER-12345",
+    total: 89.99,
+    currency: "USD",
+    items: [
+      {
+        productId: "SKU-001",
+        name: "Premium T-Shirt",
+        price: 29.99,
+        quantity: 2
+      },
+      {
+        productId: "SKU-002",
+        name: "Baseball Cap",
+        price: 29.99,
+        quantity: 1
+      }
+    ]
+  };
+
+  // Send a custom FullStory event
+  if (window.FS) {
+    FS.event('Purchase Completed', {
+      order_id: purchase.orderId,
+      total: purchase.total,
+      currency: purchase.currency,
+      item_count: purchase.items.length,
+      items: purchase.items
+    });
+  }
+</script>
