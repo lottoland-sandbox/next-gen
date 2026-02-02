@@ -43,7 +43,7 @@ FS('trackEvent', {
     properties: {
         error: getRegistrationError()
     };
-    console.log('Registration Failure')
+    console.log('Registration Failure');
 }
 
 function loginSuccess() {
