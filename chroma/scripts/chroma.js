@@ -42,7 +42,7 @@ FS('trackEvent', {
     name: 'Registration | Failure',
     properties: {
         error: getRegistrationError()
-    });
+    };
     console.log('Registration Failure')
 }
 
