@@ -59,6 +59,19 @@ function loginSuccess() {
         }
     });
 
+  // ** LOGIN EVENT ***
+    FS('trackEvent', {
+        name: 'Login | Success',
+        properties: {
+            accountStatus: 'REGISTERED',
+            playerTier: 'NON-VIP',
+            verificationStatus: 'PENDING',
+            attempt: 1
+        }
+    });
+
+
+    
    
 }
     
