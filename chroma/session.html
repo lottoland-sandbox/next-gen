@@ -41,8 +41,26 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 
 <body>
  
-                <button id="button.submit.success" type="submit" onclick="loginSubmit()" data-analytics-name="login" data-analytics-outcome="success" data-analytics-method="frontend">Log in (UI Success)</button>
+                <button id="button.submit.success" type="submit" onclick="loginSuccess()" data-analytics-name="login" data-analytics-outcome="success" data-analytics-method="frontend">Log in (UI Success)</button>
               
 </body>
-<script src="./scripts/global-scripts.js"></script>
+<script>
+function loginSuccess() {
+    // ** IDENTITY ***
+    FS('setIdentity', {
+        uid: 'user22',
+        properties: {
+            "method": 'login',
+            "displayName": 'Mike Jackson',
+            "playerNumber": '22',
+            "accountStatus": 'REGISTERED',
+            "playerTier": 'NON-VIP',
+            "verificationStatus": 'PENDING',
+        }
+    });
+
+   
+}
+    
+</script>
 </html>
