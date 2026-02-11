@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-   <title>Purchase Success v4</title>
+   <title>Purchase Success v6</title>
    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, proxy-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -42,13 +42,25 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       return;
     }
 
-    FS.event('Purchase | Success', {
-      order_id: purchase.orderId,
-      total: purchase.total,
-      currency: purchase.currency,
-      item_count: purchase.items.length,
-      items: purchase.items
-    });
+   FS('trackEvent', {
+  name: 'Purchase | Success',
+  properties: {
+    orderId: '23f3er3d',
+    products: [
+      {
+        productId: 'Irish Lotto',
+        price: 20.00,
+        quantity: 0.75
+      }, {
+        productId: 'Mega Millions',
+        price: 12.87,
+        quantity: 6
+      }
+    ]
+  }
+});
+  
+  
   }
 </script>
 
@@ -64,26 +76,12 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 <button id="buy-now">Complete Purchase</button>
 
 <script>
-  const purchaseData = {
-    orderId: "ORDER-12345",
-    total: 89.99,
-    currency: "GBP",
-    items: [
-      {
-        productId: "SKU-001",
-        productName: "Mega Millions",
-      },
-      {
-        productId: "SKU-002",
-        productName: "Irish Lotto",
-     }
-    ]
-  };
+ 
 
   document
     .getElementById('buy-now')
     .addEventListener('click', function () {
-      trackPurchase(purchaseData);
+      trackPurchase();
     });
 </script>
 
