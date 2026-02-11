@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-   <title>Purchase v12</title>
+   <title>Purchase v13</title>
    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, proxy-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -42,82 +42,62 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
       return;
     }
 
-
-FS('trackEvent',
-
- {
-  name: 'Order Completed',
-  properties: {
-    orderId: '23f3er3d',
-    orderAmount: 800,
-    bonusAmount: 200,
-    currency: 'EUR',
-    products: [
-      {
-        genre: 'Lotto',
-        productId: 'euroJackpot',
-        lines: 1,
-        duration: 4,
-        type: 'subscription',
-        amount: 800,
-
-        mediaCode: 'UK_2026_APP_6IRISHLOTTO_2VOUCHER',
-        adsPartnerid: 'TBC',
-        partnerId: 'crm_email_de',
-        source: 'crm',
-        medium: 'email',
-        market: 'de'
-
-        
-      }, {
-
-        genre: 'Lotto',
-        productId: 'austriaLotto',
-        lines: 2,
-        duration: 1,
-        type: 'jackpotHunt',
-        amount: 170,
-
-        mediaCode: '8948398_EN_MON',
-        adsPartnerid: 'TBC',
-        partnerId: 'crm_email_uk',
-        source: 'crm',
-        medium: 'email',
-        market: 'uk'
-        
-      }, {
-
-        genre: 'Lotto',
-        productId: 'powerBall',
-        lines: 12,
-        duration: 6,
-        type: 'duration',
-        amount: 864,
-
-        mediaCode: '8948398_EN_TUE',
-        adsPartnerid: 'TBC',
-        partnerId: 'crm_sms_en',
-        source: 'crm',
-        medium: 'sms',
-        market: 'en'
-
-
-
+    FS('trackEvent', {
+      name: 'Order Completed',
+      properties: {
+        orderId: '23f3er3d',
+        orderAmount: 800,
+        bonusAmount: 200,
+        currency: 'EUR',
+        products: [
+          {
+            genre: 'Lotto',
+            productId: 'euroJackpot',
+            lines: 1,
+            duration: 4,
+            type: 'subscription',
+            amount: 800,
+            mediaCode: 'UK_2026_APP_6IRISHLOTTO_2VOUCHER',
+            adsPartnerid: 'TBC',
+            partnerId: 'crm_email_de',
+            source: 'crm',
+            medium: 'email',
+            market: 'de'
+          },
+          {
+            genre: 'Lotto',
+            productId: 'austriaLotto',
+            lines: 2,
+            duration: 1,
+            type: 'jackpotHunt',
+            amount: 170,
+            mediaCode: '8948398_EN_MON',
+            adsPartnerid: 'TBC',
+            partnerId: 'crm_email_uk',
+            source: 'crm',
+            medium: 'email',
+            market: 'uk'
+          },
+          {
+            genre: 'Lotto',
+            productId: 'powerBall',
+            lines: 12,
+            duration: 6,
+            type: 'duration',
+            amount: 864,
+            mediaCode: '8948398_EN_TUE',
+            adsPartnerid: 'TBC',
+            partnerId: 'crm_sms_en',
+            source: 'crm',
+            medium: 'sms',
+            market: 'en'
+          }
+        ]
       }
-    ]
+    });
 
-
-
-   );
-
-
-
-     
-   console.log('Purchase Success');
-  
-  }
-</script>
-
+    console.log('Purchase Succes
+                </script>
 
   
 </head>
