@@ -31,19 +31,149 @@ g.log=function(b,d){h("log",{level:b,msg:d})},g.consent=function(b){h("setIdenti
 f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){return g._w[s].apply(this,arguments)}),g._v="2.0.0")
 }(window,document,window._fs_namespace,"script",window._fs_script);
 </script>
+
+
+<title>Create Account</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #0b1230;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container {
+    width: 400px;
+  }
+
+  h1 {
+    margin-bottom: 30px;
+    font-size: 28px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #cfd3ff;
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px 40px 12px 12px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #2a2f5a;
+    background-color: #11183f;
+    color: #ffffff;
+    font-size: 14px;
+  }
+
+  .password-wrapper {
+    position: relative;
+  }
+
+  .toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 14px;
+    color: #cfd3ff;
+  }
+
+  .checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+  }
+
+  .checkbox-group input {
+    margin-right: 10px;
+    margin-top: 4px;
+  }
+
+  .checkbox-group label {
+    font-size: 13px;
+    color: #cfd3ff;
+  }
+
+  .checkbox-group a {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+
+  button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 30px;
+    border: none;
+    background-color: #d9d9d9;
+    color: #1a1a1a;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+
+  button:hover {
+    background-color: #c5c5c5;
+  }
+</style>
+</head>
 <body>
-  <div class="form-step" id="step-1" data-analytics-category="step1">
-            <h2>Step 1: Create Account</h2>
-            <label for="field.email">Email:</label>
-            <input type="email" id="field.email" name="email" data-track-name="email" >
-            <label for="field.password">Password:</label>
-            <input type="password" id="field.password" name="password" data-track-name="password" >
-      
-            <br><br>
-      
-         <button id="button.step_4.back" type="button" onclick="prevStep(4)" data-analytics-name="back"  >Back</button>
-        
- </div>
+
+<div class="container" data-track-feature="Registration">
+  <h1>Create an account</h1>
+<div data-track-container="Step 1" data-track-test-version="1.A">
+  <form>
+    <label for="email">Email</label>
+    <input data-track-name="Email" type="email" id="email" placeholder="Enter email address" required />
+
+    <label for="password">Password</label>
+    <div class="password-wrapper">
+      <input data-track-name="Email"  type="password" id="password" placeholder="Enter password" required />
+      <span class="toggle-password" onclick="togglePassword()">👁</span>
+    </div>
+
+    <div class="checkbox-group">
+      <input data-track-name="age"  type="checkbox" id="age" required />
+      <label for="age">
+        I am 18 years old or older and agree to the
+        <a href="#">Terms and Conditions</a>
+      </label>
+    </div>
+
+    <div class="checkbox-group">
+      <input data-track-name="privacy" type="checkbox" id="privacy" required />
+      <label for="privacy">
+        I have read and accept the
+        <a href="#">Privacy Policy</a>.
+      </label>
+    </div>
+
+    <button data-track-name="Continue" type="submit">Continue</button>
+</div>
+  </form>
+</div>
+
+<script>
+  function togglePassword() {
+    const passwordInput = document.getElementById("password");
+    passwordInput.type =
+      passwordInput.type === "password" ? "text" : "password";
+  }
+</script>
+
 </body>
+
+
+   
   
 </html>
