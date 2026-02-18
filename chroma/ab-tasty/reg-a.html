@@ -9,8 +9,6 @@
 
    
 <!-- FULL STORY --> 
-
-
 <script>
 window['_fs_host'] = 'fullstory.com';
 window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
@@ -33,19 +31,19 @@ g.log=function(b,d){h("log",{level:b,msg:d})},g.consent=function(b){h("setIdenti
 f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){return g._w[s].apply(this,arguments)}),g._v="2.0.0")
 }(window,document,window._fs_namespace,"script",window._fs_script);
 </script>
-
-
- <div class="form-step" id="step-1" data-analytics-category="step1">
+<body>
+  <div class="form-step" id="step-1" data-analytics-category="step1">
             <h2>Step 1: Create Account</h2>
             <label for="field.email">Email:</label>
-            <input type="email" id="field.email" name="email" data-analytics-name="email" >
+            <input type="email" id="field.email" name="email" data-track-name="email" >
             <label for="field.password">Password:</label>
-            <input type="password" id="field.password" name="password" data-analytics-name="password" >
+            <input type="password" id="field.password" name="password" data-track-name="password" >
       
-            <a id="link.facebook" class="page-link" href="#"  data-analytics-name="termsAndConditions" >Terms and Conditions</a>
-            <a id="link.twitter" class="page-link" href="#"  data-analytics-name="privacyPolicy" >Privacy Policy</a>
             <br><br>
       
          <button id="button.step_4.back" type="button" onclick="prevStep(4)" data-analytics-name="back"  >Back</button>
         
  </div>
+</body>
+  
+</html>
